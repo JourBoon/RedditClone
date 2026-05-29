@@ -25,7 +25,7 @@ func main() {
 	http.Handle("/static/", handler)
 	http.HandleFunc("/", fonction_go.RenderTemplate)
 
-	log.Println("Serveur lancé sur http://localhost:8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Println("Serveur lancé sur http://localhost:4040")
+	log.Fatal(http.ListenAndServe(":4040", nil))
 
 }

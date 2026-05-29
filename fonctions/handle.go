@@ -23,6 +23,9 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request) {
 		return;
 	}
 	fmt.Println(params.mail);
+
+	fmt.Println(params.password)
+	fmt.Println(hashedPassword(params.password))
 }
 
 func handleError(w http.ResponseWriter, message string, statusCode int, err error) {
