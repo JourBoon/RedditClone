@@ -9,7 +9,7 @@ import (
 
 func RenderTemplate(w http.ResponseWriter, r *http.Request) {
 
-	tmplPath := "register.html";
+	tmplPath := "login.html";
 	
 	params:= extractQueryParams(r);
 	tmpl, err := template.New(tmplPath).ParseFiles("static/auth/" + tmplPath);
