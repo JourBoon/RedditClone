@@ -5,8 +5,9 @@ import (
 )
 
 type queryParams struct {
-	Password	string
-	User		string
+	password	string
+	user		string
+	mail		string
 	searchQuery string
 	searchType  string
 	home       	string
@@ -15,10 +16,13 @@ type queryParams struct {
 
 func extractQueryParams(r *http.Request) queryParams {
 	params := queryParams{
-		searchQuery: r.URL.Query().Get("Search"),
-		searchType:  r.URL.Query().Get("SearchType"),
-		home:       r.URL.Query().Get("Home"),
-		sortOrder:   r.URL.Query().Get("sort"),
+		password: r.FormValue("Password"),
+		user:	r.FormValue("User"),
+		mail:r.FormValue("Mail"),
+		searchQuery: r.FormValue("Search"),
+		searchType:  r.FormValue("SearchType"),
+		home:       r.FormValue("Home"),
+		sortOrder:   r.FormValue("sort"),
 	}
 
 	return params
