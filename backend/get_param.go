@@ -7,7 +7,7 @@ import (
 type queryParams struct {
 	password	string
 	password_log	string
-	user		string
+	username		string
 	mail		string
 	mail_log	string
 	searchQuery string
@@ -20,7 +20,7 @@ func extractQueryParams(r *http.Request) queryParams {
 	params := queryParams{
 		password: r.FormValue("Password"),
 		password_log: r.FormValue("Password_log"),
-		user:	r.FormValue("User"),
+		username:	r.FormValue("User"),
 		mail:	r.FormValue("Mail"),
 		mail_log:	r.FormValue("Mail_log"),
 		searchQuery: r.FormValue("Search"),

@@ -10,6 +10,7 @@ import (
 func RenderTemplate(w http.ResponseWriter, r *http.Request) {
 
 	tmplPath := "login.html";
+	dbConnection()
 	
 	params:= extractQueryParams(r);
 	tmpl, err := template.New(tmplPath).ParseFiles("static/auth/" + tmplPath);
@@ -22,10 +23,18 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request) {
 		handleError(w, "Erreur lors de l'exécution du template", http.StatusInternalServerError, err);
 		return;
 	}
-	fmt.Println(params.mail);
 
-	fmt.Println(params.password)
-	fmt.Println(hashedPassword(params.password))
+	db, err := dbConnection()
+	if err != nil {
+		handleError(w, "Erreur DB", http.StatusInternalServerError, err)
+		return
+	}
+	defer db.Close()
+    insertUser(db, params)
+
+	fmt.Println(params.mail);
+	//fmt.Println(params.password)
+	//fmt.Println(hashedPassword(params.password))
 }
 
 func handleError(w http.ResponseWriter, message string, statusCode int, err error) {
