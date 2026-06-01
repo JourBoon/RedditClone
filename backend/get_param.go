@@ -35,10 +35,21 @@ func extractPage(r *http.Request) string{
 }
 
 func extractLog(r *http.Request) login {
+	var username string;
+	query := `SELECT username FROM users WHERE email=(?)`
+	
+	db,_ := dbConnection()
+	
+	err := db.QueryRow(query, r.FormValue("mail")).Scan(&username)
+	
+	if err != nil {
+		print("Erreur lors de la récupération du username")
+	}
+
 	log := login{
 		password:     r.FormValue("password"),
 		mail:         r.FormValue("mail"),
-		username: extractReg(r).username,
+		username: 	  username,
 		sessionToken: "",
 		csrfToken:    "",
 	}
