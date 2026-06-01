@@ -8,14 +8,16 @@ import (
 func insertUser(db *sql.DB, user register) (bool, error) {
 	query := `INSERT INTO users (username, email, password) VALUES (?, ?, ?)`
 	println("insertion")
-	_, err := db.Exec(query, user.username, user.mail, user.password)
+
+	passwd := hashedPassword(user.password)
+	_, err := db.Exec(query, user.username, user.mail, passwd)
 	if err != nil {
 		fmt.Println(err)
 		return false, err
 	}
 
 	fmt.Println("User add on the db ;)")
-	return true,err
+	return true,nil
 }
 
 func logUser(db *sql.DB, user login) (bool, error) {
