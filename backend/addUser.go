@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-func insertUser(db *sql.DB, user queryParams) (int64, error) {
+func insertUser(db *sql.DB, user register) (int64, error) {
 	query := `INSERT INTO users (username, email, password) VALUES (?, ?, ?)`
 
 	result, err := db.Exec(query, user.username, user.mail, user.password)
