@@ -42,10 +42,6 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 	}
-	if err != nil {
-		handleError(w, "Erreur lors du chargement du template", http.StatusInternalServerError, err);
-		return;
-	}
 
 	
 	defer db.Close();
