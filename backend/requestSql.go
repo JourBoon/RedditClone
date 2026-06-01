@@ -17,22 +17,22 @@ func insertUser(db *sql.DB, user register) (bool, error) {
 	}
 
 	fmt.Println("User add on the db ;)")
-	return true,nil
+	return true, nil
 }
 
 func logUser(db *sql.DB, user login) (bool, error) {
 	query := `SELECT password FROM users WHERE email=(?)`
 
-	var hashedPassword string;
+	var hashedPassword string
 	err := db.QueryRow(query, user.mail).Scan(&hashedPassword)
 	if err != nil {
-		return false, err;
+		return false, err
 	}
 
-	if !checkPassword(hashedPassword, user.password){
+	if !checkPassword(hashedPassword, user.password) {
 		fmt.Println("Bad password")
-		return false,nil;
+		return false, nil
 	}
 
-	return true, nil;
+	return true, nil
 }
