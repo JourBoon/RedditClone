@@ -36,3 +36,32 @@ func logUser(db *sql.DB, user login) (bool, error) {
 
 	return true, nil
 }
+
+func addSessionToken(db *sql.DB, login login) (bool, error) {
+	query := `INSERT INTO session (id_user, sessionToken) SELECT id, ? FROM users WHERE email = ? ON CONFLICT(id_user) DO UPDATE SET sessionToken = excluded.sessionToken;`
+	// Requête SQL suggérée par ChatGpt ;)
+
+	_, err := db.Exec(query, login.sessionToken, login.mail)
+	if err != nil {
+		fmt.Println(err)
+		return false, err
+	}
+
+	fmt.Println("Token add on the db ;)")
+	return true, nil
+}
+
+func addCsrfToken(db *sql.DB, login login) (bool, error) {
+	query := `INSERT INTO session (id_user, csrfToken) SELECT id, ? FROM users WHERE email = ? ON CONFLICT(id_user) DO UPDATE SET csrfToken = excluded.csrfToken;`
+	// Requête SQL suggérée par ChatGpt ;)
+
+	_, err := db.Exec(query, login.csrfToken, login.mail)
+	if err != nil {
+		fmt.Println(err)
+		return false, err
+	}
+
+	fmt.Println("csrf Token add on the db ;)")
+	return true, nil
+}
+

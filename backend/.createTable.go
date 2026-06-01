@@ -13,7 +13,14 @@ func createUserTable(db *sql.DB) (bool, error) {
         email TEXT UNIQUE NOT NULL,
 		password TEXT UNIQUE NOT NULL,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    );`
+    );
+	CREATE TABLE IF NOT EXISTS session (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+		id_user INTEGER UNIQUE,
+		sessionToken TEXT UNIQUE,
+		csrfToken TEXT UNIQUE
+    );
+	`
 
     _, err := db.Query(query)
 	if err != nil {
