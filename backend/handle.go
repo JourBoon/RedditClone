@@ -4,26 +4,54 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-	"fmt"
 )
 
 func RenderTemplate(w http.ResponseWriter, r *http.Request) {
-
 	tmplPath := "login.html";
-	dbConnection()
+	path := "static/auth/";
+	page:= extractPage(r);
 	
-	params:= extractQueryParams(r);
-	tmpl, err := template.New(tmplPath).ParseFiles("static/auth/" + tmplPath);
+	db, err := dbConnection()
+	createUserTable(db);
+
+	if err != nil {
+		handleError(w, "Erreur DB", http.StatusInternalServerError, err);
+		return;
+	}
+
+	switch page{
+	case "log":
+		params_log :=extractLog(r);
+		l,err := logUser(db,params_log);
+		if err != nil {
+			handleError(w, "Erreur lors de la connexion", http.StatusInternalServerError, err);
+			return;
+		}
+		if(l){
+			path="static/protected/"
+			tmplPath = "home.html"
+		}
+
+	default:
+		params_reg :=extractReg(r);
+		insertUser(db, params_reg);
+	}
 	if err != nil {
 		handleError(w, "Erreur lors du chargement du template", http.StatusInternalServerError, err);
 		return;
 	}
 
+	
+	defer db.Close();
+	
+	tmpl, err := template.New(tmplPath).ParseFiles(path + tmplPath);
+	
 	if err := tmpl.Execute(w,tmpl); err != nil {
 		handleError(w, "Erreur lors de l'exécution du template", http.StatusInternalServerError, err);
 		return;
 	}
 
+<<<<<<< HEAD
 	db, err := dbConnection()
 	if err != nil {
 		handleError(w, "Erreur DB", http.StatusInternalServerError, err)
@@ -35,6 +63,8 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(params.mail);
 	//fmt.Println(params.password)
 	//fmt.Println(hashedPassword(params.password))
+=======
+>>>>>>> 392004aaee461eeab5230f4cffbab4fb0f2d49f6
 }
 
 func handleError(w http.ResponseWriter, message string, statusCode int, err error) {

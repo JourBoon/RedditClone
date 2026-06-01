@@ -9,7 +9,7 @@ import (
 )
 
 func dbConnection() (*sql.DB, error) {
-    db, err := sql.Open("sqlite3", "./database/database.sqlite")
+    db, err := sql.Open("sqlite3", "./database/database.db")
     if err != nil {
         log.Fatal(err)
     }
