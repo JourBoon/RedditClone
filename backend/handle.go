@@ -50,7 +50,6 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request) {
 		handleError(w, "Erreur lors de l'exécution du template", http.StatusInternalServerError, err);
 		return;
 	}
-
 }
 
 func handleError(w http.ResponseWriter, message string, statusCode int, err error) {
