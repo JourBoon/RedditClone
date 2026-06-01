@@ -62,7 +62,7 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request) {
 
 		case "message":
 			params_mess := extractMess(r);
-			postMess(params_mess.subject,params_mess.body)
+			postMess(db, params_mess.subject,params_mess.body)
 		default:
 			params_reg := extractReg(r)
 			_, err := insertUser(db, params_reg)
