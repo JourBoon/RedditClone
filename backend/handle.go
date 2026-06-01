@@ -50,21 +50,6 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request) {
 		handleError(w, "Erreur lors de l'exécution du template", http.StatusInternalServerError, err);
 		return;
 	}
-
-<<<<<<< HEAD
-	db, err := dbConnection()
-	if err != nil {
-		handleError(w, "Erreur DB", http.StatusInternalServerError, err)
-		return
-	}
-    insertUser(db, params)
-	defer db.Close()
-
-	fmt.Println(params.mail);
-	//fmt.Println(params.password)
-	//fmt.Println(hashedPassword(params.password))
-=======
->>>>>>> 392004aaee461eeab5230f4cffbab4fb0f2d49f6
 }
 
 func handleError(w http.ResponseWriter, message string, statusCode int, err error) {
