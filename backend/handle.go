@@ -29,8 +29,8 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request) {
 		handleError(w, "Erreur DB", http.StatusInternalServerError, err)
 		return
 	}
-	defer db.Close()
     insertUser(db, params)
+	defer db.Close()
 
 	fmt.Println(params.mail);
 	//fmt.Println(params.password)
