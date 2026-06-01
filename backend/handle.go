@@ -13,7 +13,6 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request) {
 	
 	
 	db, err := dbConnection()
-	createUserTable(db)
 	if err != nil {
 		handleError(w, "Erreur DB", http.StatusInternalServerError, err);
 		return;
@@ -21,7 +20,6 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		switch page{
 		case "log":
-			println("log")
 			params_log :=extractLog(r);
 			l,err := logUser(db,params_log);
 			if err != nil {

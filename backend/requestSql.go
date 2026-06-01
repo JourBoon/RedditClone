@@ -8,7 +8,7 @@ import (
 func insertUser(db *sql.DB, user register) (bool, error) {
 	query := `INSERT INTO users (username, email, password) VALUES (?, ?, ?)`
 	println("insertion")
-	_, err := db.Query(query, user.username, user.mail, user.password)
+	_, err := db.Exec(query, user.username, user.mail, user.password)
 	if err != nil {
 		fmt.Println(err)
 		return false, err

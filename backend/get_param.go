@@ -30,6 +30,8 @@ func extractLog(r *http.Request) login{
 		password: r.FormValue("password"),
 		mail:	r.FormValue("mail"),
 	}
+	
+	fmt.Println(log)
 	return log;
 }
 
@@ -40,7 +42,6 @@ func extractReg(r *http.Request) register{
 		username:	r.FormValue("user"),
 		mail:	r.FormValue("mail"),
 	}
-	fmt.Println(reg)
 	return reg;
 }
 
