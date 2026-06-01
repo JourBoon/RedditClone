@@ -12,7 +12,6 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request) {
 	page:= extractPage(r);
 	
 	db, err := dbConnection()
-	createUserTable(db);
 
 	if err != nil {
 		handleError(w, "Erreur DB", http.StatusInternalServerError, err);

@@ -21,6 +21,5 @@ func dbConnection() (*sql.DB, error) {
     }
 
     fmt.Println("Successfully connected to SQLite database!")
-
     return db, nil
 }
