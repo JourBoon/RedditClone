@@ -1,7 +1,6 @@
 package fonction_go
 
 import (
-	"fmt"
 	"net/http"
 )
 
@@ -18,6 +17,12 @@ type register struct {
 	username string
 	mail     string
 }
+
+type message struct{
+	subject		string
+	body 		string
+}
+
 type queryParams struct {
 	searchQuery string
 	searchType  string
@@ -25,8 +30,8 @@ type queryParams struct {
 	sortOrder   string
 }
 
-func extractPage(r *http.Request) string {
-	return r.FormValue("page")
+func extractPage(r *http.Request) string{
+	return r.FormValue("page");
 }
 
 func extractLog(r *http.Request) login {
@@ -37,12 +42,18 @@ func extractLog(r *http.Request) login {
 		sessionToken: "",
 		csrfToken:    "",
 	}
-
-	fmt.Println(log)
-	return log
+	return log;
 }
 
-func extractReg(r *http.Request) register {
+func extractMess(r *http.Request) message{
+	mess := message{
+		subject: r.FormValue("subject"),
+		body:	r.FormValue("body"),
+	}
+	return mess;
+}
+
+func extractReg(r *http.Request) register{
 	println("extraction...")
 	reg := register{
 		password: r.FormValue("password"),

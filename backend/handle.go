@@ -60,6 +60,9 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request) {
 				tmplPath = "home.html"
 			}
 
+		case "message":
+			params_mess := extractMess(r);
+			postMess(params_mess.subject,params_mess.body)
 		default:
 			params_reg := extractReg(r)
 			_, err := insertUser(db, params_reg)
