@@ -1,0 +1,64 @@
+name: Build & Deploy Allocation Service
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  IMAGE_NAME: ghcr.io/jourboon/redditclone:latest
+
+jobs:
+
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.21
+
+      - name: Build Go binary
+        run: go build -o redditclone .
+
+      - name: Login to GHCR
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build Docker image
+        run: |
+          docker build \
+          -t $IMAGE_NAME \
+          .
+
+      - name: Push Docker image
+        run: docker push $IMAGE_NAME
+
+  deploy:
+    needs: build-and-push
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Deploy on VPS
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+          script: |
+            docker service update \
+              --image ghcr.io/jourboon/redditclone:latest \
+              --with-registry-auth \
+              --update-failure-action rollback \
+              redditclone_service
