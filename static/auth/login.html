@@ -6,11 +6,11 @@
         <link rel="stylesheet" href="/static/css/login.css">
     </head>
     <body>
-        <form class="form" method="POST">
+        <form class="form" method="POST" action="/">
             <input type="hidden" name="page" value="log">
             <p class="text_login">CONNEXION</p>
-            <input name="Mail_log" class="input_login" type="mail" placeholder="Email">
-            <input name="Password_log" class="input_login" type="password" placeholder="Mot de passe">
+            <input name="mail" class="input_login" type="email" placeholder="Email">
+            <input name="password" class="input_login" type="password" placeholder="Mot de passe">
             <button class="login_button" type="submit">Connexion</button>
             <a class="register_button" href="/static/auth/register.html">Créer un compte</a>
         </form>

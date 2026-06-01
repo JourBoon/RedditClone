@@ -5,28 +5,29 @@ import (
 	"fmt"
 )
 
-func insertUser(db *sql.DB, user register) (int64, error) {
+func insertUser(db *sql.DB, user register) (bool, error) {
 	query := `INSERT INTO users (username, email, password) VALUES (?, ?, ?)`
-
-	result, err := db.Exec(query, user.username, user.mail, user.password)
+	println("insertion")
+	_, err := db.Query(query, user.username, user.mail, user.password)
 	if err != nil {
-		return 0, err
+		fmt.Println(err)
+		return false, err
 	}
 
 	fmt.Println("User add on the db ;)")
-	return result.LastInsertId()
+	return true,err
 }
 
 func logUser(db *sql.DB, user login) (bool, error) {
 	query := `SELECT password FROM users WHERE email=(?)`
 
 	var hashedPassword string;
-	err := db.QueryRow(query, user.mail_log).Scan(&hashedPassword)
+	err := db.QueryRow(query, user.mail).Scan(&hashedPassword)
 	if err != nil {
 		return false, err;
 	}
 
-	if !checkPassword(hashedPassword, user.password_log){
+	if !checkPassword(hashedPassword, user.password){
 		fmt.Println("Bad password")
 		return false,nil;
 	}

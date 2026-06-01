@@ -5,18 +5,22 @@ import (
 	"fmt"
 )
 
-func createUserTable(db *sql.DB) error {
-    query := `
+func createUserTable(db *sql.DB) (bool, error) {
+	query := `
     CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         username TEXT UNIQUE NOT NULL,
         email TEXT UNIQUE NOT NULL,
 		password TEXT UNIQUE NOT NULL,
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );`
 
-    fmt.Println("User Table creat ;)")
+    _, err := db.Query(query)
+	if err != nil {
+		fmt.Println(err)
+		return false, err
+	}
 
-    _, err := db.Exec(query)
-    return err
+	fmt.Println("Users table creat :)")
+	return true,err
 }

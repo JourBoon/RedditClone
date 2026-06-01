@@ -22,13 +22,13 @@ type queryParams struct {
 }
 
 func extractPage(r *http.Request) string{
-	return r.FormValue("Page");
+	return r.FormValue("page");
 }
 
 func extractLog(r *http.Request) login{
 	log := login{
-		password: r.FormValue("Password_log"),
-		mail:	r.FormValue("Mail_log"),
+		password: r.FormValue("password"),
+		mail:	r.FormValue("mail"),
 	}
 	return log;
 }
@@ -36,9 +36,9 @@ func extractLog(r *http.Request) login{
 func extractReg(r *http.Request) register{
 	println("extraction...")
 	reg := register{
-		password: r.FormValue("Password"),
-		username:	r.FormValue("User"),
-		mail:	r.FormValue("Mail"),
+		password: r.FormValue("password"),
+		username:	r.FormValue("user"),
+		mail:	r.FormValue("mail"),
 	}
 	fmt.Println(reg)
 	return reg;
@@ -46,9 +46,9 @@ func extractReg(r *http.Request) register{
 
 func extractQueryParams(r *http.Request) queryParams {
 	params := queryParams{
-		searchQuery: r.FormValue("Search"),
-		searchType:  r.FormValue("SearchType"),
-		home:       r.FormValue("Home"),
+		searchQuery: r.FormValue("search"),
+		searchType:  r.FormValue("searchType"),
+		home:       r.FormValue("home"),
 		sortOrder:   r.FormValue("sort"),
 	}
 	return params;
