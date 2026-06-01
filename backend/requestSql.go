@@ -20,6 +20,16 @@ func insertUser(db *sql.DB, user register) (bool, error) {
 	return true, nil
 }
 
+func postMess(db *sql.DB,subject string, body string) (error){
+	query:= `INSERT INTO messages (id_user,subject,body) VALUES (?,?,?)`
+	_, err := db.Exec(query, body/*a completer */, subject, body);
+	if err != nil {
+		fmt.Println(err);
+		return err;
+	}
+	return nil;
+}
+
 func logUser(db *sql.DB, user login) (bool, error) {
 	query := `SELECT password FROM users WHERE email=(?)`
 
