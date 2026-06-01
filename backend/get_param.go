@@ -1,16 +1,17 @@
 package fonction_go
 
 import (
+	"fmt"
 	"net/http"
 )
 type login struct{
-	password_log	string
-	mail_log	string
+	password	string
+	mail		string
 }
 
 type register struct{
 	password	string
-	username		string
+	username	string
 	mail		string
 }
 type queryParams struct {
@@ -26,18 +27,20 @@ func extractPage(r *http.Request) string{
 
 func extractLog(r *http.Request) login{
 	log := login{
-		password_log: r.FormValue("Password_log"),
-		mail_log:	r.FormValue("Mail_log"),
+		password: r.FormValue("Password_log"),
+		mail:	r.FormValue("Mail_log"),
 	}
 	return log;
 }
 
 func extractReg(r *http.Request) register{
+	println("extraction...")
 	reg := register{
 		password: r.FormValue("Password"),
 		username:	r.FormValue("User"),
 		mail:	r.FormValue("Mail"),
 	}
+	fmt.Println(reg)
 	return reg;
 }
 
