@@ -5,13 +5,13 @@ import (
 	"net/http"
 )
 
-func defaultPage() {
+func DefaultPage() {
 	handler := http.StripPrefix("/static/", http.FileServer(http.Dir("static")))
 	http.Handle("/static/", handler)
 	http.HandleFunc("/", RenderTemplate)
 }
 
-func protected(w http.ResponseWriter, r *http.Request) {
+func Protected(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		er := http.StatusMethodNotAllowed
 		http.Error(w, "Invalid request method", er)
