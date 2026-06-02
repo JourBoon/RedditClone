@@ -22,6 +22,7 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		switch page {
 		case "log":
+			fmt.Println("passage dans log")
 			params_log := extractLog(r)
 			l, err := logUser(db, params_log)
 			if err != nil {
@@ -31,7 +32,6 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request) {
 			if l {
 				// Gestion de la session
 				params_log := extractLog(r)
-				fmt.Printf("test")
 
 				params_log.sessionToken = generateToken(32)
 				params_log.csrfToken = generateToken(32)

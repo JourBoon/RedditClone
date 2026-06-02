@@ -3,6 +3,7 @@ package fonction_go
 import (
 	"database/sql"
 	"fmt"
+	"strings"
 )
 
 func insertUser(db *sql.DB, user register) (bool, error) {
@@ -89,4 +90,51 @@ func userExiste(db *sql.DB, login login) (bool, error) {
 		return true, nil
 	}
 	return false,err;
+}
+
+func getMess(db *sql.DB) ([]mess, error) {
+	const postsQuery = `SELECT users.username, messages.subject, messages.body, messages.tag, messages.created_at FROM messages JOIN users ON messages.id_user=users.id`
+	rows, err := db.Query(postsQuery)
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+	defer rows.Close()
+
+	rowsData := []mess{}
+	for rows.Next() {
+		var username string
+		var subject string
+		var body string
+		var tagStr string
+		var tag []string
+		var created_at string
+		err = rows.Scan(&username, &subject, &body, &tagStr, &created_at)
+
+		if err != nil {
+			fmt.Println(err.Error())
+			continue
+		}
+
+		if tagStr != "" {
+			tag = strings.Split(tagStr, ",")
+		} else {
+			tag = []string{}
+		}
+
+		rowsData = append(rowsData, mess{
+			username:   username,
+			subject:    subject,
+			body:       body,
+			tag:        tag,
+			created_at: created_at,
+		})
+	}
+
+	if err := rows.Err(); err != nil {
+		fmt.Println(err)
+		return rowsData, err
+	}
+
+	return rowsData, nil
 }
