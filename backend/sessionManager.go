@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"errors"
 	"log"
+	"net/http"
 )
 
 var AuthError = errors.New("Unauthorized")
@@ -17,7 +18,6 @@ func generateToken(length int) string {
 	return base64.RawStdEncoding.EncodeToString(bytes)
 }
 
-/*
 func Authorize(r *http.Request) error {
 	params_log := extractLog(r)
 
@@ -38,4 +38,3 @@ func Authorize(r *http.Request) error {
 
 	return nil
 }
-*/
