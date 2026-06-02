@@ -38,3 +38,24 @@ func Authorize(r *http.Request) error {
 
 	return nil
 }
+
+func who(r *http.Request) (string,string){
+	var userId string;
+	var userName string;
+	query := `SELECT users.id,users.username FROM users JOIN session ON session.id_user=user.id WHERE session.sessionToken=(?);`
+	db, err := dbConnection()
+	if err != nil {
+		println("erreur dans l'ouverture de la DB")
+	}
+
+	cookie, err := r.Cookie("session_token")
+	if err != nil {
+		println("erreur dans l'extraction du cookie")
+	}
+
+	err = db.QueryRow(query, cookie.Value).Scan(&userId, &userName)
+	if err != nil {
+		println("erreur dans l'extraction du pseudo dans la db")
+	}
+	return userId,userName;
+}
