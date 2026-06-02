@@ -111,7 +111,7 @@ func DefaultRoutePages() {
 	http.HandleFunc("/createForum", createForum)
 }
 
-func protected(w http.ResponseWriter, r *http.Request) {
+func Protected(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		er := http.StatusMethodNotAllowed
 		http.Error(w, "Invalid request method", er)
