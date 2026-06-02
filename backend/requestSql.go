@@ -3,7 +3,6 @@ package fonction_go
 import (
 	"database/sql"
 	"fmt"
-	"text/scanner"
 )
 
 func insertUser(db *sql.DB, user register) (bool, error) {
