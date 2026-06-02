@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func RenderTemplate(w http.ResponseWriter, r *http.Request) {
+func RenderTemplate(w http.ResponseWriter, r *http.Request ) {
 	tmplPath := "login.html"
 	path := "static/auth/"
 	page := extractPage(r)
@@ -21,6 +21,7 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		switch page {
 		case "log":
+			println("passage dans case log")
 			params_log := extractLog(r)
 			l, err := logUser(db, params_log)
 			if err != nil {

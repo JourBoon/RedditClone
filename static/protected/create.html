@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <title>Créer un forum</title>
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="static/css/style.css">
 </head>
 
 <body>
@@ -21,7 +21,7 @@
 
     <button
       class="create-btn"
-      onclick="window.location.href='create.html'"
+      action="/create"
     >
       Créer
     </button>
@@ -32,11 +32,11 @@
 
     <div class="sidebar">
 
-      <button class="home-btn">
+      <button class="home-btn" action="/home">
         Accueil
       </button>
 
-      <button class="popular-btn">
+      <button class="popular-btn" action="/famous">
         Populaire
       </button>
 
