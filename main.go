@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	fonction_go.defaultPage()
+	fonction_go.DefaultRoutePages()
 
 	log.Println("Serveur lancé sur http://localhost:4040")
 	log.Fatal(http.ListenAndServe(":4040", nil))

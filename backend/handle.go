@@ -1,13 +1,32 @@
 package fonction_go
 
 import (
-	"fmt"
+	//"fmt"
 	"html/template"
 	"log"
+	//"log"
 	"net/http"
-	"time"
+	"path/filepath"
+	//"time"
 )
 
+func renderTemplateWithData(w http.ResponseWriter, tmpl string, data any) {
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+
+	path := filepath.Join("static", tmpl)
+
+	t, err := template.ParseFiles(path)
+	if err != nil {
+		http.Error(w, "template parse error: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	if err := t.Execute(w, data); err != nil {
+		http.Error(w, "template execute error: "+err.Error(), http.StatusInternalServerError)
+	}
+}
+
+/*
 func RenderTemplate(w http.ResponseWriter, r *http.Request) {
 	tmplPath := "login.html"
 	path := "static/auth/"
@@ -84,6 +103,7 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+*/
 
 func handleError(w http.ResponseWriter, message string, statusCode int, err error) {
 	http.Error(w, message, statusCode)
@@ -91,3 +111,5 @@ func handleError(w http.ResponseWriter, message string, statusCode int, err erro
 		log.Printf("%s: %v", message, err)
 	}
 }
+
+
