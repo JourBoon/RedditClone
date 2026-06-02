@@ -4,8 +4,10 @@ import (
 	"crypto/rand"
 	"encoding/base64"
 	"errors"
+	"fmt"
 	"log"
 	"net/http"
+	"time"
 )
 
 var AuthError = errors.New("Unauthorized")
@@ -59,4 +61,34 @@ func Authorize(r *http.Request) error {
 	}
 
 	return nil
+}
+
+func Logout(w http.ResponseWriter, r *http.Request) {
+	if err := Authorize(r); err != nil {
+		er := http.StatusUnauthorized
+		http.Error(w, "Unauthorized", er)
+		return 
+	}
+
+	http.SetCookie(w, &http.Cookie{
+		Name:     "session_token",
+		Value:    "",
+		Expires:  time.Now().Add(-time.Hour),
+		HttpOnly: true,
+	})
+
+	http.SetCookie(w, &http.Cookie{
+		Name:     "csrf_token",
+		Value:    "",
+		Expires:  time.Now().Add(-time.Hour),
+		HttpOnly: false,
+	})
+
+	params_log := extractLog(r)
+
+	params_log.sessionToken = ""
+	params_log.csrfToken = ""
+
+
+	fmt.Println("Logged is good ;)")
 }

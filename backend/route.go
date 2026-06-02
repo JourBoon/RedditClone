@@ -11,6 +11,7 @@ import (
 
 func Start(w http.ResponseWriter, r *http.Request) {
 	renderTemplateWithData(w, "index.html", nil)
+	Logout(w, r)
 }
 
 func Login(w http.ResponseWriter, r *http.Request) {
@@ -32,6 +33,30 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Gestion de la session
+	params_log := extractLog(r)
+	fmt.Printf("test")
+
+	params_log.sessionToken = generateToken(32)
+	params_log.csrfToken = generateToken(32)
+
+	http.SetCookie(w, &http.Cookie{
+		Name:     "session_token",
+		Value:    params_log.sessionToken,
+		Expires:  time.Now().Add(24 * time.Hour),
+		HttpOnly: true,
+	})
+
+	http.SetCookie(w, &http.Cookie{
+		Name:     "csrf_token",
+		Value:    params_log.csrfToken,
+		Expires:  time.Now().Add(24 * time.Hour),
+		HttpOnly: false,
+	})
+
+	addSessionToken(db, params_log)
+	addCsrfToken(db, params_log)
+
 	if r.Method == http.MethodPost {
 		switch page {
 		case "log":
@@ -42,30 +67,6 @@ func Home(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 			if l {
-				// Gestion de la session
-				params_log := extractLog(r)
-				fmt.Printf("test")
-
-				params_log.sessionToken = generateToken(32)
-				params_log.csrfToken = generateToken(32)
-
-				http.SetCookie(w, &http.Cookie{
-					Name:     "session_token",
-					Value:    params_log.sessionToken,
-					Expires:  time.Now().Add(24 * time.Hour),
-					HttpOnly: true,
-				})
-
-				http.SetCookie(w, &http.Cookie{
-					Name:     "csrf_token",
-					Value:    params_log.csrfToken,
-					Expires:  time.Now().Add(24 * time.Hour),
-					HttpOnly: false,
-				})
-
-				addSessionToken(db, params_log)
-				addCsrfToken(db, params_log)
-
 				path := "/protected/home.html"
 				renderTemplateWithData(w, path, nil)
 
