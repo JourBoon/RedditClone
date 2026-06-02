@@ -4,11 +4,9 @@ body {
 
 .app {
   display: flex;
-
-  padding-top: 60px;
-
-  height: calc(100vh - 60px);
+  height: 100vh;
 }
+
 .sidebar {
   width: 200px;
   background-color: white;
@@ -74,6 +72,13 @@ body {
   z-index: 1000;
 }
 
+.app {
+  display: flex;
+  height: 100vh;
+
+  padding-top: 53px;
+}
+
 .search-bar {
   position: absolute;
   left: 50%;
@@ -121,4 +126,85 @@ body {
 
   font-size: 16px;
   border: 2px solid black;
+}
+
+.forum-description {
+  height: 150px;
+  padding: 10px;
+
+  font-size: 16px;
+  border: 2px solid black;
+
+  resize: none;
+}
+
+.submit-btn {
+  padding: 12px;
+
+  background: black;
+  color: white;
+
+  border: none;
+  cursor: pointer;
+
+  font-size: 16px;
+}
+
+.submit-btn:hover {
+  opacity: 0.8;
+}
+
+.create-forum-box {
+  width: 500px;
+  padding: 30px;
+
+  border: 3px solid black;
+  background: white;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.create-title {
+  font-weight: normal;
+}
+
+.forum-input {
+  height: 40px;
+
+  padding: 10px;
+
+  font-size: 16px;
+
+  border: 2px solid black;
+}
+
+.forum-description {
+  height: 150px;
+
+  padding: 10px;
+
+  font-size: 16px;
+
+  border: 2px solid black;
+
+  resize: none;
+}
+
+.submit-btn {
+  padding: 12px;
+
+  background: black;
+  color: white;
+
+  border: none;
+
+  cursor: pointer;
+
+  font-size: 16px;
+}
+
+.submit-btn:hover {
+  opacity: 0.8;
 }
