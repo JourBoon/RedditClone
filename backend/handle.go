@@ -1,6 +1,7 @@
 package fonction_go
 
 import (
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -30,6 +31,7 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request) {
 			if l {
 				// Gestion de la session
 				params_log := extractLog(r)
+				fmt.Printf("test")
 
 				params_log.sessionToken = generateToken(32)
 				params_log.csrfToken = generateToken(32)
