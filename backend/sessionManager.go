@@ -18,11 +18,33 @@ func generateToken(length int) string {
 	return base64.RawStdEncoding.EncodeToString(bytes)
 }
 
+func who(r *http.Request) (string,string){
+	var userId string;
+	var userName string;
+	query := `SELECT users.id,users.username FROM users JOIN session ON session.id_user=user.id WHERE session.sessionToken=(?);`
+	db, err := dbConnection()
+	if err != nil {
+		println("erreur dans l'ouverture de la DB")
+	}
+
+	cookie, err := r.Cookie("session_token")
+	if err != nil {
+		println("erreur dans l'extraction du cookie")
+	}
+
+	err = db.QueryRow(query, cookie.Value).Scan(&userId, &userName)
+	if err != nil {
+		println("erreur dans l'extraction du pseudo dans la db")
+	}
+	return userId,userName;
+}
+
 func Authorize(r *http.Request) error {
 	params_log := extractLog(r)
-
-	user, ok := users[params_log.username]
-	if !ok {
+	db, err := dbConnection()
+	isUser, err := userExiste(db, params_log)
+	
+	if isUser == false || err != nil {
 		return AuthError
 	}
 

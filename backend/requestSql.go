@@ -3,6 +3,7 @@ package fonction_go
 import (
 	"database/sql"
 	"fmt"
+	"text/scanner"
 )
 
 func insertUser(db *sql.DB, user register) (bool, error) {
@@ -73,4 +74,20 @@ func addCsrfToken(db *sql.DB, login login) (bool, error) {
 
 	fmt.Println("csrf Token add on the db ;)")
 	return true, nil
+}
+
+func userExiste(db *sql.DB, login login) (bool, error) {
+	query := `SELECT username FROM users WHERE username=(?)`
+	var username string = "";
+	err := db.QueryRow(query, login.mail).Scan(&username)
+	if err != nil {
+		fmt.Println(err)
+		return false, err
+	}
+
+	if (username!=""){
+		fmt.Println("User return with sucess ;)")
+		return true, nil
+	}
+	return false,err;
 }
