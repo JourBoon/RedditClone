@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Créer un forum</title>
+  <title>Créer un post</title>
 
   <link rel="stylesheet" href="static/css/style.css">
 </head>
@@ -47,18 +47,23 @@
       <div class="create-forum-box">
 
         <h2 class="create-title">
-          Créer un forum
+          Créer un post
         </h2>
 
         <input
           type="text"
           class="forum-input"
-          placeholder="Titre du forum"
+          placeholder="Titre du post"
         >
-
+        <input
+          type="text"
+          class="tag-input"
+          placeholder="Tag"
+        >
+        <button class="popular-btn" onclick="addElement()">+Tag</button>
         <textarea
           class="forum-description"
-          placeholder="Description du forum"
+          placeholder="Description du post"
         ></textarea>
 
         <button
@@ -75,5 +80,15 @@
   </div>
 
 </body>
+<script>
+  function addElement() {
+    const newDiv = document.createElement("input");
+    newDiv.setAttribute("type","text")
+    newDiv.setAttribute("class","tag-input")
+    newDiv.setAttribute("placeholder","Tag")
+    const currentDiv = document.getElementById("tag-input");
+    document.body.insertBefore(newDiv, currentDiv);
+  };
+</script>
 
 </html>
