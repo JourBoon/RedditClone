@@ -20,6 +20,7 @@ type register struct {
 
 type message struct{
 	subject		string
+	tags			[]string
 	body 		string
 }
 
@@ -57,8 +58,10 @@ func extractLog(r *http.Request) login {
 }
 
 func extractMess(r *http.Request) message{
+
 	mess := message{
 		subject: r.FormValue("subject"),
+		tags:	r.PostForm["tag"],
 		body:	r.FormValue("body"),
 	}
 	return mess;
