@@ -3,7 +3,6 @@ package fonction_go
 import (
 	"database/sql"
 	"fmt"
-	"strings"
 )
 
 func insertUser(db *sql.DB, user register) (error) {
@@ -23,7 +22,7 @@ func insertUser(db *sql.DB, user register) (error) {
 
 func postMess(db *sql.DB,subject string,tag []string ,body string) (error){
 	query:= `INSERT INTO messages (id_user,subject,tag,body) VALUES (?,?,?,?)`
-	_, err := db.Exec(query, tag, subject, body);
+	_, err := db.Exec(query, string(tabStringToJson(tag)), subject, body);
 	if err != nil {
 		fmt.Println(err);
 		return err;
@@ -133,11 +132,7 @@ func getMess(db *sql.DB) ([]mess, error) {
 			continue
 		}
 
-		if tagStr != "" {
-			tag = strings.Split(tagStr, ",")
-		} else {
-			tag = []string{}
-		}
+		tag = jsonToTabString([]byte(tagStr))
 
 		rowsData = append(rowsData, mess{
 			username:   username,
