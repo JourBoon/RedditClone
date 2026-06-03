@@ -61,6 +61,23 @@ func addSessionToken(db *sql.DB, login login) (bool, error) {
 	return true, nil
 }
 
+func returnSessionToken(db *sql.DB, user login) (bool, error) {
+	query := `SELECT session.sessionToken FROM session INNER JOIN users ON session.id_user = users.id WHERE users.email=(?)`
+
+	var sessionToken string
+	err := db.QueryRow(query, user.mail).Scan(&sessionToken)
+	if err != nil {
+		return false, err
+	}
+
+	if sessionToken != user.sessionToken {
+		fmt.Println("Bad token session")
+		return false, nil
+	}
+
+	return true, nil
+}
+
 func addCsrfToken(db *sql.DB, login login) (bool, error) {
 	query := `INSERT INTO session (id_user, csrfToken) SELECT id, ? FROM users WHERE email = ? ON CONFLICT(id_user) DO UPDATE SET csrfToken = excluded.csrfToken;`
 	// Requête SQL suggérée par ChatGpt ;)

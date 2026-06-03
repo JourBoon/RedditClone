@@ -9,9 +9,47 @@ import (
 	"time"
 )
 
+func InitSession(w http.ResponseWriter, r *http.Request) {
+	params_log := extractLog(r)
+
+	db, err := dbConnection()
+	if err != nil {
+		handleError(w, "Erreur DB", http.StatusInternalServerError, err)
+		return
+	}
+
+	sessionToken, err := returnSessionToken(db, params_log)
+	if sessionToken == true {
+		params_log.sessionToken = generateToken(32)
+		params_log.csrfToken = generateToken(32)
+
+		http.SetCookie(w, &http.Cookie{
+			Name:     "username",
+			Value:    params_log.username,
+			Expires:  time.Now().Add(24 * time.Hour),
+		})
+
+		http.SetCookie(w, &http.Cookie{
+			Name:     "session_token",
+			Value:    params_log.sessionToken,
+			Expires:  time.Now().Add(24 * time.Hour),
+			HttpOnly: true,
+		})
+
+		http.SetCookie(w, &http.Cookie{
+			Name:     "csrf_token",
+			Value:    params_log.csrfToken,
+			Expires:  time.Now().Add(24 * time.Hour),
+			HttpOnly: false,
+		})
+
+		addSessionToken(db, params_log)
+		addCsrfToken(db, params_log)
+		}
+}
+
 func Start(w http.ResponseWriter, r *http.Request) {
 	renderTemplateWithData(w, "index.html", nil)
-	Logout(w, r)
 }
 
 func Login(w http.ResponseWriter, r *http.Request) {
@@ -24,38 +62,21 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	renderTemplateWithData(w, path, nil)
 }
 
+func LogoutBtn(w http.ResponseWriter,r *http.Request) {
+	Logout(w, r)
+	path := "index.html"
+	renderTemplateWithData(w, path, nil)
+}
+
 func Home(w http.ResponseWriter, r *http.Request) {
 	page := extractPage(r)
+	InitSession(w, r)
 
 	db, err := dbConnection()
 	if err != nil {
 		handleError(w, "Erreur DB", http.StatusInternalServerError, err)
 		return
 	}
-
-	// Gestion de la session
-	params_log := extractLog(r)
-	fmt.Printf("test")
-
-	params_log.sessionToken = generateToken(32)
-	params_log.csrfToken = generateToken(32)
-
-	http.SetCookie(w, &http.Cookie{
-		Name:     "session_token",
-		Value:    params_log.sessionToken,
-		Expires:  time.Now().Add(24 * time.Hour),
-		HttpOnly: true,
-	})
-
-	http.SetCookie(w, &http.Cookie{
-		Name:     "csrf_token",
-		Value:    params_log.csrfToken,
-		Expires:  time.Now().Add(24 * time.Hour),
-		HttpOnly: false,
-	})
-
-	addSessionToken(db, params_log)
-	addCsrfToken(db, params_log)
 
 	if r.Method == http.MethodPost {
 		switch page {
@@ -110,6 +131,7 @@ func DefaultRoutePages() {
 	http.HandleFunc("/register", Register)
 	http.HandleFunc("/home", Home)
 	http.HandleFunc("/createForum", createForum)
+	http.HandleFunc("/LogoutBtn", LogoutBtn)
 }
 
 func Protected(w http.ResponseWriter, r *http.Request) {
