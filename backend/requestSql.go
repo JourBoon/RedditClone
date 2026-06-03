@@ -20,9 +20,9 @@ func insertUser(db *sql.DB, user register) (error) {
 	return err
 }
 
-func postMess(db *sql.DB,subject string,tag []string ,body string) (error){
+func postMess(db *sql.DB,id_user string,subject string,tag []string ,body string) (error){
 	query:= `INSERT INTO messages (id_user,subject,tag,body) VALUES (?,?,?,?)`
-	_, err := db.Exec(query, string(tabStringToJson(tag)), subject, body);
+	_, err := db.Exec(query,id_user,string(tabStringToJson(tag)), subject, body);
 	if err != nil {
 		fmt.Println(err);
 		return err;
@@ -150,4 +150,15 @@ func getMess(db *sql.DB) ([]mess, error) {
 	}
 
 	return rowsData, nil
+}
+
+
+func getIdUserByUsername(db *sql.DB,userName string) string{
+	query := `SELECT id FROM users WHERE username=(?)`
+	var id string
+	err := db.QueryRow(query, userName).Scan(&id)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return id
 }
