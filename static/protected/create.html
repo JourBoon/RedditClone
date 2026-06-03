@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <title>Créer un post</title>
 
-  <link rel="stylesheet" href="static/css/style.css">
+  <link rel="stylesheet" href="static/css/create.css">
 </head>
 
 <body>
@@ -50,6 +50,7 @@
           Créer un post
         </h2>
         <button type="button" class="popular-btn" onclick="addElement()">+Tag</button>
+        <button type="button" class="popular-btn" onclick="suppElement()">-Tag</button>
         <form class="form" method="POST" action="/HomePage">
           <input
             type="text"
@@ -100,6 +101,16 @@
       form.appendChild(newInput);
     }
   };
+
+  function suppElement() {
+    const tagInputs = document.querySelectorAll("input.tag-input");
+    if (tagInputs.length === 0) {
+      return;
+    }
+
+    const lastTag = tagInputs[tagInputs.length - 1];
+    lastTag.remove();
+  }
 </script>
 
 </html>

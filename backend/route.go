@@ -119,7 +119,8 @@ func createForum(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	params_mess := extractMess(r);
-	postMess(db,params_mess.subject,params_mess.tags,params_mess.body);
+	user_id := getIdUserByUsername(db,extractLog(r).username)
+	postMess(db,user_id,params_mess.subject,params_mess.tags,params_mess.body);
 	path := "/protected/create.html"
 	renderTemplateWithData(w, path, nil)
 }
