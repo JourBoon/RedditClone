@@ -18,31 +18,34 @@ func InitSession(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	params_log.sessionToken = generateToken(32)
-	params_log.csrfToken = generateToken(32)
+	sessionToken, err := returnSessionToken(db, params_log)
+	if sessionToken == true {
+		params_log.sessionToken = generateToken(32)
+		params_log.csrfToken = generateToken(32)
 
-	http.SetCookie(w, &http.Cookie{
-		Name:     "username",
-		Value:    params_log.username,
-		Expires:  time.Now().Add(24 * time.Hour),
-	})
+		http.SetCookie(w, &http.Cookie{
+			Name:     "username",
+			Value:    params_log.username,
+			Expires:  time.Now().Add(24 * time.Hour),
+		})
 
-	http.SetCookie(w, &http.Cookie{
-		Name:     "session_token",
-		Value:    params_log.sessionToken,
-		Expires:  time.Now().Add(24 * time.Hour),
-		HttpOnly: true,
-	})
+		http.SetCookie(w, &http.Cookie{
+			Name:     "session_token",
+			Value:    params_log.sessionToken,
+			Expires:  time.Now().Add(24 * time.Hour),
+			HttpOnly: true,
+		})
 
-	http.SetCookie(w, &http.Cookie{
-		Name:     "csrf_token",
-		Value:    params_log.csrfToken,
-		Expires:  time.Now().Add(24 * time.Hour),
-		HttpOnly: false,
-	})
+		http.SetCookie(w, &http.Cookie{
+			Name:     "csrf_token",
+			Value:    params_log.csrfToken,
+			Expires:  time.Now().Add(24 * time.Hour),
+			HttpOnly: false,
+		})
 
-	addSessionToken(db, params_log)
-	addCsrfToken(db, params_log)
+		addSessionToken(db, params_log)
+		addCsrfToken(db, params_log)
+		}
 }
 
 func Start(w http.ResponseWriter, r *http.Request) {
@@ -50,7 +53,6 @@ func Start(w http.ResponseWriter, r *http.Request) {
 }
 
 func Login(w http.ResponseWriter, r *http.Request) {
-	InitSession(w, r)
 	path := "/auth/login.html"
 	renderTemplateWithData(w, path, nil)
 }
@@ -78,11 +80,7 @@ func LogoutBtn(w http.ResponseWriter,r *http.Request) {
 }
 
 func Home(w http.ResponseWriter, r *http.Request) {
-<<<<<<< HEAD
-	page := extractPage(r)
-=======
 	InitSession(w, r)
->>>>>>> e81ce8bd82086e2530bf267ffb66fae656245fac
 
 	db, err := dbConnection()
 	if err != nil {
@@ -101,42 +99,17 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			path := "/protected/home.html"
 			renderTemplateWithData(w, path, nil)
 			if err != nil {
-<<<<<<< HEAD
-				handleError(w, "Erreur lors de la connexion", http.StatusInternalServerError, err)
-				return
-			}
-			if l {
-				if err := Authorize(r); err != nil {
-					er := http.StatusUnauthorized
-					http.Error(w, "Unauthorized", er)
-				return 
-			} else {
-				path := "/protected/home.html"
-				renderTemplateWithData(w, path, nil)
-
-				if err != nil {
-					handleError(w, "Erreur lors de l'insertion des token dans la db", http.StatusInternalServerError, err)
-					return
-				}
-			}
-		}
-
-		case "message":
-			params_mess := extractMess(r);
-			postMess(db,params_mess.subject,params_mess.body);
-		default:
-			params_reg := extractReg(r)
-			_, err := insertUser(db, params_reg)
-			if err != nil {
-				handleError(w, "Erreur lors de l'insertion dans la database", http.StatusInternalServerError, err)
-=======
 				handleError(w, "Erreur lors de l'insertion des token dans la db", http.StatusInternalServerError, err)
->>>>>>> e81ce8bd82086e2530bf267ffb66fae656245fac
 				return
 			}
 		}
 	}
 	defer db.Close()
+}
+
+func HomePage(w http.ResponseWriter, r *http.Request) {
+	path := "/protected/home.html"
+	renderTemplateWithData(w, path, nil)
 }
 
 func createForum(w http.ResponseWriter, r *http.Request) {
@@ -166,6 +139,7 @@ func DefaultRoutePages() {
 	http.HandleFunc("/home", Home)
 	http.HandleFunc("/createForum", createForum)
 	http.HandleFunc("/LogoutBtn", LogoutBtn)
+	http.HandleFunc("/HomePage", HomePage)
 }
 
 func Protected(w http.ResponseWriter, r *http.Request) {
