@@ -44,35 +44,38 @@
 
     <div class="content">
 
-      <div class="create-forum-box">
+      <div id="post" class="create-forum-box">
 
         <h2 class="create-title">
           Créer un post
         </h2>
+        <button type="button" class="popular-btn" onclick="addElement()">+Tag</button>
+        <form class="form" method="POST" action="/home.html">
+          <input
+            type="text"
+            class="forum-input"
+            name="subject"
+            placeholder="Titre du post"
+          >
+          <input
+            type="text"
+            class="tag-input"
+            name="tag[]"
+            placeholder="Tag"
+          >          
+          <textarea
+            class="forum-description"
+            name="body"
+            placeholder="Description du post"
+          ></textarea>
 
-        <input
-          type="text"
-          class="forum-input"
-          placeholder="Titre du post"
-        >
-        <input
-          type="text"
-          class="tag-input"
-          placeholder="Tag"
-        >
-        <button class="popular-btn" onclick="addElement()">+Tag</button>
-        <textarea
-          class="forum-description"
-          placeholder="Description du post"
-        ></textarea>
-
-        <button
-          type="button"
-          class="submit-btn"
-        >
-          Publier
-        </button>
-
+          <button
+            type="submit"
+            class="submit-btn"
+          >
+            Publier
+          </button>
+        </form>
       </div>
 
     </div>
@@ -82,12 +85,20 @@
 </body>
 <script>
   function addElement() {
-    const newDiv = document.createElement("input");
-    newDiv.setAttribute("type","text")
-    newDiv.setAttribute("class","tag-input")
-    newDiv.setAttribute("placeholder","Tag")
-    const currentDiv = document.getElementById("tag-input");
-    document.body.insertBefore(newDiv, currentDiv);
+    const newInput = document.createElement("input");
+    newInput.setAttribute("type", "text");
+    newInput.setAttribute("class", "tag-input");
+    newInput.setAttribute("placeholder", "Tag");
+    newInput.setAttribute("name", "tag[]");
+
+    const form = document.querySelector("form.form");
+    const referenceNode = form.querySelector("textarea");
+
+    if (referenceNode) {
+      form.insertBefore(newInput, referenceNode);
+    } else {
+      form.appendChild(newInput);
+    }
   };
 </script>
 

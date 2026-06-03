@@ -58,6 +58,17 @@ func Login(w http.ResponseWriter, r *http.Request) {
 }
 
 func Register(w http.ResponseWriter, r *http.Request) {
+	db, err := dbConnection()
+	if err != nil {
+		handleError(w, "Erreur DB", http.StatusInternalServerError, err)
+		return
+	}
+	params_reg := extractReg(r)
+	erro := insertUser(db, params_reg)
+	if erro != nil {
+		handleError(w, "Erreur lors de l'insertion dans la database", http.StatusInternalServerError, err)
+		return
+	}
 	path := "/auth/register.html"
 	renderTemplateWithData(w, path, nil)
 }
@@ -69,7 +80,6 @@ func LogoutBtn(w http.ResponseWriter,r *http.Request) {
 }
 
 func Home(w http.ResponseWriter, r *http.Request) {
-	page := extractPage(r)
 	InitSession(w, r)
 
 	db, err := dbConnection()
@@ -79,32 +89,17 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if r.Method == http.MethodPost {
-		switch page {
-		case "log":
-			params_log := extractLog(r)
-			l, err := logUser(db, params_log)
+		params_log := extractLog(r)
+		l, err := logUser(db, params_log)
+		if err != nil {
+			handleError(w, "Erreur lors de la connexion", http.StatusInternalServerError, err)
+			return
+		}
+		if l {
+			path := "/protected/home.html"
+			renderTemplateWithData(w, path, nil)
 			if err != nil {
-				handleError(w, "Erreur lors de la connexion", http.StatusInternalServerError, err)
-				return
-			}
-			if l {
-				path := "/protected/home.html"
-				renderTemplateWithData(w, path, nil)
-
-				if err != nil {
-					handleError(w, "Erreur lors de l'insertion des token dans la db", http.StatusInternalServerError, err)
-					return
-				}
-			}
-
-		case "message":
-			params_mess := extractMess(r);
-			postMess(db,params_mess.subject,params_mess.body);
-		default:
-			params_reg := extractReg(r)
-			_, err := insertUser(db, params_reg)
-			if err != nil {
-				handleError(w, "Erreur lors de l'insertion dans la database", http.StatusInternalServerError, err)
+				handleError(w, "Erreur lors de l'insertion des token dans la db", http.StatusInternalServerError, err)
 				return
 			}
 		}
@@ -113,6 +108,13 @@ func Home(w http.ResponseWriter, r *http.Request) {
 }
 
 func createForum(w http.ResponseWriter, r *http.Request) {
+	db, err := dbConnection()
+	if err != nil {
+		handleError(w, "Erreur DB", http.StatusInternalServerError, err)
+		return
+	}
+	params_mess := extractMess(r);
+	postMess(db,params_mess.subject,params_mess.tags,params_mess.body);
 	path := "/protected/create.html"
 	renderTemplateWithData(w, path, nil)
 }

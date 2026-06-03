@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func insertUser(db *sql.DB, user register) (bool, error) {
+func insertUser(db *sql.DB, user register) (error) {
 	query := `INSERT INTO users (username, email, password) VALUES (?, ?, ?)`
 	println("insertion")
 
@@ -14,16 +14,16 @@ func insertUser(db *sql.DB, user register) (bool, error) {
 	_, err := db.Exec(query, user.username, user.mail, passwd)
 	if err != nil {
 		fmt.Println(err)
-		return false, err
+		return err
 	}
 
 	fmt.Println("User add on the db ;)")
-	return true, nil
+	return err
 }
 
-func postMess(db *sql.DB,subject string, body string) (error){
-	query:= `INSERT INTO messages (id_user,subject,body) VALUES (?,?,?)`
-	_, err := db.Exec(query, body/*a completer */, subject, body);
+func postMess(db *sql.DB,subject string,tag []string ,body string) (error){
+	query:= `INSERT INTO messages (id_user,subject,tag,body) VALUES (?,?,?,?)`
+	_, err := db.Exec(query, tag, subject, body);
 	if err != nil {
 		fmt.Println(err);
 		return err;
