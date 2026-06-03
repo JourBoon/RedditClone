@@ -107,6 +107,11 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	defer db.Close()
 }
 
+func HomePage(w http.ResponseWriter, r *http.Request) {
+	path := "/protected/home.html"
+	renderTemplateWithData(w, path, nil)
+}
+
 func createForum(w http.ResponseWriter, r *http.Request) {
 	db, err := dbConnection()
 	if err != nil {
@@ -134,6 +139,7 @@ func DefaultRoutePages() {
 	http.HandleFunc("/home", Home)
 	http.HandleFunc("/createForum", createForum)
 	http.HandleFunc("/LogoutBtn", LogoutBtn)
+	http.HandleFunc("/HomePage", HomePage)
 }
 
 func Protected(w http.ResponseWriter, r *http.Request) {
