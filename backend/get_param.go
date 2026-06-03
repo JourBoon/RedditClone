@@ -9,7 +9,7 @@ type login struct {
 	mail         string
 	username	string
 	sessionToken string
-	csrfToken    string
+	CsrfToken    string
 }
 
 type register struct {
@@ -52,7 +52,7 @@ func extractLog(r *http.Request) login {
 		mail:         r.FormValue("mail"),
 		username: 	  username,
 		sessionToken: "",
-		csrfToken:    "",
+		CsrfToken:    "",
 	}
 	return log;
 }

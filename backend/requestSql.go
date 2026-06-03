@@ -61,28 +61,35 @@ func addSessionToken(db *sql.DB, login login) (bool, error) {
 	return true, nil
 }
 
-func returnSessionToken(db *sql.DB, user login) (bool, error) {
+func returnSessionToken(db *sql.DB, user login) (string, error) {
 	query := `SELECT session.sessionToken FROM session INNER JOIN users ON session.id_user = users.id WHERE users.email=(?)`
 
 	var sessionToken string
 	err := db.QueryRow(query, user.mail).Scan(&sessionToken)
 	if err != nil {
-		return false, err
+		fmt.Println("Error return session token")
 	}
 
-	if sessionToken != user.sessionToken {
-		fmt.Println("Bad token session")
-		return false, nil
+	return sessionToken, nil
+}
+
+func returnCsrfToken(db *sql.DB, user login) (string, error) {
+	query := `SELECT session.csrfToken FROM session INNER JOIN users ON session.id_user = users.id WHERE users.email=(?)`
+
+	var csrfToken string
+	err := db.QueryRow(query, user.mail).Scan(&csrfToken)
+	if err != nil {
+		fmt.Println("Error return csrf token")
 	}
 
-	return true, nil
+	return csrfToken, nil
 }
 
 func addCsrfToken(db *sql.DB, login login) (bool, error) {
 	query := `INSERT INTO session (id_user, csrfToken) SELECT id, ? FROM users WHERE email = ? ON CONFLICT(id_user) DO UPDATE SET csrfToken = excluded.csrfToken;`
 	// Requête SQL suggérée par ChatGpt ;)
 
-	_, err := db.Exec(query, login.csrfToken, login.mail)
+	_, err := db.Exec(query, login.CsrfToken, login.mail)
 	if err != nil {
 		fmt.Println(err)
 		return false, err
@@ -92,20 +99,14 @@ func addCsrfToken(db *sql.DB, login login) (bool, error) {
 	return true, nil
 }
 
-func userExiste(db *sql.DB, login login) (bool, error) {
-	query := `SELECT username FROM users WHERE username=(?)`
+func returnUsername(db *sql.DB, sessionToken string) (string, error) {
+	query := `SELECT users.username FROM users INNER JOIN session ON session.id_user = users.id WHERE session.sessionToken=(?)`
 	var username string = "";
-	err := db.QueryRow(query, login.mail).Scan(&username)
+	err := db.QueryRow(query, sessionToken).Scan(&username)
 	if err != nil {
 		fmt.Println(err)
-		return false, err
 	}
-
-	if (username!=""){
-		fmt.Println("User return with sucess ;)")
-		return true, nil
-	}
-	return false,err;
+	return username,err;
 }
 
 func getMess(db *sql.DB) ([]mess, error) {

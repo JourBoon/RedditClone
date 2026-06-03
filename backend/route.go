@@ -6,47 +6,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
-	"time"
 )
-
-func InitSession(w http.ResponseWriter, r *http.Request) {
-	params_log := extractLog(r)
-
-	db, err := dbConnection()
-	if err != nil {
-		handleError(w, "Erreur DB", http.StatusInternalServerError, err)
-		return
-	}
-
-	sessionToken, err := returnSessionToken(db, params_log)
-	if sessionToken == true {
-		params_log.sessionToken = generateToken(32)
-		params_log.csrfToken = generateToken(32)
-
-		http.SetCookie(w, &http.Cookie{
-			Name:     "username",
-			Value:    params_log.username,
-			Expires:  time.Now().Add(24 * time.Hour),
-		})
-
-		http.SetCookie(w, &http.Cookie{
-			Name:     "session_token",
-			Value:    params_log.sessionToken,
-			Expires:  time.Now().Add(24 * time.Hour),
-			HttpOnly: true,
-		})
-
-		http.SetCookie(w, &http.Cookie{
-			Name:     "csrf_token",
-			Value:    params_log.csrfToken,
-			Expires:  time.Now().Add(24 * time.Hour),
-			HttpOnly: false,
-		})
-
-		addSessionToken(db, params_log)
-		addCsrfToken(db, params_log)
-		}
-}
 
 func Start(w http.ResponseWriter, r *http.Request) {
 	renderTemplateWithData(w, "index.html", nil)
@@ -74,9 +34,9 @@ func Register(w http.ResponseWriter, r *http.Request) {
 }
 
 func LogoutBtn(w http.ResponseWriter,r *http.Request) {
-	Logout(w, r)
 	path := "index.html"
 	renderTemplateWithData(w, path, nil)
+	Logout(w, r)
 }
 
 func Home(w http.ResponseWriter, r *http.Request) {
@@ -96,12 +56,15 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		if l {
-			path := "/protected/home.html"
-			renderTemplateWithData(w, path, nil)
-			if err != nil {
-				handleError(w, "Erreur lors de l'insertion des token dans la db", http.StatusInternalServerError, err)
-				return
+			if Authorize(r) != AuthError {
+				path := "/protected/home.html"
+				renderTemplateWithData(w, path, nil)
+				if err != nil {
+					handleError(w, "Erreur lors de l'insertion des token dans la db", http.StatusInternalServerError, err)
+					return
+				}
 			}
+			
 		}
 	}
 	defer db.Close()
@@ -124,7 +87,7 @@ func createForum(w http.ResponseWriter, r *http.Request) {
 	renderTemplateWithData(w, path, nil)
 }
 
-func DefaultRoutePages() {
+func RoutePages() {
 	dir, err := os.Getwd()
 	if err != nil {
 		log.Fatal(err)
