@@ -33,20 +33,20 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	renderTemplateWithData(w, path, nil)
 }
 
-func LogoutBtn(w http.ResponseWriter,r *http.Request) {
+func LogoutBtn(w http.ResponseWriter, r *http.Request) {
 	path := "index.html"
 	renderTemplateWithData(w, path, nil)
 	Logout(w, r)
 }
 
 func Home(w http.ResponseWriter, r *http.Request) {
-	InitSession(w, r)
 
 	db, err := dbConnection()
 	if err != nil {
 		handleError(w, "Erreur DB", http.StatusInternalServerError, err)
 		return
 	}
+	defer db.Close()
 
 	if r.Method == http.MethodPost {
 		params_log := extractLog(r)
@@ -56,18 +56,15 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		if l {
-			if Authorize(r) != AuthError {
-				path := "/protected/home.html"
-				renderTemplateWithData(w, path, nil)
-				if err != nil {
-					handleError(w, "Erreur lors de l'insertion des token dans la db", http.StatusInternalServerError, err)
-					return
-				}
-			}
-			
+			InitStartSession(w, r)
+			path := "/protected/home.html"
+			renderTemplateWithData(w, path, nil)
+			return
 		}
 	}
-	defer db.Close()
+
+	path := "/auth/login.html"
+	renderTemplateWithData(w, path, nil)
 }
 
 func HomePage(w http.ResponseWriter, r *http.Request) {
@@ -81,9 +78,17 @@ func createForum(w http.ResponseWriter, r *http.Request) {
 		handleError(w, "Erreur DB", http.StatusInternalServerError, err)
 		return
 	}
-	params_mess := extractMess(r);
-	user_id := getIdUserByUsername(db,extractLog(r).username)
-	postMess(db,user_id,params_mess.subject,params_mess.tags,params_mess.body);
+	defer db.Close()
+
+	username, err := getUsernameFromSessionCookie(r)
+	if err != nil {
+		handleError(w, "Utilisateur non authentifié", http.StatusUnauthorized, err)
+		return
+	}
+
+	params_mess := extractMess(r)
+	user_id := getIdUserByUsername(db, username)
+	postMess(db, user_id, params_mess.subject, params_mess.tags, params_mess.body)
 	path := "/protected/create.html"
 	renderTemplateWithData(w, path, nil)
 }
@@ -94,7 +99,7 @@ func RoutePages() {
 		log.Fatal(err)
 	}
 
-	publicPath := filepath.Join(dir, "static")	
+	publicPath := filepath.Join(dir, "static")
 	fs := http.FileServer(http.Dir(publicPath))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	http.HandleFunc("/", Start)
@@ -104,6 +109,21 @@ func RoutePages() {
 	http.HandleFunc("/createForum", createForum)
 	http.HandleFunc("/LogoutBtn", LogoutBtn)
 	http.HandleFunc("/HomePage", HomePage)
+}
+
+func getUsernameFromSessionCookie(r *http.Request) (string, error) {
+	st, err := r.Cookie("session_token")
+	if err != nil {
+		return "", err
+	}
+
+	db, err := dbConnection()
+	if err != nil {
+		return "", err
+	}
+	defer db.Close()
+
+	return returnUsername(db, st.Value)
 }
 
 func Protected(w http.ResponseWriter, r *http.Request) {
@@ -124,12 +144,15 @@ func Protected(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 
-	publicPath := filepath.Join(dir, "static")	
+	publicPath := filepath.Join(dir, "static")
 	fs := http.FileServer(http.Dir(publicPath))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	http.HandleFunc("/home", Home)
 
-	parms_log := extractLog(r);
-	username := parms_log.username
+	username, err := getUsernameFromSessionCookie(r)
+	if err != nil {
+		fmt.Println("Unable to resolve username from session cookie")
+		return
+	}
 	fmt.Printf("CSRF validate ;) Welcome to the forum %s", username)
 }
