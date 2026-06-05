@@ -22,6 +22,7 @@ func insertUser(db *sql.DB, user register) (error) {
 
 func postMess(db *sql.DB,id_user string,subject string,tag []string ,body string) (error){
 	query:= `INSERT INTO messages (id_user,subject,tag,body) VALUES (?,?,?,?)`
+	println(query,id_user,string(tabStringToJson(tag)), subject, body);
 	_, err := db.Exec(query,id_user,string(tabStringToJson(tag)), subject, body);
 	if err != nil {
 		fmt.Println(err);

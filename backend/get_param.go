@@ -46,7 +46,7 @@ func extractLog(r *http.Request) login {
 	if err != nil {
 		print("Erreur lors de la récupération du username")
 	}
-
+	println("extract",username,r.FormValue("mail"))
 	log := login{
 		password:     r.FormValue("password"),
 		mail:         r.FormValue("mail"),

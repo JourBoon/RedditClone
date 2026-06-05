@@ -28,19 +28,22 @@ func InitStartSession(w http.ResponseWriter, r *http.Request) {
 		handleError(w, "Erreur DB", http.StatusInternalServerError, err)
 		return
 	}
+	defer db.Close()
 
 	params_log.sessionToken = generateToken(32)
 	//params_log.CsrfToken = generateToken(32)
-
+	println("InitStart:")
 	http.SetCookie(w, &http.Cookie{
-		Name:     "username",
-		Value:    params_log.username,
-		Expires:  time.Now().Add(24 * time.Hour),
+		Name:    "username",
+		Value:   params_log.username,
+		Path:    "/",
+		Expires: time.Now().Add(24 * time.Hour),
 	})
 
 	http.SetCookie(w, &http.Cookie{
 		Name:     "session_token",
 		Value:    params_log.sessionToken,
+		Path:     "/",
 		Expires:  time.Now().Add(24 * time.Hour),
 		HttpOnly: true,
 	})
@@ -62,30 +65,38 @@ func InitSession(w http.ResponseWriter, r *http.Request) {
 	params_log := extractLog(r)
 	st, err := r.Cookie("session_token")
 
+	if err != nil {
+		println("pas de cookie")
+		println(err)
+		return
+	}
 	db, err := dbConnection()
 	if err != nil {
 		handleError(w, "Erreur DB", http.StatusInternalServerError, err)
 		return
 	}
+	defer db.Close()
 
 	sessionToken, err := returnSessionToken(db, params_log)
 
 	fmt.Println("Session Token :", sessionToken)
 	fmt.Println("Session Token en cookies", st.Value)
-
+	println("Init:", params_log.username)
 	if sessionToken != st.Value {
 		params_log.sessionToken = generateToken(32)
 		//params_log.CsrfToken = generateToken(32)
 
 		http.SetCookie(w, &http.Cookie{
-			Name:     "username",
-			Value:    params_log.username,
-			Expires:  time.Now().Add(24 * time.Hour),
+			Name:    "username",
+			Value:   params_log.username,
+			Path:    "/",
+			Expires: time.Now().Add(24 * time.Hour),
 		})
 
 		http.SetCookie(w, &http.Cookie{
 			Name:     "session_token",
 			Value:    params_log.sessionToken,
+			Path:     "/",
 			Expires:  time.Now().Add(24 * time.Hour),
 			HttpOnly: true,
 		})
@@ -106,38 +117,32 @@ func InitSession(w http.ResponseWriter, r *http.Request) {
 }
 
 func Authorize(r *http.Request) error {
-	params_log := extractLog(r)
 	db, err := dbConnection()
+	if err != nil {
+		return AuthError
+	}
+	defer db.Close()
+
 	st, err := r.Cookie("session_token")
+	if err != nil {
+		return AuthError
+	}
+
 	user_cookie, err := r.Cookie("username")
+	if err != nil {
+		return AuthError
+	}
 
 	User, err := returnUsername(db, st.Value)
-
-	if User != user_cookie.Value || err != nil {
+	if err != nil {
 		fmt.Printf("User not in the db")
 		return AuthError
 	}
 
-	tokenSession, err := returnSessionToken(db, params_log)
-
-	if err != nil || st.Value == "" || st.Value != tokenSession {
+	if User == "" || User != user_cookie.Value {
 		fmt.Printf("Session Token invalid")
 		return AuthError
 	}
-
-	// Protection du jeton de session contre les attaques csrf a revoir
-
-	/*
-	csrfToken, err := returnCsrfToken(db, params_log)
-	csrf := r.Header.Get("X-CSRF-Token")
-
-	fmt.Println("csrf reçu :", csrf)
-	fmt.Println("csrf attendu :", csrfToken)
-
-	if csrf != csrfToken || csrf == "" {
-		fmt.Println("Csrf Token invalid")
-		return AuthError
-	}*/
 
 	return nil
 }
@@ -147,8 +152,8 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 		Name:     "username",
 		Value:    "",
 		Path:     "/",
-		MaxAge: -1,
-		Expires: time.Unix(0, 0),
+		MaxAge:   -1,
+		Expires:  time.Unix(0, 0),
 		HttpOnly: true,
 	})
 
@@ -156,8 +161,8 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 		Name:     "session_token",
 		Value:    "",
 		Path:     "/",
-		MaxAge: -1,
-		Expires: time.Unix(0, 0),
+		MaxAge:   -1,
+		Expires:  time.Unix(0, 0),
 		HttpOnly: true,
 	})
 
@@ -165,8 +170,8 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 		Name:     "csrf_token",
 		Value:    "",
 		Path:     "/",
-		MaxAge: -1,
-		Expires: time.Unix(0, 0),
+		MaxAge:   -1,
+		Expires:  time.Unix(0, 0),
 		HttpOnly: false,
 	})
 
@@ -174,7 +179,6 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 
 	params_log.sessionToken = ""
 	params_log.CsrfToken = ""
-
 
 	fmt.Println("Logged is good ;)")
 }
