@@ -24,6 +24,11 @@ func InitSession(w http.ResponseWriter, r *http.Request) {
 	params_log := extractLog(r)
 	st, err := r.Cookie("session_token")
 
+	if err!=nil{
+		println("pas de cookie")
+		println(err);
+		return;
+	}
 	db, err := dbConnection()
 	if err != nil {
 		handleError(w, "Erreur DB", http.StatusInternalServerError, err)
@@ -88,7 +93,6 @@ func Authorize(r *http.Request) error {
 
 	// Protection du jeton de session contre les attaques csrf a revoir
 
-	/*
 	csrfToken, err := returnCsrfToken(db, params_log)
 	csrf := r.Header.Get("X-CSRF-Token")
 
@@ -98,7 +102,7 @@ func Authorize(r *http.Request) error {
 	if csrf != csrfToken || csrf == "" {
 		fmt.Println("Csrf Token invalid")
 		return AuthError
-	}*/
+	}
 
 	return nil
 }
