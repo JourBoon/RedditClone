@@ -6,6 +6,7 @@
         <link rel="stylesheet" href="/static/css/register.css">
     </head>
     <body>
+        <input type="hidden" name="csrf_token" value="{{ .CSRFToken }}">
         <form class="form" method="POST" action="/">
             <p class="text_register">CREER UN COMPTE</p>
             <input type="hidden" name="page" value="reg">
