@@ -20,6 +20,44 @@ func generateToken(length int) string {
 	return base64.RawStdEncoding.EncodeToString(bytes)
 }
 
+func InitStartSession(w http.ResponseWriter, r *http.Request) {
+	params_log := extractLog(r)
+
+	db, err := dbConnection()
+	if err != nil {
+		handleError(w, "Erreur DB", http.StatusInternalServerError, err)
+		return
+	}
+
+	params_log.sessionToken = generateToken(32)
+	//params_log.CsrfToken = generateToken(32)
+
+	http.SetCookie(w, &http.Cookie{
+		Name:     "username",
+		Value:    params_log.username,
+		Expires:  time.Now().Add(24 * time.Hour),
+	})
+
+	http.SetCookie(w, &http.Cookie{
+		Name:     "session_token",
+		Value:    params_log.sessionToken,
+		Expires:  time.Now().Add(24 * time.Hour),
+		HttpOnly: true,
+	})
+
+	/*http.SetCookie(w, &http.Cookie{
+		Name:     "csrf_token",
+		Value:    params_log.CsrfToken,
+		Path:     "/",
+		Expires:  time.Now().Add(24 * time.Hour),
+		HttpOnly: false,
+	})*/
+
+	addSessionToken(db, params_log)
+	//addCsrfToken(db, params_log)
+
+}
+
 func InitSession(w http.ResponseWriter, r *http.Request) {
 	params_log := extractLog(r)
 	st, err := r.Cookie("session_token")
@@ -36,36 +74,37 @@ func InitSession(w http.ResponseWriter, r *http.Request) {
 	}
 
 	sessionToken, err := returnSessionToken(db, params_log)
+
+	fmt.Println("Session Token :", sessionToken)
+	fmt.Println("Session Token en cookies", st.Value)
+
 	if sessionToken != st.Value {
 		params_log.sessionToken = generateToken(32)
-		params_log.CsrfToken = generateToken(32)
+		//params_log.CsrfToken = generateToken(32)
 
 		http.SetCookie(w, &http.Cookie{
 			Name:     "username",
 			Value:    params_log.username,
-			Path:     "/",
 			Expires:  time.Now().Add(24 * time.Hour),
 		})
 
 		http.SetCookie(w, &http.Cookie{
 			Name:     "session_token",
 			Value:    params_log.sessionToken,
-			Path:     "/",
 			Expires:  time.Now().Add(24 * time.Hour),
 			HttpOnly: true,
-			SameSite: http.SameSiteLaxMode,
 		})
 
-		http.SetCookie(w, &http.Cookie{
+		/*http.SetCookie(w, &http.Cookie{
 			Name:     "csrf_token",
 			Value:    params_log.CsrfToken,
 			Path:     "/",
 			Expires:  time.Now().Add(24 * time.Hour),
 			HttpOnly: false,
-		})
+		})*/
 
 		addSessionToken(db, params_log)
-		addCsrfToken(db, params_log)
+		//addCsrfToken(db, params_log)
 	} else {
 		return
 	}
