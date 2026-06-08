@@ -2,6 +2,7 @@ package fonction_go
 
 import (
 	"database/sql"
+	"errors"
 	"fmt"
 )
 
@@ -37,6 +38,9 @@ func logUser(db *sql.DB, user login) (bool, error) {
 	var hashedPassword string
 	err := db.QueryRow(query, user.mail).Scan(&hashedPassword)
 	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return false, nil
+		}
 		return false, err
 	}
 
