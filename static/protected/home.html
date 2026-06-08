@@ -1,60 +1,54 @@
 <!DOCTYPE html>
 <html lang="fr">
 
-    <head>
-        <title>Forum</title>
-        <meta charset="utf8">
-        <link rel="stylesheet" href="static/css/home.css"/>
+<head>
+    <title>Forum</title>
+    <meta charset="utf8">
+    <link rel="stylesheet" href="static/css/home.css" />
 
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-    </head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+</head>
 
-    <div class="topbar"></div>
+<div class="topbar"></div>
 
-    <div class="topbar">
-        <form method="POST" action="/home">
-            <input name="search" type="text" class="search-bar" placeholder="Rechercher..." />
-            <button type="submit">Chercher</button>
-        </form>
-        
-        <button class="create-btn" onclick="window.location.href='/createForum'">
-            Créer
-        </button>
-        <button class="create-btn" onclick="window.location.href='/LogoutBtn'">
-            Déconnexion
-        </button>
+<div class="topbar">
+    <form method="POST" action="/home">
+        <input name="search" type="text" class="search-bar" placeholder="Rechercher..." />
+        <button type="submit">Chercher</button>
+    </form>
+
+    <button class="create-btn" onclick="window.location.href='/createForum'">
+        Créer
+    </button>
+    <button class="create-btn" onclick="window.location.href='/LogoutBtn'">
+        Déconnexion
+    </button>
+</div>
+
+<div class="app">
+
+    <div class="sidebar">
+        <button class="home-btn">Accueil</button>
+        <button class="popular-btn">Populaire</button>
     </div>
 
-    <div class="app">
-
-        <div class="sidebar">
-            <button class="home-btn">Accueil</button>
-            <button class="popular-btn">Populaire</button>
+    <div class="content">
+        {{range .}}
+        <div class="post">
+            <div class="subject">{{.Subject}}</div>
+            <div class="bod">{{.Body}}</div>
+            <div class="user">{{.Username}}</div>
         </div>
+        </a>
+        {{else}}
+        <span style="color:#fff; grid-column: 1 / -1; text-align: center; padding: 20px;">Aucun post trouvé.</span>
+        {{end}}
+    </div>
+</div>
 
-        <div class="app">
-            <div class="sidebar">
-                <a class="home-btn">Accueil</a>
-                <a class="popular-btn">Populaire</a>
-            </div>
-
-            <div class="content">
-                {{range .}}
-                    <div class="post">
-                        <div class="subject">{{.Subject}}</div>
-                        <div class="bod">{{.Body}}</div>
-                        <div class="user">{{.Username}}</div>
-                    </div>
-                </a>
-                {{else}}
-                <span style="color:#fff; grid-column: 1 / -1; text-align: center; padding: 20px;">Aucun post trouvé.</span>
-                {{end}}
-            </div>
-        </div>
-
-        <script type="module" src="/src/main.js"></script>
-    </body>
+<script type="module" src="/src/main.js"></script>
+</body>
 
 </html>

@@ -30,13 +30,10 @@
                     <button type="button" class="popular-btn" onclick="addElement()">+Tag</button>
                     <button type="button" class="popular-btn" onclick="suppElement()">-Tag</button>
                     
-                    <form class="form" method="POST" action="/createForum">
+                    <form class="form" method="POST" action="/Home">
                         <input type="text" class="forum-input" name="subject" placeholder="Titre du post">
                         <input type="text" class="tag-input" name="tag" placeholder="Tag">
                         <textarea class="forum-description" name="body" placeholder="Description du post"></textarea>
-
-                        <input type="text" class="forum-input" placeholder="Titre du forum">
-                        <textarea class="forum-description" placeholder="Description du forum"></textarea>
                         <button type="button" class="submit-btn">Publier</button>
                     </form>
                 </div>
