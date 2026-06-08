@@ -127,6 +127,11 @@ body {
     font-style: normal;
 }
 
+.create-btn:hover, .decon-btn:hover {
+    background-color: rgba(245, 222, 179, 0.363);
+    transition-duration: 1s;
+}
+
 .btn-group {
     display: flex;
     align-items: center;
