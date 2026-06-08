@@ -12,12 +12,12 @@
     <body>
         <input type="hidden" name="csrf_token" value="{{ .CSRFToken }}">
         <form class="form" method="POST" action="/register">
-            <p class="text_register">CREER UN COMPTE</p>
+            <p class="text_register">Créer un compte</p>
             <input type="hidden" name="page" value="reg">
             <input minlength="2" name="user" class="input_register" type="text" placeholder="Utilisateur">
             <input minlength="2" name="mail" class="input_register" type="email" placeholder="Email">
             <input minlength="2" name="password" class="input_register" type="password" placeholder="Mot de passe">
-            <button class="register_button" type="submit">Créer un compte</button>
+            <button class="register_button" type="submit">Valider</button>
             <a class="login_button" href="/login">Connexion</a>
         </form>
     </body>
