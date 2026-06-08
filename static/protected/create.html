@@ -1,127 +1,75 @@
 <!DOCTYPE html>
 <html lang="fr">
 
-<head>
-  <meta charset="UTF-8">
-  <title>Créer un forum</title>
+    <head>
+        <meta charset="UTF-8">
+        <title>Créer un forum</title>
 
-  <link rel="stylesheet" href="stylecreate.css">
-</head>
+        <link rel="stylesheet" href="static/css/create.css">
 
-<body>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    </head>
 
+    <body>
+        <div class="topbar">
+            <input type="text" class="search-bar" placeholder="Rechercher...">
+            <button class="create-btn" onclick="window.location.href='create.html'">Créer</button>
+        </div>
 
-  <div class="topbar">
+        <div class="app">
+            <div class="sidebar">
+                <a class="home-btn" onclick="window.location.href='index.html'">Accueil</a>
+                <a class="popular-btn">Populaire</a>
+            </div>
 
-    <input
-      type="text"
-      class="search-bar"
-      placeholder="Rechercher..."
-    >
+            <div class="content">
+                <div class="create-forum-box">
+                    <h2 class="create-title">Créer un forum</h2>
+                    <button type="button" class="popular-btn" onclick="addElement()">+Tag</button>
+                    <button type="button" class="popular-btn" onclick="suppElement()">-Tag</button>
+                    
+                    <form class="form" method="POST" action="/createForum">
+                        <input type="text" class="forum-input" name="subject" placeholder="Titre du post">
+                        <input type="text" class="tag-input" name="tag" placeholder="Tag">
+                        <textarea class="forum-description" name="body" placeholder="Description du post"></textarea>
 
-    <button
-      class="create-btn"
-      onclick="window.location.href='create.html'"
-    >
-      Créer
-    </button>
+                        <input type="text" class="forum-input" placeholder="Titre du forum">
+                        <textarea class="forum-description" placeholder="Description du forum"></textarea>
+                        <button type="button" class="submit-btn">Publier</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
 
-  </div>
+    <script>
+        function addElement() {
+            const newInput = document.createElement("input");
+            newInput.setAttribute("type", "text");
+            newInput.setAttribute("class", "tag-input");
+            newInput.setAttribute("placeholder", "Tag");
+            newInput.setAttribute("name", "tag");
 
-  <div class="app">
+            const form = document.querySelector("form.form");
+            const referenceNode = form.querySelector("textarea");
 
-    <div class="sidebar">
+            if (referenceNode) {
+                form.insertBefore(newInput, referenceNode);
+            } else {
+                form.appendChild(newInput);
+            }
+        };
 
-      <button class="home-btn" onclick="window.location.href='index.html'">
-        Accueil
-      </button>
+        function suppElement() {
+            const tagInputs = document.querySelectorAll("input.tag-input");
+            if (tagInputs.length === 0) {
+                return;
+            }
 
-      <button class="popular-btn">
-        Populaire
-      </button>
-
-    </div>
-
-    <div class="content">
-
-      <div class="create-forum-box">
-
-        <h2 class="create-title">
-          Créer un forum
-        </h2>
-        <button type="button" class="popular-btn" onclick="addElement()">+Tag</button>
-        <button type="button" class="popular-btn" onclick="suppElement()">-Tag</button>
-        <form class="form" method="POST" action="/createForum">
-          <input
-            type="text"
-            class="forum-input"
-            name="subject"
-            placeholder="Titre du post"
-          >
-          <input
-            type="text"
-            class="tag-input"
-            name="tag"
-            placeholder="Tag"
-          >          
-          <textarea
-            class="forum-description"
-            name="body"
-            placeholder="Description du post"
-          ></textarea>
-
-        <input
-          type="text"
-          class="forum-input"
-          placeholder="Titre du forum"
-        >
-
-        <textarea
-          class="forum-description"
-          placeholder="Description du forum"
-        ></textarea>
-
-        <button
-          type="button"
-          class="submit-btn"
-        >
-          Publier
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</body>
-<script>
-  function addElement() {
-    const newInput = document.createElement("input");
-    newInput.setAttribute("type", "text");
-    newInput.setAttribute("class", "tag-input");
-    newInput.setAttribute("placeholder", "Tag");
-    newInput.setAttribute("name", "tag");
-
-    const form = document.querySelector("form.form");
-    const referenceNode = form.querySelector("textarea");
-
-    if (referenceNode) {
-      form.insertBefore(newInput, referenceNode);
-    } else {
-      form.appendChild(newInput);
-    }
-  };
-
-  function suppElement() {
-    const tagInputs = document.querySelectorAll("input.tag-input");
-    if (tagInputs.length === 0) {
-      return;
-    }
-
-    const lastTag = tagInputs[tagInputs.length - 1];
-    lastTag.remove();
-  }
-</script>
-
+            const lastTag = tagInputs[tagInputs.length - 1];
+            lastTag.remove();
+        }
+    </script>
 </html>
