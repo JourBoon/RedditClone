@@ -1,4 +1,6 @@
-
+body {
+    background-color: rgb(54, 53, 53);
+}
 
 .form {
     display: flex;
@@ -36,7 +38,11 @@
 }
 
 .text_login {
-    font-family: Arial, Helvetica, sans-serif;
     font-size: 20px;
     font-weight: bold;
+    color: wheat;
+
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
