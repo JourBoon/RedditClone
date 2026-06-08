@@ -1,50 +1,47 @@
 <!DOCTYPE html>
 <html lang="fr">
 
-<head>
-    <title>Forum</title>
-    <meta charset="utf8">
-    <link rel="stylesheet" href="static/css/home.css" />
-</head>
+    <head>
+        <title>Forum</title>
+        <meta charset="utf8">
+        <link rel="stylesheet" href="static/css/home.css"/>
 
-<body>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    </head>
 
-    <div class="topbar"></div>
-
-    <div class="topbar">
-        <input type="text" class="search-bar" placeholder="Rechercher..." />
-        <button class="create-btn" onclick="window.location.href='/createForum'">
-            Créer
-        </button>
-        <button class="create-btn" onclick="window.location.href='/LogoutBtn'">
-            Déconnexion
-        </button>
-    </div>
-
-    <div class="app">
-
-        <div class="sidebar">
-            <button class="home-btn">Accueil</button>
-            <button class="popular-btn">Populaire</button>
+    <body>
+        <div class="topbar">
+            <a id="title" href="/home">4Red - FORUM</a>
+            <input type="text" class="search-bar" placeholder="Rechercher..." />
+            <div class="btn-group">
+                <button class="create-btn" onclick="window.location.href='/createForum'">Créer</button>
+                <button class="decon-btn" onclick="window.location.href='/LogoutBtn'">Déconnexion</button>
+            </div>
         </div>
 
-        <div class="content">
-            {{range .mess}}
-                <div class="post">
-                    <div class="subject">{{.Subject}}</div>
-                    <div class="bod">{{.Body}}</div>
-                    <div class="tag">Tags : {{.Tag}}</div>
-                    <div class="user">{{.Username}}</div>
-                </div>
-            </a>
-            {{else}}
-            <span style="color:#fff; grid-column: 1 / -1; text-align: center; padding: 20px;">Aucun post trouvé.</span>
-            {{end}}
+        <div class="app">
+            <div class="sidebar">
+                <a class="home-btn">Accueil</a>
+                <a class="popular-btn">Populaire</a>
+            </div>
+
+            <div class="content">
+                {{range .}}
+                    <div class="post">
+                        <div class="subject">{{.Subject}}</div>
+                        <div class="bod">{{.Body}}</div>
+                        <div class="user">{{.Username}}</div>
+                    </div>
+                </a>
+                {{else}}
+                <span style="color:#fff; grid-column: 1 / -1; text-align: center; padding: 20px;">Aucun post trouvé.</span>
+                {{end}}
+            </div>
         </div>
 
-    </div>
-
-    <script type="module" src="/src/main.js"></script>
-</body>
+        <script type="module" src="/src/main.js"></script>
+    </body>
 
 </html>

@@ -1,6 +1,7 @@
 package fonction_go
 
 import (
+	"bytes"
 	"html/template"
 	"log"
 	"net/http"
@@ -8,8 +9,6 @@ import (
 )
 
 func renderTemplateWithData(w http.ResponseWriter, tmpl string, data any) {
-	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-
 	path := filepath.Join("static", tmpl)
 
 	t, err := template.ParseFiles(path)
@@ -18,9 +17,15 @@ func renderTemplateWithData(w http.ResponseWriter, tmpl string, data any) {
 		return
 	}
 
-	if err := t.Execute(w, data); err != nil {
+	var buf bytes.Buffer
+	if err := t.Execute(&buf, data); err != nil {
 		http.Error(w, "template execute error: "+err.Error(), http.StatusInternalServerError)
+		return
 	}
+
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	w.WriteHeader(http.StatusOK)
+	_, _ = w.Write(buf.Bytes())
 }
 
 func handleError(w http.ResponseWriter, message string, statusCode int, err error) {

@@ -49,6 +49,26 @@
         <h2 class="create-title">
           Créer un forum
         </h2>
+        <button type="button" class="popular-btn" onclick="addElement()">+Tag</button>
+        <button type="button" class="popular-btn" onclick="suppElement()">-Tag</button>
+        <form class="form" method="POST" action="/createForum">
+          <input
+            type="text"
+            class="forum-input"
+            name="subject"
+            placeholder="Titre du post"
+          >
+          <input
+            type="text"
+            class="tag-input"
+            name="tag"
+            placeholder="Tag"
+          >          
+          <textarea
+            class="forum-description"
+            name="body"
+            placeholder="Description du post"
+          ></textarea>
 
         <input
           type="text"
@@ -75,5 +95,33 @@
   </div>
 
 </body>
+<script>
+  function addElement() {
+    const newInput = document.createElement("input");
+    newInput.setAttribute("type", "text");
+    newInput.setAttribute("class", "tag-input");
+    newInput.setAttribute("placeholder", "Tag");
+    newInput.setAttribute("name", "tag");
+
+    const form = document.querySelector("form.form");
+    const referenceNode = form.querySelector("textarea");
+
+    if (referenceNode) {
+      form.insertBefore(newInput, referenceNode);
+    } else {
+      form.appendChild(newInput);
+    }
+  };
+
+  function suppElement() {
+    const tagInputs = document.querySelectorAll("input.tag-input");
+    if (tagInputs.length === 0) {
+      return;
+    }
+
+    const lastTag = tagInputs[tagInputs.length - 1];
+    lastTag.remove();
+  }
+</script>
 
 </html>
