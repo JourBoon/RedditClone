@@ -9,8 +9,8 @@
         <form class="form" method="POST" action="/home">
             <input type="hidden" name="page" value="log">
             <p class="text_login">CONNEXION</p>
-            <input name="mail" class="input_login" type="email" placeholder="Email">
-            <input name="password" class="input_login" type="password" placeholder="Mot de passe">
+            <input minlength="2" name="mail" class="input_login" type="email" placeholder="Email">
+            <input minlength="2" name="password" class="input_login" type="password" placeholder="Mot de passe">
             <button class="login_button" type="submit">Connexion</button>
             <a class="register_button" href="/register">Créer un compte</a>
         </form>

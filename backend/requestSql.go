@@ -107,7 +107,7 @@ func returnUsername(db *sql.DB, sessionToken string) (string, error) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	return username,err;
+	return username,err;	
 }
 
 func getMess(db *sql.DB) ([]Mess, error) {
