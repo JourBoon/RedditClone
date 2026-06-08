@@ -4,7 +4,7 @@
 <head>
     <title>Forum</title>
     <meta charset="utf8">
-    <link rel="stylesheet" href="/static/css/home.css" />
+    <link rel="stylesheet" href="static/css/home.css" />
 </head>
 
 <body>
@@ -29,11 +29,17 @@
         </div>
 
         <div class="content">
-            <div class="forum-box">
-                <h1>{{.title}}</h1>
-                <p>{{.body}}</p>
-            </div>
-
+            {{range .mess}}
+                <div class="post">
+                    <div class="subject">{{.Subject}}</div>
+                    <div class="bod">{{.Body}}</div>
+                    <div class="tag">Tags : {{.Tag}}</div>
+                    <div class="user">{{.Username}}</div>
+                </div>
+            </a>
+            {{else}}
+            <span style="color:#fff; grid-column: 1 / -1; text-align: center; padding: 20px;">Aucun post trouvé.</span>
+            {{end}}
         </div>
 
     </div>

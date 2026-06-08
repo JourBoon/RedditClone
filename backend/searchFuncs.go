@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func Search(searchQuery string, searchType string) []mess {
+func Search(searchQuery string, searchType string) []Mess {
 	db, err := dbConnection()
 	if err != nil {
 		fmt.Println(err)
@@ -20,22 +20,22 @@ func Search(searchQuery string, searchType string) []mess {
 		return nil
 	}
 
-	var result []mess
+	var result []Mess
 	for _, m := range allMess {
 		switch searchType {
 		case "tag":
-			for _, tag := range m.tag {
+			for _, tag := range m.Tag {
 				if tag == searchQuery {
 					result = append(result, m)
 					break
 				}
 			}
 		case "username":
-			if m.username == searchQuery {
+			if m.Username == searchQuery {
 				result = append(result, m)
 			}
 		case "created_at":
-			if m.created_at == searchQuery {
+			if m.Created_at == searchQuery {
 				result = append(result, m)
 			}
 		}
