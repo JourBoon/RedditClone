@@ -85,6 +85,11 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 }
 
 func createForum(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		renderTemplateWithData(w, "protected/create.html", nil)
+		return
+	}
+
 	db, err := dbConnection()
 	if err != nil {
 		handleError(w, "Erreur DB", http.StatusInternalServerError, err)
@@ -100,9 +105,12 @@ func createForum(w http.ResponseWriter, r *http.Request) {
 
 	params_mess := extractMess(r)
 	user_id := getIdUserByUsername(db, username)
-	postMess(db, user_id, params_mess.subject, params_mess.tags, params_mess.body)
-	path := "protected/create.html"
-	renderTemplateWithData(w, path, nil)
+	if err := postMess(db, user_id, params_mess.subject, params_mess.tags, params_mess.body); err != nil {
+		handleError(w, "Erreur lors de l'insertion du post", http.StatusInternalServerError, err)
+		return
+	}
+
+	http.Redirect(w, r, "/HomePage", http.StatusSeeOther)
 }
 
 func RoutePages() {

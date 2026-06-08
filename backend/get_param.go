@@ -73,10 +73,13 @@ func extractLog(r *http.Request) login {
 }
 
 func extractMess(r *http.Request) message {
+	if err := r.ParseForm(); err != nil {
+		fmt.Println("Erreur ParseForm:", err)
+	}
 
 	mess := message{
 		subject: r.FormValue("subject"),
-		tags:    r.PostForm["tag"],
+		tags:    r.Form["tag"],
 		body:    r.FormValue("body"),
 	}
 	return mess

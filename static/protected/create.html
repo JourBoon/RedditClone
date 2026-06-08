@@ -51,7 +51,7 @@
         </h2>
         <button type="button" class="popular-btn" onclick="addElement()">+Tag</button>
         <button type="button" class="popular-btn" onclick="suppElement()">-Tag</button>
-        <form class="form" method="POST" action="/HomePage">
+        <form class="form" method="POST" action="/createForum">
           <input
             type="text"
             class="forum-input"
@@ -61,7 +61,7 @@
           <input
             type="text"
             class="tag-input"
-            name="tag[]"
+            name="tag"
             placeholder="Tag"
           >          
           <textarea
@@ -90,7 +90,7 @@
     newInput.setAttribute("type", "text");
     newInput.setAttribute("class", "tag-input");
     newInput.setAttribute("placeholder", "Tag");
-    newInput.setAttribute("name", "tag[]");
+    newInput.setAttribute("name", "tag");
 
     const form = document.querySelector("form.form");
     const referenceNode = form.querySelector("textarea");

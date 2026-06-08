@@ -29,11 +29,10 @@
         </div>
 
         <div class="content">
-            {{range .mess}}
+            {{range .}}
                 <div class="post">
                     <div class="subject">{{.Subject}}</div>
                     <div class="bod">{{.Body}}</div>
-                    <div class="tag">Tags : {{.Tag}}</div>
                     <div class="user">{{.Username}}</div>
                 </div>
             </a>
