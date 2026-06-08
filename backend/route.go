@@ -70,6 +70,10 @@ func Home(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 			defer db.Close()
+			search := r.FormValue("search")
+			if (search!=""){
+				data = Search(data,search,"")
+			}
 			renderTemplateWithData(w, path, data)
 			return
 		}
