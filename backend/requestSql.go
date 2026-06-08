@@ -110,7 +110,7 @@ func returnUsername(db *sql.DB, sessionToken string) (string, error) {
 	return username,err;	
 }
 
-func getMess(db *sql.DB) ([]mess, error) {
+func getMess(db *sql.DB) ([]Mess, error) {
 	const postsQuery = `SELECT users.username, messages.subject, messages.body, messages.tag, messages.created_at FROM messages JOIN users ON messages.id_user=users.id`
 	rows, err := db.Query(postsQuery)
 	if err != nil {
@@ -119,7 +119,7 @@ func getMess(db *sql.DB) ([]mess, error) {
 	}
 	defer rows.Close()
 
-	rowsData := []mess{}
+	rowsData := []Mess{}
 	for rows.Next() {
 		var username string
 		var subject string
@@ -136,12 +136,12 @@ func getMess(db *sql.DB) ([]mess, error) {
 
 		tag = jsonToTabString([]byte(tagStr))
 
-		rowsData = append(rowsData, mess{
-			username:   username,
-			subject:    subject,
-			body:       body,
-			tag:        tag,
-			created_at: created_at,
+		rowsData = append(rowsData, Mess{
+			Username:   username,
+			Subject:    subject,
+			Body:       body,
+			Tag:        tag,
+			Created_at: created_at,
 		})
 	}
 

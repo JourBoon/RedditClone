@@ -46,7 +46,6 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		handleError(w, "Erreur DB", http.StatusInternalServerError, err)
 		return
 	}
-	defer db.Close()
 
 	if r.Method == http.MethodPost {
 		params_log := extractLog(r)
@@ -58,7 +57,13 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		if l {
 			InitStartSession(w, r)
 			path := "/protected/home.html"
-			renderTemplateWithData(w, path, nil)
+			data,err := getMess(db)
+			if err != nil {
+				handleError(w, "Erreur dans le chargement des messages", http.StatusInternalServerError, err)
+				return
+			}	
+			renderTemplateWithData(w, path,data )
+			defer db.Close()
 			return
 		}
 	}

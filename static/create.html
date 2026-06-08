@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Créer un forum</title>
+
+  <link rel="stylesheet" href="stylecreate.css">
+</head>
+
+<body>
+
+
+  <div class="topbar">
+
+    <input
+      type="text"
+      class="search-bar"
+      placeholder="Rechercher..."
+    >
+
+    <button
+      class="create-btn"
+      onclick="window.location.href='create.html'"
+    >
+      Créer
+    </button>
+
+  </div>
+
+  <div class="app">
+
+    <div class="sidebar">
+
+      <button class="home-btn" onclick="window.location.href='index.html'">
+        Accueil
+      </button>
+
+      <button class="popular-btn">
+        Populaire
+      </button>
+
+    </div>
+
+    <div class="content">
+
+      <div class="create-forum-box">
+
+        <h2 class="create-title">
+          Créer un forum
+        </h2>
+
+        <input
+          type="text"
+          class="forum-input"
+          placeholder="Titre du forum"
+        >
+
+        <textarea
+          class="forum-description"
+          placeholder="Description du forum"
+        ></textarea>
+
+        <button
+          type="button"
+          class="submit-btn"
+        >
+          Publier
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+
+</html>
