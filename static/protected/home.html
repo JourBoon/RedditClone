@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="fr">
 
-<head>
-    <title>Forum</title>
-    <meta charset="utf8">
-    <link rel="stylesheet" href="static/css/home.css" />
-</head>
+    <head>
+        <title>Forum</title>
+        <meta charset="utf8">
+        <link rel="stylesheet" href="static/css/home.css"/>
 
-<body>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    </head>
 
     <div class="topbar"></div>
 
@@ -32,22 +34,27 @@
             <button class="popular-btn">Populaire</button>
         </div>
 
-        <div class="content">
-            {{range .}}
-                <div class="post">
-                    <div class="subject">{{.Subject}}</div>
-                    <div class="bod">{{.Body}}</div>
-                    <div class="user">{{.Username}}</div>
-                </div>
-            </a>
-            {{else}}
-            <span style="color:#fff; grid-column: 1 / -1; text-align: center; padding: 20px;">Aucun post trouvé.</span>
-            {{end}}
+        <div class="app">
+            <div class="sidebar">
+                <a class="home-btn">Accueil</a>
+                <a class="popular-btn">Populaire</a>
+            </div>
+
+            <div class="content">
+                {{range .}}
+                    <div class="post">
+                        <div class="subject">{{.Subject}}</div>
+                        <div class="bod">{{.Body}}</div>
+                        <div class="user">{{.Username}}</div>
+                    </div>
+                </a>
+                {{else}}
+                <span style="color:#fff; grid-column: 1 / -1; text-align: center; padding: 20px;">Aucun post trouvé.</span>
+                {{end}}
+            </div>
         </div>
 
-    </div>
-
-    <script type="module" src="/src/main.js"></script>
-</body>
+        <script type="module" src="/src/main.js"></script>
+    </body>
 
 </html>

@@ -1,81 +1,135 @@
 body {
-  margin: 0;
-  font-family: 'Inter', Arial, sans-serif;
-  background: linear-gradient(180deg, #eef2ff 0%, #ffffff 100%);
-  color: #121212;
-  min-height: 100vh;
+    margin: 0;
+    font-family: 'Inter', Arial, sans-serif;
+    background-color: rgb(54, 53, 53);
+    color: #121212;
+    min-height: 100vh;
 }
 
 .topbar {
-  height: 72px;
-  width: 100%;
-  background-color: #ffffff;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 0 30px;
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
-  z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgb(54, 53, 53);
+    border-bottom: 2px solid wheat;
+}
+
+#title {
+    font-size: 50px;
+    font-weight: bold;
+    color: wheat;
+    margin-left: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    text-decoration: none;
 }
 
 .search-bar {
-  width: 100%;
-  max-width: 420px;
-  height: 44px;
-  border: none;
-  border-radius: 999px;
-  background: #f3f4f8;
-  padding: 0 18px;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06);
-  font-size: 15px;
-  outline: none;
+    color: wheat;
+    margin-top: 5px;
+    background-color: rgb(54, 53, 53);
+    border: wheat solid 3px;
+    font-size: 25px;
+    border-radius: 10px;
+    padding: 10px;
+    width: 400px;
+    margin-left: 10px;
+
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
 .app {
-  display: flex;  
-  min-height: calc(100vh - 72px);
-  padding-top: 88px;
+    display: flex;
+    min-height: calc(100vh - 72px);
 }
 
 .sidebar {
-  width: 220px;
-  background: transparent;
-  border-right: 1px solid rgba(0, 0, 0, 0.08);
-  padding: 24px 16px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    width: 220px;
+    background: transparent;
+    border-right: 1px solid rgba(0, 0, 0, 0.08);
+    background-color: rgb(54, 53, 53);
+    border-left: 2px solid wheat;
+    border-right: 2px solid wheat;
+    border-bottom: 2px solid wheat;
 }
 
 .content {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 24px;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 24px;
 }
 
 .home-btn,
 .popular-btn {
-  display: block;
-  width: 100%;
-  padding: 14px 16px;
-  border: 1px solid transparent;
-  border-radius: 16px;
-  background: white;
-  color: #121212;
-  cursor: pointer;
-  font-weight: 700;
-  text-align: left;
-  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
-  margin-bottom: 14px;
+    background-color: rgb(54, 53, 53);
+    padding: 10px;
+    color: wheat;
+    text-decoration: none;
+    font-size: 40px;
+    border-bottom: wheat solid 2px;
+
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
 .home-btn:hover,
 .popular-btn:hover {
-  background: #111111;
-  color: white;
-  transform: translateY(-1px);
+    color: rgb(167, 159, 145);
+    transition-duration: 1s;
+    cursor: pointer;
+}
+
+.create-btn {
+    background-color: rgb(54, 53, 53);
+    padding: 10px;
+    border-radius: 10px;
+    color: wheat;
+    font-style: normal;
+    text-decoration: none;
+    font-size: 30px;
+    border: wheat solid 2px;
+
+    display: flex;
+    align-items: center;
+    justify-content: right;
+
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.decon-btn {
+    background-color: rgb(54, 53, 53);
+    padding: 10px;
+    border-radius: 10px;
+    color: wheat;
+    font-style: normal;
+    text-decoration: none;
+    font-size: 30px;
+    border: wheat solid 2px;
+    margin-right: 20px;
+
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.btn-group {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    gap: 20px;
 }
