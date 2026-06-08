@@ -1,13 +1,16 @@
 package fonction_go
 
 import (
+	"database/sql"
+	"errors"
+	"fmt"
 	"net/http"
 )
 
 type login struct {
 	password     string
 	mail         string
-	username	string
+	username     string
 	sessionToken string
 	CsrfToken    string
 }
@@ -18,10 +21,10 @@ type register struct {
 	mail     string
 }
 
-type message struct{
-	subject		string
-	tags			[]string
-	body 		string
+type message struct {
+	subject string
+	tags    []string
+	body    string
 }
 
 type queryParams struct {
@@ -31,43 +34,55 @@ type queryParams struct {
 	sortOrder   string
 }
 
-func extractPage(r *http.Request) string{
-	return r.FormValue("page");
+func extractPage(r *http.Request) string {
+	return r.FormValue("page")
 }
 
 func extractLog(r *http.Request) login {
-	var username string;
+	var username string
 	query := `SELECT username FROM users WHERE email=(?)`
-	
-	db,_ := dbConnection()
-	
-	err := db.QueryRow(query, r.FormValue("mail")).Scan(&username)
-	
+
+	db, err := dbConnection()
 	if err != nil {
-		print("Erreur lors de la récupération du username")
+		fmt.Println("Erreur DB dans extractLog:", err)
+		return login{
+			password:     r.FormValue("password"),
+			mail:         r.FormValue("mail"),
+			username:     "",
+			sessionToken: "",
+			CsrfToken:    "",
+		}
 	}
-	println("extract",username,r.FormValue("mail"))
+	defer db.Close()
+
+	err = db.QueryRow(query, r.FormValue("mail")).Scan(&username)
+	if err != nil {
+		if !errors.Is(err, sql.ErrNoRows) {
+			fmt.Println("Erreur lors de la récupération du username:", err)
+		}
+	}
+	println("extract", username, r.FormValue("mail"))
 	log := login{
 		password:     r.FormValue("password"),
 		mail:         r.FormValue("mail"),
-		username: 	  username,
+		username:     username,
 		sessionToken: "",
 		CsrfToken:    "",
 	}
-	return log;
+	return log
 }
 
-func extractMess(r *http.Request) message{
+func extractMess(r *http.Request) message {
 
 	mess := message{
 		subject: r.FormValue("subject"),
-		tags:	r.PostForm["tag"],
-		body:	r.FormValue("body"),
+		tags:    r.PostForm["tag"],
+		body:    r.FormValue("body"),
 	}
-	return mess;
+	return mess
 }
 
-func extractReg(r *http.Request) register{
+func extractReg(r *http.Request) register {
 	println("extraction...")
 	reg := register{
 		password: r.FormValue("password"),

@@ -13,24 +13,31 @@ func Start(w http.ResponseWriter, r *http.Request) {
 }
 
 func Login(w http.ResponseWriter, r *http.Request) {
-	path := "/auth/login.html"
+	path := "auth/login.html"
 	renderTemplateWithData(w, path, nil)
 }
 
 func Register(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		renderTemplateWithData(w, "auth/register.html", nil)
+		return
+	}
+
 	db, err := dbConnection()
 	if err != nil {
 		handleError(w, "Erreur DB", http.StatusInternalServerError, err)
 		return
 	}
+	defer db.Close()
+
 	params_reg := extractReg(r)
-	erro := insertUser(db, params_reg)
-	if erro != nil {
+	err = insertUser(db, params_reg)
+	if err != nil {
 		handleError(w, "Erreur lors de l'insertion dans la database", http.StatusInternalServerError, err)
 		return
 	}
-	path := "/auth/register.html"
-	renderTemplateWithData(w, path, nil)
+
+	http.Redirect(w, r, "/login", http.StatusSeeOther)
 }
 
 func LogoutBtn(w http.ResponseWriter, r *http.Request) {
@@ -56,24 +63,24 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		}
 		if l {
 			InitStartSession(w, r)
-			path := "/protected/home.html"
-			data,err := getMess(db)
+			path := "protected/home.html"
+			data, err := getMess(db)
 			if err != nil {
 				handleError(w, "Erreur dans le chargement des messages", http.StatusInternalServerError, err)
 				return
-			}	
-			renderTemplateWithData(w, path,data )
+			}
 			defer db.Close()
+			renderTemplateWithData(w, path, data)
 			return
 		}
 	}
 
-	path := "/auth/login.html"
+	path := "auth/login.html"
 	renderTemplateWithData(w, path, nil)
 }
 
 func HomePage(w http.ResponseWriter, r *http.Request) {
-	path := "/protected/home.html"
+	path := "protected/home.html"
 	renderTemplateWithData(w, path, nil)
 }
 
@@ -94,7 +101,7 @@ func createForum(w http.ResponseWriter, r *http.Request) {
 	params_mess := extractMess(r)
 	user_id := getIdUserByUsername(db, username)
 	postMess(db, user_id, params_mess.subject, params_mess.tags, params_mess.body)
-	path := "/protected/create.html"
+	path := "protected/create.html"
 	renderTemplateWithData(w, path, nil)
 }
 

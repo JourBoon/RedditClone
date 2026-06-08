@@ -15,9 +15,13 @@ func tabStringToJson(tab []string) []byte {
 
 func jsonToTabString(tab []byte) []string {
 	var tabString []string
-	err := json.Unmarshal([]byte(tab), &tabString)
+	if len(tab) == 0 {
+		return nil
+	}
+	err := json.Unmarshal(tab, &tabString)
 	if err != nil {
-		log.Fatal(err)
+		log.Println("Warning: invalid JSON tag value:", err, string(tab))
+		return nil
 	}
 	return tabString
 }

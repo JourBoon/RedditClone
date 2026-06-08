@@ -11,7 +11,7 @@
     </head>
     <body>
         <input type="hidden" name="csrf_token" value="{{ .CSRFToken }}">
-        <form class="form" method="POST" action="/">
+        <form class="form" method="POST" action="/register">
             <p class="text_register">CREER UN COMPTE</p>
             <input type="hidden" name="page" value="reg">
             <input minlength="2" name="user" class="input_register" type="text" placeholder="Utilisateur">
