@@ -12,7 +12,11 @@
     <div class="topbar"></div>
 
     <div class="topbar">
-        <input type="text" class="search-bar" placeholder="Rechercher..." />
+        <form method="POST" action="/home">
+            <input name="search" type="text" class="search-bar" placeholder="Rechercher..." />
+            <button type="submit">Chercher</button>
+        </form>
+        
         <button class="create-btn" onclick="window.location.href='/createForum'">
             Créer
         </button>
