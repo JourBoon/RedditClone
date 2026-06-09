@@ -41,9 +41,9 @@ func Register(w http.ResponseWriter, r *http.Request) {
 }
 
 func LogoutBtn(w http.ResponseWriter, r *http.Request) {
+	Logout(w, r)
 	path := "index.html"
 	renderTemplateWithData(w, path, nil)
-	Logout(w, r)
 }
 
 func Home(w http.ResponseWriter, r *http.Request) {
