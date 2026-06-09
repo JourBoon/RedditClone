@@ -14,8 +14,12 @@
 
     <body>
         <div class="topbar">
+            <a id="title" href="/HomePage">4Red - FORUM</a>
             <input type="text" class="search-bar" placeholder="Rechercher...">
-            <button class="create-btn" onclick="window.location.href='create.html'">Créer</button>
+            <div class="btn-group">
+                <button class="create-btn" onclick="window.location.href='/createForum'">Créer</button>
+                <button class="decon-btn" onclick="window.location.href='/LogoutBtn'">Déconnexion</button>
+            </div>
         </div>
 
         <div class="app">
@@ -27,8 +31,8 @@
             <div class="content">
                 <div class="create-forum-box">
                     <h2 class="create-title">Créer un forum</h2>
-                    <button type="button" class="popular-btn" onclick="addElement()">+Tag</button>
-                    <button type="button" class="popular-btn" onclick="suppElement()">-Tag</button>
+                    <a type="button" class="popular-btn" onclick="addElement()">+Tag</a>
+                    <a type="button" class="popular-btn" onclick="suppElement()">-Tag</a>
                     
                     <form class="form" method="POST" action="/createForum">
                         <input type="text" class="forum-input" name="subject" placeholder="Titre du post">
@@ -37,7 +41,7 @@
 
                         <input type="text" class="forum-input" placeholder="Titre du forum">
                         <textarea class="forum-description" placeholder="Description du forum"></textarea>
-                        <button type="button" class="submit-btn">Publier</button>
+                        <a type="button" class="submit-btn">Publier</a>
                     </form>
                 </div>
             </div>

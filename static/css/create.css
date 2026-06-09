@@ -93,38 +93,73 @@ body {
 }
 
 .create-btn {
-    padding: 12px 22px;
-    border: 2px solid #111111;
-    border-radius: 999px;
-    background: #111111;
-    color: white;
-    cursor: pointer;
-    font-weight: 700;
-    transition: background 0.2s ease, transform 0.2s ease;
+    background-color: rgb(54, 53, 53);
+    padding: 10px;
+    border-radius: 10px;
+    color: wheat;
+    font-style: normal;
+    text-decoration: none;
+    font-size: 30px;
+    border: wheat solid 2px;
+
+    display: flex;
+    align-items: center;
+    justify-content: right;
+
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
-.create-btn:hover {
-    background: #333333;
-    transform: translateY(-1px);
+.decon-btn {
+    background-color: rgb(54, 53, 53);
+    padding: 10px;
+    border-radius: 10px;
+    color: wheat;
+    font-style: normal;
+    text-decoration: none;
+    font-size: 30px;
+    border: wheat solid 2px;
+    margin-right: 20px;
+
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.create-btn:hover, .decon-btn:hover {
+    background-color: rgba(245, 222, 179, 0.363);
+    transition-duration: 1s;
+}
+
+.btn-group {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    gap: 20px;
 }
 
 .create-forum-box {
     width: 100%;
     max-width: 560px;
-    padding: 36px;
+    padding: 30px 100px 30px 100px;
     border-radius: 28px;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    background: white;
-    box-shadow: 0 28px 64px rgba(15, 23, 42, 0.08);
+    border: 2px solid wheat;
+    background: rgb(54, 53, 53);
     display: flex;
     flex-direction: column;
     gap: 24px;
+    margin-top: 40px;
+
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
 .create-title {
-    font-size: 2rem;
     margin: 0;
-    font-weight: 700;
+    color: wheat;
+    font-size: 40px;
 }
 
 .form {
@@ -137,19 +172,24 @@ body {
 .tag-input,
 .forum-description {
     width: 100%;
-    border: 1px solid rgba(0, 0, 0, 0.12);
+    border: 2px solid wheat;
     border-radius: 18px;
     padding: 16px 18px;
     font-size: 15px;
-    background: #fbfbff;
+    background: rgb(54, 53, 53);
     outline: none;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    font-size: 20px;
+
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
 .forum-input:focus,
 .tag-input:focus,
 .forum-description:focus {
-    border-color: #111111;
+    border-color: white;
     box-shadow: 0 0 0 4px rgba(17, 24, 39, 0.06);
 }
 
@@ -166,10 +206,10 @@ body {
     padding: 16px 24px;
     border: none;
     border-radius: 999px;
-    background: #111111;
-    color: white;
+    background: wheat;
+    color: rgb(54, 53, 53);
     cursor: pointer;
-    font-size: 16px;
+    font-size: 25px;
     font-weight: 700;
     box-shadow: 0 16px 28px rgba(17, 24, 39, 0.15);
     transition: transform 0.2s ease, opacity 0.2s ease;
