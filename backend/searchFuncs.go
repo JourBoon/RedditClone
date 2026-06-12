@@ -7,9 +7,24 @@ import(
 func Search(list []Mess, searchQuery string, searchType string) []Mess {
 	var result []Mess;
 	var noSort [][]any;
-	for i:=0;i<len(list);i++{
-		indice := matchExact(list[i].Subject,searchQuery)+matchLetter(list[i].Subject,searchQuery);
-		noSort = append(noSort, []any{indice, list[i]})
+	switch searchType{
+	case "subject": 
+		for i:=0;i<len(list);i++{
+			indice := matchExact(list[i].Subject,searchQuery)+matchLetter(list[i].Subject,searchQuery);
+			noSort = append(noSort, []any{indice, list[i]})
+		}
+	case "user" :
+		for i:=0;i<len(list);i++{
+			indice := matchExact(list[i].Username,searchQuery)+matchLetter(list[i].Username,searchQuery);
+			noSort = append(noSort, []any{indice, list[i]})
+		}
+	default :
+		for i:=0;i<len(list);i++{
+			for j:=0;j<len(list[i].Tag);j++{
+				indice := matchExact(list[i].Tag[j],searchQuery)+matchLetter(list[i].Tag[j],searchQuery);
+				noSort = append(noSort, []any{indice, list[i]})
+			}
+		}
 	}
 	result = sortMess(noSort);
 	return result

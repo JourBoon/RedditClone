@@ -7,6 +7,11 @@ import (
 	"net/http"
 )
 
+type DataHome struct {
+	Mess   []Mess
+	Params queryParams
+}
+
 type login struct {
 	password     string
 	mail         string
@@ -28,10 +33,10 @@ type message struct {
 }
 
 type queryParams struct {
-	searchQuery string
-	searchType  string
-	home        string
-	sortOrder   string
+	SearchQuery string
+	SearchType  string
+	Home        string
+	SortOrder   string
 }
 
 func extractPage(r *http.Request) string {
@@ -102,10 +107,10 @@ func extractReg(r *http.Request) register {
 
 func extractQueryParams(r *http.Request) queryParams {
 	params := queryParams{
-		searchQuery: r.FormValue("search"),
-		searchType:  r.FormValue("searchType"),
-		home:        r.FormValue("home"),
-		sortOrder:   r.FormValue("sort"),
+		SearchQuery: r.FormValue("search"),
+		SearchType:  r.FormValue("SearchType"),
+		Home:        r.FormValue("home"),
+		SortOrder:   r.FormValue("sort"),
 	}
 	return params
 }
