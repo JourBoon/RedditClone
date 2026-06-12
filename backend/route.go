@@ -53,6 +53,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		handleError(w, "Erreur DB", http.StatusInternalServerError, err)
 		return
 	}
+	defer db.Close()
 
 	if r.Method == http.MethodPost {
 		params_log := extractLog(r)
@@ -63,20 +64,24 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		}
 		if l {
 			InitStartSession(w, r)
-			path := "protected/home.html"
-			data, err := getMess(db)
-			if err != nil {
-				handleError(w, "Erreur dans le chargement des messages", http.StatusInternalServerError, err)
-				return
-			}
-			defer db.Close()
-			search := r.FormValue("search")
-			if (search!=""){
-				data = Search(data,search,"")
-			}
-			renderTemplateWithData(w, path, data)
+			http.Redirect(w, r, "/home", http.StatusSeeOther)
 			return
 		}
+	}
+
+	if err := Authorize(r); err == nil {
+		path := "protected/home.html"
+		data, err := getMess(db)
+		if err != nil {
+			handleError(w, "Erreur dans le chargement des messages", http.StatusInternalServerError, err)
+			return
+		}
+		search := r.FormValue("search")
+		if search != "" {
+			data = Search(data, search, "")
+		}
+		renderTemplateWithData(w, path, data)
+		return
 	}
 
 	path := "auth/login.html"
@@ -84,8 +89,26 @@ func Home(w http.ResponseWriter, r *http.Request) {
 }
 
 func HomePage(w http.ResponseWriter, r *http.Request) {
+	db, err := dbConnection()
+	if err != nil {
+		handleError(w, "Erreur DB", http.StatusInternalServerError, err)
+		return
+	}
+	defer db.Close()
+
+	if err := Authorize(r); err != nil {
+		handleError(w, "Utilisateur non authentifié", http.StatusUnauthorized, err)
+		return
+	}
+
+	data, err := getMess(db)
+	if err != nil {
+		handleError(w, "Erreur dans le chargement des messages", http.StatusInternalServerError, err)
+		return
+	}
+
 	path := "protected/home.html"
-	renderTemplateWithData(w, path, nil)
+	renderTemplateWithData(w, path, data)
 }
 
 func createForum(w http.ResponseWriter, r *http.Request) {
