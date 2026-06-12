@@ -82,6 +82,7 @@ func InitSession(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Session Token :", sessionToken)
 	fmt.Println("Session Token en cookies", st.Value)
 	println("Init:", params_log.username)
+	
 	if sessionToken != st.Value {
 		params_log.sessionToken = generateToken(32)
 		//params_log.CsrfToken = generateToken(32)
