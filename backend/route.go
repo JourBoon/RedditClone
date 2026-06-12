@@ -76,9 +76,9 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			handleError(w, "Erreur dans le chargement des messages", http.StatusInternalServerError, err)
 			return
 		}
-		search := r.FormValue("search")
-		if search != "" {
-			data = Search(data, search, "")
+		search := extractQueryParams(r)
+		if search.searchQuery != "" {
+			data = Search(data, search.searchQuery,search.searchType)
 		}
 		renderTemplateWithData(w, path, data)
 		return
@@ -94,7 +94,6 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 		handleError(w, "Erreur DB", http.StatusInternalServerError, err)
 		return
 	}
-	defer db.Close()
 
 	if err := Authorize(r); err != nil {
 		handleError(w, "Utilisateur non authentifié", http.StatusUnauthorized, err)
@@ -108,6 +107,8 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 	}
 
 	path := "protected/home.html"
+	
+	defer db.Close()
 	renderTemplateWithData(w, path, data)
 }
 
