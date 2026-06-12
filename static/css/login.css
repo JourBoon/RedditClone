@@ -77,3 +77,173 @@ body {
     color: rgba(245, 222, 179, 0.61);
     transition-duration: 500ms;
 }
+
+/* RESPONSIVE */
+
+/* Tablettes */
+@media (max-width: 1024px) {
+    body {
+        /*background-color: rgb(54, 53, 53);*/
+        background-color: red;
+    }
+
+    .form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        border: 2px solid wheat;
+        border-radius: 15px;
+        margin-left: 700px;
+        margin-right: 700px;
+        margin-top: 200px;
+        padding: 50px
+    }
+
+    .login_button {
+        background-color: rgb(54, 53, 53);
+        padding: 10px;
+        border-radius: 10px;
+        color: wheat;
+        font-style: normal;
+        text-decoration: none;
+        font-size: 40px;
+        border: wheat solid 2px;
+        margin-top: 30px;
+        cursor: pointer;
+
+        font-family: "Bebas Neue", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    .login_button:hover {
+        background-color: rgba(245, 222, 179, 0.363);
+        transition-duration: 1s;
+    }
+
+    .input_login {
+        color: wheat;
+        margin-top: 5px;
+        background-color: rgb(54, 53, 53);
+        border: wheat solid 3px;
+        font-size: 25px;
+        border-radius: 10px;
+        padding: 10px;
+
+        font-family: "Bebas Neue", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    .text_login {
+        font-size: 70px;
+        font-weight: bold;
+        color: wheat;
+        margin-top: 10px;
+        margin-bottom: 20px;
+
+        font-family: "Bebas Neue", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    .register_button {
+        color: wheat;
+        margin-top: 20px;
+        font-size: 30px;
+
+        font-family: "Bebas Neue", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    .register_button:hover {
+        color: rgba(245, 222, 179, 0.61);
+        transition-duration: 500ms;
+    }
+}
+
+/* Mobiles */
+@media (max-width: 600px) {
+    body {
+        /*background-color: rgb(54, 53, 53);*/
+        background-color: yellow;
+    }
+
+    .form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        border: 2px solid wheat;
+        border-radius: 15px;
+        margin-left: 700px;
+        margin-right: 700px;
+        margin-top: 200px;
+        padding: 50px
+    }
+
+    .login_button {
+        background-color: rgb(54, 53, 53);
+        padding: 10px;
+        border-radius: 10px;
+        color: wheat;
+        font-style: normal;
+        text-decoration: none;
+        font-size: 40px;
+        border: wheat solid 2px;
+        margin-top: 30px;
+        cursor: pointer;
+
+        font-family: "Bebas Neue", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    .login_button:hover {
+        background-color: rgba(245, 222, 179, 0.363);
+        transition-duration: 1s;
+    }
+
+    .input_login {
+        color: wheat;
+        margin-top: 5px;
+        background-color: rgb(54, 53, 53);
+        border: wheat solid 3px;
+        font-size: 25px;
+        border-radius: 10px;
+        padding: 10px;
+
+        font-family: "Bebas Neue", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    .text_login {
+        font-size: 100px;
+        font-weight: bold;
+        color: wheat;
+        margin-top: 10px;
+        margin-bottom: 20px;
+
+        font-family: "Bebas Neue", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    .register_button {
+        color: wheat;
+        margin-top: 20px;
+        font-size: 30px;
+
+        font-family: "Bebas Neue", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    .register_button:hover {
+        color: rgba(245, 222, 179, 0.61);
+        transition-duration: 500ms;
+    }
+}
