@@ -138,3 +138,46 @@ body {
     justify-content: right;
     gap: 20px;
 }
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+}
+
+.post {
+    border: 2px solid wheat;
+    color: wheat;
+    font-size: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 20px;
+
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.separateur {
+    width: 500px;
+    border-top: 2px solid wheat;
+}
+
+.subject {
+    text-align: left;
+}
+
+.bod {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 25px;
+}
+
+.user {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 30px;
+}
