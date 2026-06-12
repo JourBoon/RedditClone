@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func insertUser(db *sql.DB, user register) (error) {
+func insertUser(db *sql.DB, user register) error {
 	query := `INSERT INTO users (username, email, password) VALUES (?, ?, ?)`
 	println("insertion")
 
@@ -21,15 +21,15 @@ func insertUser(db *sql.DB, user register) (error) {
 	return err
 }
 
-func postMess(db *sql.DB,id_user string,subject string,tag []string ,body string) (error){
-	query:= `INSERT INTO messages (id_user,subject,tag,body) VALUES (?,?,?,?)`
-	println(query,id_user,string(tabStringToJson(tag)), subject, body);
-	_, err := db.Exec(query,id_user,string(tabStringToJson(tag)), subject, body);
+func postMess(db *sql.DB, id_user string, subject string, tag []string, body string) error {
+	query := `INSERT INTO messages (id_user,subject,tag,body) VALUES (?,?,?,?)`
+	println(query, id_user, subject, string(tabStringToJson(tag)), body)
+	_, err := db.Exec(query, id_user, subject, string(tabStringToJson(tag)), body)
 	if err != nil {
-		fmt.Println(err);
-		return err;
+		fmt.Println(err)
+		return err
 	}
-	return nil;
+	return nil
 }
 
 func logUser(db *sql.DB, user login) (bool, error) {
@@ -106,12 +106,12 @@ func addCsrfToken(db *sql.DB, login login) (bool, error) {
 
 func returnUsername(db *sql.DB, sessionToken string) (string, error) {
 	query := `SELECT users.username FROM users INNER JOIN session ON session.id_user = users.id WHERE session.sessionToken=(?)`
-	var username string = "";
+	var username string = ""
 	err := db.QueryRow(query, sessionToken).Scan(&username)
 	if err != nil {
 		fmt.Println(err)
 	}
-	return username,err;	
+	return username, err
 }
 
 func getMess(db *sql.DB) ([]Mess, error) {
@@ -157,8 +157,7 @@ func getMess(db *sql.DB) ([]Mess, error) {
 	return rowsData, nil
 }
 
-
-func getIdUserByUsername(db *sql.DB,userName string) string{
+func getIdUserByUsername(db *sql.DB, userName string) string {
 	query := `SELECT id FROM users WHERE username=(?)`
 	var id string
 	err := db.QueryRow(query, userName).Scan(&id)

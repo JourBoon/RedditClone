@@ -77,9 +77,14 @@ func extractMess(r *http.Request) message {
 		fmt.Println("Erreur ParseForm:", err)
 	}
 
+	tagValues := r.Form["tag"]
+	if len(tagValues) == 0 {
+		tagValues = r.Form["tag[]"]
+	}
+
 	mess := message{
 		subject: r.FormValue("subject"),
-		tags:    r.Form["tag"],
+		tags:    tagValues,
 		body:    r.FormValue("body"),
 	}
 	return mess
