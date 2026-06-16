@@ -21,7 +21,7 @@
                     <option value="user" {{if eq .Params.SearchType "user" }} selected{{end}}>Utilisateur</option>
                     <option value="subject" {{if eq .Params.SearchType "subject" }} selected{{end}}>Sujet</option>
                 </select>
-                <button class="btn-primary" type="submit">🔍 Rechercher</button>
+                <button class="search-btn" type="submit">Rechercher</button>
             </form>
             <div class="btn-group">
                 <button class="create-btn" onclick="window.location.href='/createForum'">Créer</button>

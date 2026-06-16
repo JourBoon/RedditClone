@@ -181,3 +181,41 @@ body {
     margin-top: 15px;
     font-size: 30px;
 }
+
+.search-btn {
+    background-color: rgb(54, 53, 53);
+    padding: 7px;
+    border-radius: 10px;
+    color: wheat;
+    font-style: normal;
+    text-decoration: none;
+    font-size: 30px;
+    border: wheat solid 3px;
+    margin-right: 20px;
+
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.search-btn:hover {
+    background-color: rgba(245, 222, 179, 0.363);
+    transition-duration: 1s;
+}
+
+.search-select {
+    background-color: rgb(54, 53, 53);
+    padding: 5px;
+    border-radius: 10px;
+    color: wheat;
+    font-style: normal;
+    text-decoration: none;
+    font-size: 30px;
+    border: wheat solid 3px;
+    margin-right: 20px;
+    margin-left: 20px;
+
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
