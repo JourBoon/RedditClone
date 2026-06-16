@@ -17,9 +17,9 @@
             <form method="POST" action="/">
                 <input type="text" class="search-bar" placeholder="Rechercher..." />
                 <select name="SearchType" class="search-select">
-                    <option value="tags" {{if eq .SearchType "tags" }} selected{{end}}>Tags</option>
-                    <option value="user" {{if eq .SearchType "user" }} selected{{end}}>Utilisateur</option>
-                    <option value="subject" {{if eq .SearchType "subject" }} selected{{end}}>Sujet</option>
+                    <option value="tags" {{if eq .Params.SearchType "tags" }} selected{{end}}>Tags</option>
+                    <option value="user" {{if eq .Params.SearchType "user" }} selected{{end}}>Utilisateur</option>
+                    <option value="subject" {{if eq .Params.SearchType "subject" }} selected{{end}}>Sujet</option>
                 </select>
                 <button class="btn-primary" type="submit">🔍 Rechercher</button>
             </form>
@@ -36,12 +36,12 @@
             </div>
 
             <div class="content">
-                {{range .}}
+                {{range .Mess}}
                     <div class="post">
-                        <div class="subject">{{.Subject}}</div>
+                        <div class="subject">{{.Mess.Subject}}</div>
                         <div class="separateur"></div>
-                        <div class="bod">{{.Body}}</div>
-                        <div class="user">{{.Username}}</div>
+                        <div class="bod">{{.Mess.Body}}</div>
+                        <div class="user">{{.Mess.Username}}</div>
                     </div>
                 </a>
                 {{else}}

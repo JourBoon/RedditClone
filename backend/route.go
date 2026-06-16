@@ -71,14 +71,15 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 	if err := Authorize(r); err == nil {
 		path := "protected/home.html"
-		data, err := getMess(db)
+		messages, err := getMess(db)
 		if err != nil {
 			handleError(w, "Erreur dans le chargement des messages", http.StatusInternalServerError, err)
 			return
 		}
 		search := extractQueryParams(r)
-		if search.searchQuery != "" {
-			data = Search(data, search.searchQuery,search.searchType)
+		data := DataHome{
+			Mess:   Search(messages, search.SearchQuery, search.SearchType),
+			Params: search,
 		}
 		renderTemplateWithData(w, path, data)
 		return
@@ -89,6 +90,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 }
 
 func HomePage(w http.ResponseWriter, r *http.Request) {
+	var new_data any
 	db, err := dbConnection()
 	if err != nil {
 		handleError(w, "Erreur DB", http.StatusInternalServerError, err)
@@ -107,9 +109,14 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 	}
 
 	path := "protected/home.html"
-	
+
+	search := extractQueryParams(r)
+	new_data = DataHome{
+		Mess:   Search(data, search.SearchQuery, search.SearchType),
+		Params: search,
+	}
 	defer db.Close()
-	renderTemplateWithData(w, path, data)
+	renderTemplateWithData(w, path, new_data)
 }
 
 func createForum(w http.ResponseWriter, r *http.Request) {
