@@ -219,3 +219,13 @@ body {
     font-weight: 400;
     font-style: normal;
 }
+
+.like-btn {
+    color: wheat;
+    font-size: 20px;
+}
+
+.like-btn:hover {
+    color: rgb(255, 243, 222);
+    transition: 1s;
+}

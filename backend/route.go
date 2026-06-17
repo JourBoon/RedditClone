@@ -148,6 +148,10 @@ func createForum(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/HomePage", http.StatusSeeOther)
 }
 
+func Like(w http.ResponseWriter, r *http.Request) {
+	addLike()
+}
+
 func RoutePages() {
 	dir, err := os.Getwd()
 	if err != nil {
@@ -164,6 +168,7 @@ func RoutePages() {
 	http.HandleFunc("/createForum", createForum)
 	http.HandleFunc("/LogoutBtn", LogoutBtn)
 	http.HandleFunc("/HomePage", HomePage)
+	http.HandleFunc("/Like", Like)
 }
 
 func getUsernameFromSessionCookie(r *http.Request) (string, error) {

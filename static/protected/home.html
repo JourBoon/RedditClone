@@ -9,8 +9,8 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-    </head>
-
+    
+        <script src="https://kit.fontawesome.com/aeedc88d0a.js" crossorigin="anonymous"></script>    </head>
     <body>
         <div class="topbar">
             <a id="title" href="/HomePage">4Red - FORUM</a>
@@ -38,12 +38,12 @@
             <div class="content">
                 {{range .Mess}}
                     <div class="post">
-                        <div class="subject">{{.Mess.Subject}}</div>
+                        <div class="subject">{{.Subject}}</div>
                         <div class="separateur"></div>
-                        <div class="bod">{{.Mess.Body}}</div>
-                        <div class="user">{{.Mess.Username}}</div>
+                        <div class="bod">{{.Body}}</div>
+                        <div class="user">{{.Username}}</div>
+                        <a class="like-btn" href="/Like"><i class="fa-solid fa-heart"></i></a>
                     </div>
-                </a>
                 {{else}}
                 <span style="color:#fff; grid-column: 1 / -1; text-align: center; padding: 20px;">Aucun post trouvé.</span>
                 {{end}}

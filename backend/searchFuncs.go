@@ -5,28 +5,33 @@ import(
 )
 
 func Search(list []Mess, searchQuery string, searchType string) []Mess {
-	var result []Mess;
-	var noSort [][]any;
-	switch searchType{
-	case "subject": 
-		for i:=0;i<len(list);i++{
-			indice := matchExact(list[i].Subject,searchQuery)+matchLetter(list[i].Subject,searchQuery);
+	// Si pas de recherche, retourner tous les messages directement
+	if searchQuery == "" {
+		return list
+	}
+
+	var result []Mess
+	var noSort [][]any
+	switch searchType {
+	case "subject":
+		for i := 0; i < len(list); i++ {
+			indice := matchExact(list[i].Subject, searchQuery) + matchLetter(list[i].Subject, searchQuery)
 			noSort = append(noSort, []any{indice, list[i]})
 		}
-	case "user" :
-		for i:=0;i<len(list);i++{
-			indice := matchExact(list[i].Username,searchQuery)+matchLetter(list[i].Username,searchQuery);
+	case "user":
+		for i := 0; i < len(list); i++ {
+			indice := matchExact(list[i].Username, searchQuery) + matchLetter(list[i].Username, searchQuery)
 			noSort = append(noSort, []any{indice, list[i]})
 		}
-	default :
-		for i:=0;i<len(list);i++{
-			for j:=0;j<len(list[i].Tag);j++{
-				indice := matchExact(list[i].Tag[j],searchQuery)+matchLetter(list[i].Tag[j],searchQuery);
+	default:
+		for i := 0; i < len(list); i++ {
+			for j := 0; j < len(list[i].Tag); j++ {
+				indice := matchExact(list[i].Tag[j], searchQuery) + matchLetter(list[i].Tag[j], searchQuery)
 				noSort = append(noSort, []any{indice, list[i]})
 			}
 		}
 	}
-	result = sortMess(noSort);
+	result = sortMess(noSort)
 	return result
 }
 
@@ -71,12 +76,12 @@ func sortMess(list [][]any) []Mess {
         if len(item) < 2 {
             continue
         }
-        index, ok1 := item[0].(float64)
+        index, ok1 := item[0].(int)
         mess, ok2 := item[1].(Mess)
         if !ok1 || !ok2 {
             continue
         }
-        indexed = append(indexed, indexedMess{index, mess})
+        indexed = append(indexed, indexedMess{float64(index), mess})
     }
 
     sort.Slice(indexed, func(i, j int) bool {
