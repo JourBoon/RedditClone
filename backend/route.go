@@ -149,7 +149,14 @@ func createForum(w http.ResponseWriter, r *http.Request) {
 }
 
 func Like(w http.ResponseWriter, r *http.Request) {
-	addLike()
+	test := ""
+
+	db, err := dbConnection()
+	if err != nil {
+		handleError(w, "Erreur DB", http.StatusInternalServerError, err)
+		return
+	}
+	addLike(db, test)
 }
 
 func RoutePages() {

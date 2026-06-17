@@ -227,5 +227,5 @@ body {
 
 .like-btn:hover {
     color: rgb(255, 243, 222);
-    transition: 1s;
+    transition: 200ms;
 }
