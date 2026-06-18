@@ -11,8 +11,10 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     
-        <script src="https://kit.fontawesome.com/aeedc88d0a.js" crossorigin="anonymous"></script>    </head>
+        <script src="https://kit.fontawesome.com/aeedc88d0a.js" crossorigin="anonymous"></script>
+    </head>
     <body>
+        
         <div class="topbar">
             <div class="topbar-left">
                 <button class="hamburger-btn" id="hamburgerBtn" aria-label="Menu" aria-expanded="false">
@@ -40,7 +42,6 @@
         <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
         <div class="app">
-<<<<<<< HEAD
             
             <div class="sidebar" id="sidebar">
                 <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Fermer le menu">
@@ -48,13 +49,9 @@
                 </button>
                 <a class="home-btn" href="/HomePage">Accueil</a>
                 <a class="popular-btn">Populaire</a>
-=======
-            <div class="sidebar">
-                <a class="popular-btn" href='/Populaire'>Populaire</a>
-                <a class="home-btn" href='/HomePage'>Accueil</a>
->>>>>>> 7539012a84956c22ead0dce788169886650ae2bd
             </div>
 
+            
             <div class="content">
                 {{range .Mess}}
                     <div class="post">
@@ -79,7 +76,7 @@
                         
                     </div>
                 {{else}}
-                <span style="color:#fff; grid-column: 1 / -1; text-align: center; padding: 20px;">Aucun post trouvé.</span>
+                <span style="color:#fff; width:100%; text-align: center; padding: 20px;">Aucun post trouvé.</span>
                 {{end}}
             </div>
         </div>

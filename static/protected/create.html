@@ -6,16 +6,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Créer un forum</title>
 
-        <link rel="stylesheet" href="static/css/create.css">
+        <link rel="stylesheet" href="static/css/create.css?v=2">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-
-        <script src="https://kit.fontawesome.com/aeedc88d0a.js" crossorigin="anonymous"></script>    </head>
+        <script src="https://kit.fontawesome.com/aeedc88d0a.js" crossorigin="anonymous"></script>
     </head>
 
     <body>
+        
         <div class="topbar">
             <div class="topbar-left">
                 <button class="hamburger-btn" id="hamburgerBtn" aria-label="Menu" aria-expanded="false">
@@ -61,57 +61,58 @@
             </div>
         </div>
 
-        <script>
-            function addElement() {
-                const newInput = document.createElement("input");
-                newInput.setAttribute("type", "text");
-                newInput.setAttribute("class", "tag-input");
-                newInput.setAttribute("placeholder", "Tag");
-                newInput.setAttribute("name", "tag");
+    <script>
+        function addElement() {
+            const newInput = document.createElement("input");
+            newInput.setAttribute("type", "text");
+            newInput.setAttribute("class", "tag-input");
+            newInput.setAttribute("placeholder", "Tag");
+            newInput.setAttribute("name", "tag");
 
-                const form = document.querySelector("form.form");
-                const referenceNode = form.querySelector("textarea");
+            const form = document.querySelector("form.form");
+            const referenceNode = form.querySelector("textarea");
 
-                if (referenceNode) {
-                    form.insertBefore(newInput, referenceNode);
-                } else {
-                    form.appendChild(newInput);
-                }
-            };
+            if (referenceNode) {
+                form.insertBefore(newInput, referenceNode);
+            } else {
+                form.appendChild(newInput);
+            }
+        };
 
-            function suppElement() {
-                const tagInputs = document.querySelectorAll("input.tag-input");
-                if (tagInputs.length === 0) {
-                    return;
-                }
-
-                const lastTag = tagInputs[tagInputs.length - 1];
-                lastTag.remove();
+        function suppElement() {
+            const tagInputs = document.querySelectorAll("input.tag-input");
+            if (tagInputs.length === 0) {
+                return;
             }
 
-            
-            const hamburgerBtn = document.getElementById('hamburgerBtn');
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebarOverlay');
-            const closeBtn = document.getElementById('sidebarCloseBtn');
+            const lastTag = tagInputs[tagInputs.length - 1];
+            lastTag.remove();
+        }
 
-            function openSidebar() {
-                sidebar.classList.add('open');
-                overlay.classList.add('active');
-                hamburgerBtn.setAttribute('aria-expanded', 'true');
-                document.body.style.overflow = 'hidden';
-            }
+        
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        const closeBtn = document.getElementById('sidebarCloseBtn');
 
-            function closeSidebar() {
-                sidebar.classList.remove('open');
-                overlay.classList.remove('active');
-                hamburgerBtn.setAttribute('aria-expanded', 'false');
-                document.body.style.overflow = '';
-            }
+        function openSidebar() {
+            sidebar.classList.add('open');
+            overlay.classList.add('active');
+            hamburgerBtn.setAttribute('aria-expanded', 'true');
+            document.body.style.overflow = 'hidden';
+        }
 
-            hamburgerBtn.addEventListener('click', openSidebar);
-            closeBtn.addEventListener('click', closeSidebar);
-            overlay.addEventListener('click', closeSidebar);
-        </script>
+        function closeSidebar() {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+            hamburgerBtn.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+        }
+
+        hamburgerBtn.addEventListener('click', openSidebar);
+        closeBtn.addEventListener('click', closeSidebar);
+        overlay.addEventListener('click', closeSidebar);
+    </script>
     </body>
+
 </html>

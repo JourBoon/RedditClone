@@ -31,7 +31,7 @@ func InitStartSession(w http.ResponseWriter, r *http.Request) {
 	defer db.Close()
 
 	params_log.sessionToken = generateToken(32)
-	//params_log.CsrfToken = generateToken(32)
+
 	println("InitStart:")
 	http.SetCookie(w, &http.Cookie{
 		Name:    "username",
@@ -48,16 +48,7 @@ func InitStartSession(w http.ResponseWriter, r *http.Request) {
 		HttpOnly: true,
 	})
 
-	/*http.SetCookie(w, &http.Cookie{
-		Name:     "csrf_token",
-		Value:    params_log.CsrfToken,
-		Path:     "/",
-		Expires:  time.Now().Add(24 * time.Hour),
-		HttpOnly: false,
-	})*/
-
 	addSessionToken(db, params_log)
-	//addCsrfToken(db, params_log)
 
 }
 
@@ -82,10 +73,9 @@ func InitSession(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Session Token :", sessionToken)
 	fmt.Println("Session Token en cookies", st.Value)
 	println("Init:", params_log.username)
-	
+
 	if sessionToken != st.Value {
 		params_log.sessionToken = generateToken(32)
-		//params_log.CsrfToken = generateToken(32)
 
 		http.SetCookie(w, &http.Cookie{
 			Name:    "username",
@@ -102,16 +92,8 @@ func InitSession(w http.ResponseWriter, r *http.Request) {
 			HttpOnly: true,
 		})
 
-		/*http.SetCookie(w, &http.Cookie{
-			Name:     "csrf_token",
-			Value:    params_log.CsrfToken,
-			Path:     "/",
-			Expires:  time.Now().Add(24 * time.Hour),
-			HttpOnly: false,
-		})*/
-
 		addSessionToken(db, params_log)
-		//addCsrfToken(db, params_log)
+
 	} else {
 		return
 	}
