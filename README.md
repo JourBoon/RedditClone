@@ -40,7 +40,7 @@
 ```
 
 ```bash
-[MERGE]
+[MERGE] - fonctionnalité
 ```
 
 ```bash
