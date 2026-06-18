@@ -54,7 +54,6 @@ func logUser(db *sql.DB, user login) (bool, error) {
 
 func addSessionToken(db *sql.DB, login login) (bool, error) {
 	query := `INSERT INTO session (id_user, sessionToken) SELECT id, ? FROM users WHERE email = ? ON CONFLICT(id_user) DO UPDATE SET sessionToken = excluded.sessionToken;`
-	// Requête SQL suggérée par ChatGpt ;)
 
 	_, err := db.Exec(query, login.sessionToken, login.mail)
 	if err != nil {
@@ -92,7 +91,6 @@ func returnCsrfToken(db *sql.DB, user login) (string, error) {
 
 func addCsrfToken(db *sql.DB, login login) (bool, error) {
 	query := `INSERT INTO session (id_user, csrfToken) SELECT id, ? FROM users WHERE email = ? ON CONFLICT(id_user) DO UPDATE SET csrfToken = excluded.csrfToken;`
-	// Requête SQL suggérée par ChatGpt ;)
 
 	_, err := db.Exec(query, login.CsrfToken, login.mail)
 	if err != nil {
@@ -173,10 +171,10 @@ func getIdUserByUsername(db *sql.DB, userName string) string {
 	return id
 }
 
-func addLike(db *sql.DB, userName string) {
+func addLike(db *sql.DB, userId string, messId string) {
 	query := `UPDATE message SET likes += 1 WHERE username=()`
 	var id string
-	err := db.QueryRow(query, userName).Scan(&id)
+	err := db.QueryRow(query, userId, messId).Scan(&id)
 	if err != nil {
 		fmt.Println(err)
 	}

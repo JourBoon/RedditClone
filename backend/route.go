@@ -149,14 +149,15 @@ func createForum(w http.ResponseWriter, r *http.Request) {
 }
 
 func Like(w http.ResponseWriter, r *http.Request) {
-	test := ""
+	userId := r.FormValue("UserId")
+	messId := r.FormValue("MessId")
 
 	db, err := dbConnection()
 	if err != nil {
 		handleError(w, "Erreur DB", http.StatusInternalServerError, err)
 		return
 	}
-	addLike(db, test)
+	addLike(db, userId, messId)
 }
 
 func RoutePages() {
