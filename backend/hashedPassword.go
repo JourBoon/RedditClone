@@ -23,11 +23,3 @@ func checkPassword(hashedPassword, passwordLogin string) bool {
     err := bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(passwordLogin))
     return err == nil
 }
-
-func checkHashedPassword(storedPass string, password string) {
-    if checkPassword(storedPass, password) {
-        fmt.Println("The password is correct")
-    } else {
-        fmt.Println("The password is incorrect")
-    }
-}
