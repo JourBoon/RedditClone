@@ -14,8 +14,8 @@
     <body>
         <div class="topbar">
             <a id="title" href="/HomePage">4Red - FORUM</a>
-            <form method="POST" action="/">
-                <input type="text" class="search-bar" placeholder="Rechercher..." />
+            <form method="POST" action="/HomePage">
+                <input type="text" class="search-bar" name="search" value="{{.Params.SearchQuery}}" placeholder="Rechercher..." />
                 <select name="SearchType" class="search-select">
                     <option value="tags" {{if eq .Params.SearchType "tags" }} selected{{end}}>Tags</option>
                     <option value="user" {{if eq .Params.SearchType "user" }} selected{{end}}>Utilisateur</option>
