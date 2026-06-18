@@ -254,6 +254,18 @@ body {
     font-size: 30px;
 }
 
+.tags {
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 22px;
+}
+
+.tag {
+    color: rgb(255, 240, 200);
+}
+
 .bod {
     text-align: center;
     margin-top: 10px;
@@ -264,11 +276,6 @@ body {
     text-align: center;
     margin-top: 10px;
     font-size: 26px;
-}
-
-.like-group {
-    display: flex;
-    align-items: center;
 }
 
 .like-btn {
@@ -483,8 +490,4 @@ body {
     .like-btn {
         font-size: 18px;
     }
-}
-
-.likes-num {
-    font-size: 25px;
 }

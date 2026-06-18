@@ -1,106 +1,113 @@
 <!DOCTYPE html>
 <html lang="fr">
 
-    <head>
-        <title>Accueil — 4Red Forum</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="4Red Forum — Parcourez les posts de la communauté">
-        <link rel="stylesheet" href="static/css/home.css?v=3"/>
+<head>
+    <title>Forum</title>
+    <meta charset="utf8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/home.css?v=2" />
 
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-    
-        <script src="https://kit.fontawesome.com/aeedc88d0a.js" crossorigin="anonymous"></script>
-    </head>
-    <body>
-        
-        <div class="topbar">
-            <div class="topbar-left">
-                <button class="hamburger-btn" id="hamburgerBtn" aria-label="Menu" aria-expanded="false">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
-                <a id="title" href="/HomePage">4Red - FORUM</a>
-            </div>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 
-            <form method="POST" action="/" class="search-form">
-                <input type="text" name="SearchQuery" class="search-bar" placeholder="Rechercher..." />
-                <select name="SearchType" class="search-select">
-                    <option value="tags" {{if eq .Params.SearchType "tags" }} selected{{end}}>Tags</option>
-                    <option value="user" {{if eq .Params.SearchType "user" }} selected{{end}}>Utilisateur</option>
-                    <option value="subject" {{if eq .Params.SearchType "subject" }} selected{{end}}>Sujet</option>
-                </select>
-                <button class="search-btn" type="submit">Rechercher</button>
-            </form>
+    <script src="https://kit.fontawesome.com/aeedc88d0a.js" crossorigin="anonymous"></script>
+</head>
 
-            <div class="btn-group">
-                <button class="create-btn" onclick="window.location.href='/createForum'">Créer</button>
-                <button class="decon-btn" onclick="window.location.href='/LogoutBtn'">Déconnexion</button>
+<body>
+
+    <div class="topbar">
+        <div class="topbar-left">
+            <button class="hamburger-btn" id="hamburgerBtn" aria-label="Menu" aria-expanded="false">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <a id="title" href="/HomePage">4Red - FORUM</a>
+        </div>
+
+        <form method="POST" action="/" class="search-form">
+            <input type="text" name="SearchQuery" class="search-bar" placeholder="Rechercher..." />
+            <select name="SearchType" class="search-select">
+                <option value="tags" {{if eq .Params.SearchType "tags" }} selected{{end}}>Tags</option>
+                <option value="user" {{if eq .Params.SearchType "user" }} selected{{end}}>Utilisateur</option>
+                <option value="subject" {{if eq .Params.SearchType "subject" }} selected{{end}}>Sujet</option>
+            </select>
+            <button class="search-btn" type="submit">Rechercher</button>
+        </form>
+
+        <div class="btn-group">
+            <button class="create-btn" onclick="window.location.href='/createForum'">Créer</button>
+            <button class="decon-btn" onclick="window.location.href='/LogoutBtn'">Déconnexion</button>
+        </div>
+    </div>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="app">
+
+        <div class="sidebar" id="sidebar">
+            <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Fermer le menu">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="sidebar">
+                <a class="popular-btn" href='/Populaire'>Populaire</a>
+                <a class="home-btn" href='/HomePage'>Accueil</a>
             </div>
         </div>
 
-        
-        <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-        <div class="app">
-            
-            <div class="sidebar" id="sidebar">
-                <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Fermer le menu">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-                <a class="home-btn" href="/HomePage">Accueil</a>
-                <a class="popular-btn">Populaire</a>
-            </div>
-
-            
-            <div class="content">
-                {{range .Mess}}
-                    <div class="post">
-                        <form method="POST" action="/Like">
-                            <input type="hidden" name="id_message" value="{{.Id}}" />
-                            <input type="hidden" name="id_utilisateur" value="{{$.CurrentUserID}}" />
-                            <div class="subject" name="MessId" value="{{.Id}}">{{.Subject}}</div>
-                            <div class="separateur"></div>
-                            <div class="bod">{{.Body}}</div>
-                            <div class="user" name="UserId" value="{{.UserId}}">{{.Username}}</div>
-                            <div class="like-group">
-                                <button class="like-btn" type="submit"><i class="fa-solid fa-heart"></i></button>
-                                <div class="likes-num">{{.Likes}}</div>
-                            </div>
-                            
-                        </form>
-                        
+        <div class="content">
+            {{range .Mess}}
+            <div class="post">
+                <form method="POST" action="/Like">
+                    <input type="hidden" name="id_message" value="{{.Id}}" />
+                    <input type="hidden" name="id_utilisateur" value="{{$.CurrentUserID}}" />
+                    <div class="subject" name="MessId" value="{{.Id}}">{{.Subject}}</div>
+                    {{if .Tag}}
+                    <div class="tags">
+                        {{range .Tag}}<span class="tag">#{{.}}</span>{{end}}
                     </div>
-                {{else}}
-                <span style="color:#fff; width:100%; text-align: center; padding: 20px;">Aucun post trouvé.</span>
-                {{end}}
+                    {{end}}
+                    <div class="separateur"></div>
+                    <div class="bod">{{.Body}}</div>
+                    <div class="user" name="UserId" value="{{.UserId}}">{{.Username}}</div>
+                    <div class="like-group">
+                        <button class="like-btn" type="submit"><i class="fa-solid fa-heart"></i></button>
+                        <div class="likes-num">{{.Likes}}</div>
+                    </div>
+
+                </form>
+
             </div>
+            {{else}}
+            <span style="color:#fff; width:100%; text-align: center; padding: 20px;">Aucun post trouvé.</span>
+            {{end}}
         </div>
+    </div>
 
-        <script>
-            const hamburgerBtn = document.getElementById('hamburgerBtn');
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebarOverlay');
-            const closeBtn = document.getElementById('sidebarCloseBtn');
+    <script>
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        const closeBtn = document.getElementById('sidebarCloseBtn');
 
-            function openSidebar() {
-                sidebar.classList.add('open');
-                overlay.classList.add('active');
-                hamburgerBtn.setAttribute('aria-expanded', 'true');
-                document.body.style.overflow = 'hidden';
-            }
+        function openSidebar() {
+            sidebar.classList.add('open');
+            overlay.classList.add('active');
+            hamburgerBtn.setAttribute('aria-expanded', 'true');
+            document.body.style.overflow = 'hidden';
+        }
 
-            function closeSidebar() {
-                sidebar.classList.remove('open');
-                overlay.classList.remove('active');
-                hamburgerBtn.setAttribute('aria-expanded', 'false');
-                document.body.style.overflow = '';
-            }
+        function closeSidebar() {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+            hamburgerBtn.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+        }
 
-            hamburgerBtn.addEventListener('click', openSidebar);
-            closeBtn.addEventListener('click', closeSidebar);
-            overlay.addEventListener('click', closeSidebar);
-        </script>
-    </body>
+        hamburgerBtn.addEventListener('click', openSidebar);
+        closeBtn.addEventListener('click', closeSidebar);
+        overlay.addEventListener('click', closeSidebar);
+    </script>
+</body>
+
 </html>
