@@ -9,16 +9,16 @@ import (
 )
 
 func dbConnection() (*sql.DB, error) {
-    db, err := sql.Open("sqlite3", "./database/database.db")
-    if err != nil {
-        log.Fatal(err)
-    }
+	db, err := sql.Open("sqlite3", "./database/database.db")
+	if err != nil {
+		log.Fatal(err)
+	}
 
-    err = db.Ping()
-    if err != nil {
-        log.Fatal(err)
-    }
+	err = db.Ping()
+	if err != nil {
+		log.Fatal(err)
+	}
 
-    fmt.Println("Successfully connected to SQLite database!")
-    return db, nil
+	fmt.Println("Successfully connected to SQLite database!")
+	return db, nil
 }

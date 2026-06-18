@@ -1,11 +1,12 @@
 package fonction_go
-import(
-	"unicode/utf8"
+
+import (
 	"sort"
+	"unicode/utf8"
 )
 
 func Search(list []Mess, searchQuery string, searchType string) []Mess {
-	// Si pas de recherche, retourner tous les messages directement
+
 	if searchQuery == "" {
 		return list
 	}
@@ -38,11 +39,11 @@ func Search(list []Mess, searchQuery string, searchType string) []Mess {
 func matchExact(s1 string, s2 string) int {
 	var indice int
 	for i := 0; i < utf8.RuneCountInString(s2); i++ {
-		if i>utf8.RuneCountInString(s2){
+		if i > utf8.RuneCountInString(s2) {
 			break
 		}
-		if s2[i]==s1[i]{
-			indice+=1
+		if s2[i] == s1[i] {
+			indice += 1
 		}
 	}
 	return indice
@@ -66,31 +67,31 @@ func matchLetter(s1 string, s2 string) int {
 }
 
 func sortMess(list [][]any) []Mess {
-    type indexedMess struct {
-        index float64
-        mess  Mess
-    }
+	type indexedMess struct {
+		index float64
+		mess  Mess
+	}
 
-    var indexed []indexedMess
-    for _, item := range list {
-        if len(item) < 2 {
-            continue
-        }
-        index, ok1 := item[0].(int)
-        mess, ok2 := item[1].(Mess)
-        if !ok1 || !ok2 {
-            continue
-        }
-        indexed = append(indexed, indexedMess{float64(index), mess})
-    }
+	var indexed []indexedMess
+	for _, item := range list {
+		if len(item) < 2 {
+			continue
+		}
+		index, ok1 := item[0].(int)
+		mess, ok2 := item[1].(Mess)
+		if !ok1 || !ok2 {
+			continue
+		}
+		indexed = append(indexed, indexedMess{float64(index), mess})
+	}
 
-    sort.Slice(indexed, func(i, j int) bool {
-        return indexed[i].index < indexed[j].index
-    })
+	sort.Slice(indexed, func(i, j int) bool {
+		return indexed[i].index < indexed[j].index
+	})
 
-    result := make([]Mess, len(indexed))
-    for i, v := range indexed {
-        result[i] = v.mess
-    }
-    return result
+	result := make([]Mess, len(indexed))
+	for i, v := range indexed {
+		result[i] = v.mess
+	}
+	return result
 }

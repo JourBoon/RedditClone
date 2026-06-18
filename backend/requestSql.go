@@ -54,7 +54,6 @@ func logUser(db *sql.DB, user login) (bool, error) {
 
 func addSessionToken(db *sql.DB, login login) (bool, error) {
 	query := `INSERT INTO session (id_user, sessionToken) SELECT id, ? FROM users WHERE email = ? ON CONFLICT(id_user) DO UPDATE SET sessionToken = excluded.sessionToken;`
-	// Requête SQL suggérée par ChatGpt ;)
 
 	_, err := db.Exec(query, login.sessionToken, login.mail)
 	if err != nil {
@@ -92,7 +91,6 @@ func returnCsrfToken(db *sql.DB, user login) (string, error) {
 
 func addCsrfToken(db *sql.DB, login login) (bool, error) {
 	query := `INSERT INTO session (id_user, csrfToken) SELECT id, ? FROM users WHERE email = ? ON CONFLICT(id_user) DO UPDATE SET csrfToken = excluded.csrfToken;`
-	// Requête SQL suggérée par ChatGpt ;)
 
 	_, err := db.Exec(query, login.CsrfToken, login.mail)
 	if err != nil {
