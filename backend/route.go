@@ -161,10 +161,6 @@ func createForum(w http.ResponseWriter, r *http.Request) {
 }
 
 func Like(w http.ResponseWriter, r *http.Request) {
-<<<<<<< HEAD
-	userId := r.FormValue("UserId")
-	messId := r.FormValue("MessId")
-=======
 	if err := r.ParseForm(); err != nil {
 		handleError(w, "Formulaire invalide", http.StatusBadRequest, err)
 		return
@@ -174,16 +170,12 @@ func Like(w http.ResponseWriter, r *http.Request) {
 	if messId == "" {
 		messId = r.FormValue("MessId")
 	}
->>>>>>> master
 
 	db, err := dbConnection()
 	if err != nil {
 		handleError(w, "Erreur DB", http.StatusInternalServerError, err)
 		return
 	}
-<<<<<<< HEAD
-	addLike(db, userId, messId)
-=======
 	defer db.Close()
 
 	username, err := getUsernameFromSessionCookie(r)
@@ -199,7 +191,6 @@ func Like(w http.ResponseWriter, r *http.Request) {
 	}
 
 	http.Redirect(w, r, "/HomePage", http.StatusSeeOther)
->>>>>>> master
 }
 
 func RoutePages() {

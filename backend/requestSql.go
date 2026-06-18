@@ -171,15 +171,6 @@ func getIdUserByUsername(db *sql.DB, userName string) string {
 	return id
 }
 
-<<<<<<< HEAD
-func addLike(db *sql.DB, userId string, messId string) {
-	query := `UPDATE message SET likes += 1 WHERE username=()`
-	var id string
-	err := db.QueryRow(query, userId, messId).Scan(&id)
-	if err != nil {
-		fmt.Println(err)
-	}
-=======
 func addLike(db *sql.DB, userId string, messId string) error {
     queryCheck := `SELECT id FROM likes WHERE id_user = ? AND id_message = ?`
     var idLike sql.NullInt64
@@ -218,5 +209,4 @@ func addLike(db *sql.DB, userId string, messId string) error {
     }
 
     return nil
->>>>>>> master
 }
