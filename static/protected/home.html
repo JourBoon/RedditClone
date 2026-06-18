@@ -42,6 +42,11 @@
                             <input type="hidden" name="id_message" value="{{.Id}}" />
                             <input type="hidden" name="id_utilisateur" value="{{$.CurrentUserID}}" />
                             <div class="subject" name="MessId" value="{{.Id}}">{{.Subject}}</div>
+                            {{if .Tag}}
+                            <div class="tags">
+                                {{range .Tag}}<span class="tag">#{{.}}</span>{{end}}
+                            </div>
+                            {{end}}
                             <div class="separateur"></div>
                             <div class="bod">{{.Body}}</div>
                             <div class="user" name="UserId" value="{{.UserId}}">{{.Username}}</div>

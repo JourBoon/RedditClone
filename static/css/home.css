@@ -170,6 +170,18 @@ body {
     text-align: left;
 }
 
+.tags {
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 22px;
+}
+
+.tag {
+    color: rgb(255, 240, 200);
+}
+
 .bod {
     text-align: center;
     margin-top: 15px;
