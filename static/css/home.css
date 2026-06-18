@@ -64,7 +64,9 @@ body {
 }
 
 .search-form {
-    display: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 
@@ -287,8 +289,6 @@ body {
     cursor: pointer;
     font-size: 20px;
     cursor: pointer;
-    margin-top: 8px;
-    padding: 4px 8px;
     transition: color 0.2s ease;
 }
 
@@ -296,7 +296,15 @@ body {
     color: rgb(255, 243, 222);
 }
 
+.likes-num {
+    font-size: 25px;
+}
+
 @media (max-width: 1024px) {
+    .search-form {
+        display: none;
+    }
+
     .topbar {
         gap: 8px;
         padding: 0 12px;
