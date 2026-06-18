@@ -174,35 +174,41 @@ func getIdUserByUsername(db *sql.DB, userName string) string {
 }
 
 func addLike(db *sql.DB, userId string, messId string) error {
-	tx, err := db.Begin()
-	if err != nil {
-		return err
-	}
+    queryCheck := `SELECT id FROM likes WHERE id_user = ? AND id_message = ?`
+    var idLike sql.NullInt64
+    
+    err := db.QueryRow(queryCheck, userId, messId).Scan(&idLike)
+    
+    if err == sql.ErrNoRows {
+        queryInsert := `INSERT INTO likes (id_message, id_user) VALUES (?, ?)`
+        if _, err := db.Exec(queryInsert, messId, userId); err != nil {
+            fmt.Println("Erreur Insert:", err)
+            return err
+        }
 
-	insertLikeQuery := `INSERT OR IGNORE INTO likes (id_message, id_utilisateur) VALUES (?, ?)`
-	result, err := tx.Exec(insertLikeQuery, messId, userId)
-	if err != nil {
-		_ = tx.Rollback()
-		return err
-	}
+        queryUpdate := `UPDATE messages SET likes = likes + 1 WHERE id = ?`
+        if _, err := db.Exec(queryUpdate, messId); err != nil {
+            fmt.Println("Erreur Update +1:", err)
+            return err
+        }
+        return nil
+    }
+    
+    if err != nil {
+        fmt.Println("Erreur de requête:", err)
+        return err
+    }
 
-	rowsAffected, err := result.RowsAffected()
-	if err != nil {
-		_ = tx.Rollback()
-		return err
-	}
+    queryUpdate := `UPDATE messages SET likes = likes - 1 WHERE id = ?`
+    if _, err := db.Exec(queryUpdate, messId); err != nil {
+        fmt.Println("Erreur Update -1:", err)
+        return err
+    }
+    queryDelete := `DELETE FROM likes WHERE id_message = ? AND id_user = ?` 
+    if _, err := db.Exec(queryDelete, messId, userId); err != nil {
+        fmt.Println("Erreur Delete:", err)
+        return err
+    }
 
-	if rowsAffected > 0 {
-		updateLikesQuery := `UPDATE messages SET likes = likes + 1 WHERE id = ?`
-		if _, err := tx.Exec(updateLikesQuery, messId); err != nil {
-			_ = tx.Rollback()
-			return err
-		}
-	}
-
-	if err := tx.Commit(); err != nil {
-		return err
-	}
-
-	return nil
+    return nil
 }
