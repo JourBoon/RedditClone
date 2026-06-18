@@ -173,11 +173,42 @@ func getIdUserByUsername(db *sql.DB, userName string) string {
 	return id
 }
 
-func addLike(db *sql.DB, userName string) {
-	query := `UPDATE message SET likes += 1 WHERE username=()`
-	var id string
-	err := db.QueryRow(query, userName).Scan(&id)
-	if err != nil {
-		fmt.Println(err)
-	}
+func addLike(db *sql.DB, userId string, messId string) error {
+    queryCheck := `SELECT id FROM likes WHERE id_user = ? AND id_message = ?`
+    var idLike sql.NullInt64
+    
+    err := db.QueryRow(queryCheck, userId, messId).Scan(&idLike)
+    
+    if err == sql.ErrNoRows {
+        queryInsert := `INSERT INTO likes (id_message, id_user) VALUES (?, ?)`
+        if _, err := db.Exec(queryInsert, messId, userId); err != nil {
+            fmt.Println("Erreur Insert:", err)
+            return err
+        }
+
+        queryUpdate := `UPDATE messages SET likes = likes + 1 WHERE id = ?`
+        if _, err := db.Exec(queryUpdate, messId); err != nil {
+            fmt.Println("Erreur Update +1:", err)
+            return err
+        }
+        return nil
+    }
+    
+    if err != nil {
+        fmt.Println("Erreur de requête:", err)
+        return err
+    }
+
+    queryUpdate := `UPDATE messages SET likes = likes - 1 WHERE id = ?`
+    if _, err := db.Exec(queryUpdate, messId); err != nil {
+        fmt.Println("Erreur Update -1:", err)
+        return err
+    }
+    queryDelete := `DELETE FROM likes WHERE id_message = ? AND id_user = ?` 
+    if _, err := db.Exec(queryDelete, messId, userId); err != nil {
+        fmt.Println("Erreur Delete:", err)
+        return err
+    }
+
+    return nil
 }

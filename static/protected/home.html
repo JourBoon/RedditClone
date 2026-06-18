@@ -14,8 +14,8 @@
     <body>
         <div class="topbar">
             <a id="title" href="/HomePage">4Red - FORUM</a>
-            <form method="POST" action="/">
-                <input type="text" class="search-bar" placeholder="Rechercher..." />
+            <form method="POST" action="/HomePage">
+                <input type="text" class="search-bar" name="search" value="{{.Params.SearchQuery}}" placeholder="Rechercher..." />
                 <select name="SearchType" class="search-select">
                     <option value="tags" {{if eq .Params.SearchType "tags" }} selected{{end}}>Tags</option>
                     <option value="user" {{if eq .Params.SearchType "user" }} selected{{end}}>Utilisateur</option>
@@ -38,11 +38,20 @@
             <div class="content">
                 {{range .Mess}}
                     <div class="post">
-                        <div class="subject">{{.Subject}}</div>
-                        <div class="separateur"></div>
-                        <div class="bod">{{.Body}}</div>
-                        <div class="user">{{.Username}}</div>
-                        <a class="like-btn" href="/Like"><i class="fa-solid fa-heart"></i></a>
+                        <form method="POST" action="/Like">
+                            <input type="hidden" name="id_message" value="{{.Id}}" />
+                            <input type="hidden" name="id_utilisateur" value="{{$.CurrentUserID}}" />
+                            <div class="subject" name="MessId" value="{{.Id}}">{{.Subject}}</div>
+                            <div class="separateur"></div>
+                            <div class="bod">{{.Body}}</div>
+                            <div class="user" name="UserId" value="{{.UserId}}">{{.Username}}</div>
+                            <div class="like-group">
+                                <button class="like-btn" type="submit"><i class="fa-solid fa-heart"></i></button>
+                                <div class="likes-num">{{.Likes}}</div>
+                            </div>
+                            
+                        </form>
+                        
                     </div>
                 {{else}}
                 <span style="color:#fff; grid-column: 1 / -1; text-align: center; padding: 20px;">Aucun post trouvé.</span>
