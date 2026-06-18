@@ -54,5 +54,5 @@ jobs:
             docker rm redditclone || true
             docker run -d \
               --name redditclone \
-              -p 25567:25567 \
+              -p 4040:4040 \
               ghcr.io/jourboon/redditclone:latest
