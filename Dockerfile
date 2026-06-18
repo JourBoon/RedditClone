@@ -15,6 +15,7 @@ FROM alpine:latest
 WORKDIR /root/
 
 COPY --from=builder /app/redditclone .
+COPY --from=builder /app/static ./static
 
 EXPOSE 4040
 
