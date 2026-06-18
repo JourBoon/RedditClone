@@ -16,6 +16,6 @@ WORKDIR /root/
 
 COPY --from=builder /app/redditclone .
 
-EXPOSE 25567
+EXPOSE 4040
 
 CMD [ "./redditclone" ]
