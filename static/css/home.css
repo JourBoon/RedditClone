@@ -272,12 +272,7 @@ body {
 }
 
 .like-btn {
-<<<<<<< HEAD
-    background: none;
-    border: none;
-=======
     background-color: rgb(54, 53, 53);
->>>>>>> master
     color: wheat;
     font-style: normal;
     border: none;
