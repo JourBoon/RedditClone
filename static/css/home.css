@@ -64,7 +64,9 @@ body {
 }
 
 .search-form {
-    display: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 
@@ -251,6 +253,7 @@ body {
 
 .subject {
     text-align: left;
+    font-size: 30px;
 }
 
 .bod {
@@ -261,49 +264,11 @@ body {
 
 .user {
     text-align: center;
-    margin-top: 15px;
-    font-size: 30px;
+    margin-top: 10px;
+    font-size: 26px;
 }
 
-.search-btn {
-    background-color: rgb(54, 53, 53);
-    padding: 7px;
-    border-radius: 10px;
-    color: wheat;
-    font-style: normal;
-    text-decoration: none;
-    font-size: 30px;
-    border: wheat solid 3px;
-    margin-right: 20px;
-
-    font-family: "Bebas Neue", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-}
-
-.search-btn:hover {
-    background-color: rgba(245, 222, 179, 0.363);
-    transition-duration: 1s;
-}
-
-.search-select {
-    background-color: rgb(54, 53, 53);
-    padding: 5px;
-    border-radius: 10px;
-    color: wheat;
-    font-style: normal;
-    text-decoration: none;
-    font-size: 30px;
-    border: wheat solid 3px;
-    margin-right: 20px;
-    margin-left: 20px;
-
-    font-family: "Bebas Neue", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-}
-
-.like-group {
+.like-grp {
     display: flex;
     align-items: center;
 }
@@ -317,16 +282,213 @@ body {
     cursor: pointer;
     font-size: 20px;
     cursor: pointer;
-    margin-top: 8px;
-    padding: 4px 8px;
     transition: color 0.2s ease;
 }
 
 .like-btn:hover {
     color: rgb(255, 243, 222);
-    transition: 200ms;
 }
 
 .likes-num {
     font-size: 25px;
+}
+
+@media (max-width: 1024px) {
+    .search-form {
+        display: none;
+    }
+
+    .topbar {
+        gap: 8px;
+        padding: 0 12px;
+    }
+
+    #title {
+        font-size: 36px;
+        padding-top: 14px;
+        padding-bottom: 14px;
+    }
+
+    .search-bar {
+        font-size: 18px;
+        max-width: 220px;
+    }
+
+    .search-select {
+        font-size: 16px;
+        padding: 4px 6px;
+    }
+
+    .search-btn {
+        font-size: 16px;
+        padding: 6px 10px;
+    }
+
+    .create-btn, .decon-btn {
+        font-size: 18px;
+        padding: 6px 12px;
+    }
+
+    .sidebar {
+        width: 170px;
+    }
+
+    .home-btn, .popular-btn {
+        font-size: 28px;
+    }
+
+    .post {
+        font-size: 28px;
+        max-width: 100%;
+    }
+
+    .subject { font-size: 24px; }
+    .bod { font-size: 18px; }
+    .user { font-size: 20px; }
+}
+
+@media (max-width: 767px) {
+
+    
+    .topbar {
+        flex-wrap: wrap;
+        padding: 8px 12px;
+        gap: 8px;
+    }
+
+    .topbar-left {
+        flex: 1;
+    }
+
+    .hamburger-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #title {
+        font-size: 28px;
+        padding: 8px 0;
+    }
+
+    
+    .search-form {
+        order: 3;
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    .search-bar {
+        font-size: 16px;
+        max-width: 100%;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .search-select {
+        font-size: 14px;
+        padding: 6px 8px;
+        flex-shrink: 0;
+    }
+
+    .search-btn {
+        font-size: 14px;
+        padding: 6px 10px;
+        flex-shrink: 0;
+    }
+
+    
+    .btn-group {
+        gap: 8px;
+        order: 2;
+    }
+
+    .create-btn, .decon-btn {
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+
+    
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -280px;
+        width: 260px;
+        height: 100%;
+        z-index: 500;
+        border-right: 2px solid wheat;
+        border-bottom: none;
+        padding-top: 60px;
+        transition: left 0.3s ease;
+    }
+
+    .sidebar.open {
+        left: 0;
+    }
+
+    .sidebar-close-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: none;
+        border: 2px solid wheat;
+        color: wheat;
+        font-size: 18px;
+        border-radius: 8px;
+        padding: 4px 10px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+    .sidebar-close-btn:hover {
+        background-color: rgba(245, 222, 179, 0.2);
+    }
+
+    
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        z-index: 400;
+    }
+
+    .sidebar-overlay.active {
+        display: block;
+    }
+
+    .home-btn, .popular-btn {
+        font-size: 28px;
+        padding: 14px;
+    }
+
+    
+    .app {
+        flex-direction: column;
+    }
+
+    
+    .content {
+        padding: 16px 10px;
+        gap: 16px;
+    }
+
+    .post {
+        font-size: 22px;
+        padding: 12px 14px;
+        border-radius: 14px;
+        max-width: 100%;
+    }
+
+    .subject { font-size: 20px; }
+    .bod { font-size: 16px; }
+    .user { font-size: 18px; }
+
+    .like-btn {
+        font-size: 18px;
+    }
 }

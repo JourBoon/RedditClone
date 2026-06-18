@@ -78,6 +78,7 @@ body {
     margin-top: 20px;
     font-size: 30px;
     text-decoration: none;
+    text-decoration: underline;
 
     font-family: "Bebas Neue", sans-serif;
     font-weight: 400;
@@ -87,10 +88,11 @@ body {
 
 .login_button:hover {
     color: rgba(245, 222, 179, 0.61);
+    text-decoration: underline;
 }
 
 .text_register {
-    font-size: 70px;
+    font-size: 60px;
     font-weight: bold;
     color: wheat;
     margin-top: 10px;
