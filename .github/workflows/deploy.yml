@@ -1,9 +1,9 @@
-name: Build & Deploy Allocation Service
+name: Build & Deploy Forum App
 
 on:
   push:
     branches:
-      - main
+      - master
 
 env:
   IMAGE_NAME: ghcr.io/jourboon/redditclone:latest
@@ -57,8 +57,10 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
 
           script: |
-            docker service update \
-              --image ghcr.io/jourboon/redditclone:latest \
-              --with-registry-auth \
-              --update-failure-action rollback \
-              redditclone_service
+            docker pull ghcr.io/jourboon/redditclone:latest
+            docker stop redditclone || true
+            docker rm redditclone || true
+            docker run -d \
+              --name redditclone \
+              -p 25567:25567 \
+              ghcr.io/jourboon/redditclone:latest
