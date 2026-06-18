@@ -220,6 +220,11 @@ body {
     font-style: normal;
 }
 
+.like-group {
+    display: flex;
+    align-items: center;
+}
+
 .like-btn {
     background-color: rgb(54, 53, 53);
     color: wheat;
@@ -233,4 +238,8 @@ body {
 .like-btn:hover {
     color: rgb(255, 243, 222);
     transition: 200ms;
+}
+
+.likes-num {
+    font-size: 25px;
 }
