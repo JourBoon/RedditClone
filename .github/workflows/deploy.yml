@@ -33,26 +33,3 @@ jobs:
 
       - name: Push Docker image
         run: docker push $IMAGE_NAME
-
-  deploy:
-    needs: build-and-push
-
-    runs-on: ubuntu-latest
-
-    steps:
-
-      - name: Deploy on VPS
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-          script: |
-            docker pull ghcr.io/jourboon/redditclone:latest
-            docker stop redditclone || true
-            docker rm redditclone || true
-            docker run -d \
-              --name redditclone \
-              -p 4040:4040 \
-              ghcr.io/jourboon/redditclone:latest
