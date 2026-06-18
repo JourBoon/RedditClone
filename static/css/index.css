@@ -1,0 +1,50 @@
+body {
+    background-color: rgb(54, 53, 53);
+}
+
+#title {
+    color: wheat;
+    font-size: 150px;
+    text-align: center;
+
+    margin-top: 300px;
+    margin-bottom: 10px;
+
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.border {
+    border-top: wheat solid 5px;
+    width: 100px;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 50px;
+    margin-right: 20px;
+}
+
+#btn_login, #btn_register {
+    background-color: rgb(54, 53, 53);
+    padding: 10px;
+    border-radius: 10px;
+    color: wheat;
+    font-style: normal;
+    text-decoration: none;
+    font-size: 40px;
+    border: wheat solid 2px;
+
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+#btn_login:hover, #btn_register:hover {
+    background-color: rgba(245, 222, 179, 0.363);
+    transition-duration: 1s;
+}

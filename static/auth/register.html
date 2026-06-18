@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>4Red</title>
+        <link rel="stylesheet" href="/static/css/register.css">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <input type="hidden" name="csrf_token" value="{{ .CSRFToken }}">
+        <form class="form" method="POST" action="/register">
+            <p class="text_register">Créer un compte</p>
+            <input type="hidden" name="page" value="reg">
+            <input minlength="2" name="user" class="input_register" type="text" placeholder="Utilisateur">
+            <input minlength="2" name="mail" class="input_register" type="email" placeholder="Email">
+            <input minlength="2" name="password" class="input_register" type="password" placeholder="Mot de passe">
+            <button class="register_button" type="submit">Valider</button>
+            <a class="login_button" href="/login">Connexion</a>
+        </form>
+    </body>
+</html>

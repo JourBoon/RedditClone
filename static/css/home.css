@@ -1,0 +1,231 @@
+body {
+    margin: 0;
+    font-family: 'Inter', Arial, sans-serif;
+    background-color: rgb(54, 53, 53);
+    color: #121212;
+    min-height: 100vh;
+}
+
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgb(54, 53, 53);
+    border-bottom: 2px solid wheat;
+}
+
+#title {
+    font-size: 50px;
+    font-weight: bold;
+    color: wheat;
+    margin-left: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    text-decoration: none;
+}
+
+.search-bar {
+    color: wheat;
+    margin-top: 5px;
+    background-color: rgb(54, 53, 53);
+    border: wheat solid 3px;
+    font-size: 25px;
+    border-radius: 10px;
+    padding: 10px;
+    width: 400px;
+    margin-left: 10px;
+
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.app {
+    display: flex;
+    min-height: calc(100vh - 72px);
+}
+
+.sidebar {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    width: 220px;
+    background: transparent;
+    border-right: 1px solid rgba(0, 0, 0, 0.08);
+    background-color: rgb(54, 53, 53);
+    border-left: 2px solid wheat;
+    border-right: 2px solid wheat;
+    border-bottom: 2px solid wheat;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 24px;
+}
+
+.home-btn,
+.popular-btn {
+    background-color: rgb(54, 53, 53);
+    padding: 10px;
+    color: wheat;
+    text-decoration: none;
+    font-size: 40px;
+    border-bottom: wheat solid 2px;
+
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.home-btn:hover,
+.popular-btn:hover {
+    color: rgb(167, 159, 145);
+    transition-duration: 1s;
+    cursor: pointer;
+}
+
+.create-btn {
+    background-color: rgb(54, 53, 53);
+    padding: 10px;
+    border-radius: 10px;
+    color: wheat;
+    font-style: normal;
+    text-decoration: none;
+    font-size: 30px;
+    border: wheat solid 2px;
+
+    display: flex;
+    align-items: center;
+    justify-content: right;
+
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.decon-btn {
+    background-color: rgb(54, 53, 53);
+    padding: 10px;
+    border-radius: 10px;
+    color: wheat;
+    font-style: normal;
+    text-decoration: none;
+    font-size: 30px;
+    border: wheat solid 2px;
+    margin-right: 20px;
+
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.create-btn:hover, .decon-btn:hover {
+    background-color: rgba(245, 222, 179, 0.363);
+    transition-duration: 1s;
+}
+
+.btn-group {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    gap: 20px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+}
+
+.post {
+    border: 2px solid wheat;
+    color: wheat;
+    font-size: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 20px;
+
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.separateur {
+    width: 500px;
+    border-top: 2px solid wheat;
+}
+
+.subject {
+    text-align: left;
+}
+
+.bod {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 25px;
+}
+
+.user {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 30px;
+}
+
+.search-btn {
+    background-color: rgb(54, 53, 53);
+    padding: 7px;
+    border-radius: 10px;
+    color: wheat;
+    font-style: normal;
+    text-decoration: none;
+    font-size: 30px;
+    border: wheat solid 3px;
+    margin-right: 20px;
+
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.search-btn:hover {
+    background-color: rgba(245, 222, 179, 0.363);
+    transition-duration: 1s;
+}
+
+.search-select {
+    background-color: rgb(54, 53, 53);
+    padding: 5px;
+    border-radius: 10px;
+    color: wheat;
+    font-style: normal;
+    text-decoration: none;
+    font-size: 30px;
+    border: wheat solid 3px;
+    margin-right: 20px;
+    margin-left: 20px;
+
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.like-btn {
+    color: wheat;
+    font-size: 20px;
+}
+
+.like-btn:hover {
+    color: rgb(255, 243, 222);
+    transition: 200ms;
+}

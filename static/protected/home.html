@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+    <head>
+        <title>Forum</title>
+        <meta charset="utf8">
+        <link rel="stylesheet" href="static/css/home.css?v=2"/>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    
+        <script src="https://kit.fontawesome.com/aeedc88d0a.js" crossorigin="anonymous"></script>    </head>
+    <body>
+        <div class="topbar">
+            <a id="title" href="/HomePage">4Red - FORUM</a>
+            <form method="POST" action="/">
+                <input type="text" class="search-bar" placeholder="Rechercher..." />
+                <select name="SearchType" class="search-select">
+                    <option value="tags" {{if eq .Params.SearchType "tags" }} selected{{end}}>Tags</option>
+                    <option value="user" {{if eq .Params.SearchType "user" }} selected{{end}}>Utilisateur</option>
+                    <option value="subject" {{if eq .Params.SearchType "subject" }} selected{{end}}>Sujet</option>
+                </select>
+                <button class="search-btn" type="submit">Rechercher</button>
+            </form>
+            <div class="btn-group">
+                <button class="create-btn" onclick="window.location.href='/createForum'">Créer</button>
+                <button class="decon-btn" onclick="window.location.href='/LogoutBtn'">Déconnexion</button>
+            </div>
+        </div>
+
+        <div class="app">
+            <div class="sidebar">
+                <a class="home-btn">Accueil</a>
+                <a class="popular-btn">Populaire</a>
+            </div>
+
+            <div class="content">
+                {{range .Mess}}
+                    <div class="post">
+                        <div class="subject">{{.Subject}}</div>
+                        <div class="separateur"></div>
+                        <div class="bod">{{.Body}}</div>
+                        <div class="user">{{.Username}}</div>
+                        <a class="like-btn" href="/Like"><i class="fa-solid fa-heart"></i></a>
+                    </div>
+                {{else}}
+                <span style="color:#fff; grid-column: 1 / -1; text-align: center; padding: 20px;">Aucun post trouvé.</span>
+                {{end}}
+            </div>
+        </div>
+    </body>
+</html>
