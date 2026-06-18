@@ -1,3 +1,7 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     font-family: 'Inter', Arial, sans-serif;
@@ -6,18 +10,99 @@ body {
     min-height: 100vh;
 }
 
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    background-color: rgb(54, 53, 53);
+    border-bottom: 2px solid wheat;
+    padding: 0 16px;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.hamburger-btn {
+    display: none;
+    background: none;
+    border: 2px solid wheat;
+    color: wheat;
+    font-size: 20px;
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    line-height: 1;
+    transition: background-color 0.2s ease;
+    flex-shrink: 0;
+}
+
+.hamburger-btn:hover {
+    background-color: rgba(245, 222, 179, 0.2);
+}
+
 #title {
     font-size: 50px;
-    font-weight: bold;
     color: wheat;
-    margin-left: 20px;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    white-space: nowrap;
 
     font-family: "Bebas Neue", sans-serif;
     font-weight: 400;
     font-style: normal;
     text-decoration: none;
+}
+
+.btn-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.create-btn {
+    background-color: rgb(54, 53, 53);
+    padding: 8px 16px;
+    border-radius: 10px;
+    color: wheat;
+    font-size: 26px;
+    border: wheat solid 2px;
+    cursor: pointer;
+    white-space: nowrap;
+
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    transition: background-color 0.2s ease;
+}
+
+.decon-btn {
+    background-color: rgb(54, 53, 53);
+    padding: 8px 16px;
+    border-radius: 10px;
+    color: wheat;
+    font-size: 26px;
+    border: wheat solid 2px;
+    cursor: pointer;
+    white-space: nowrap;
+
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    transition: background-color 0.2s ease;
+}
+
+.create-btn:hover, .decon-btn:hover {
+    background-color: rgba(245, 222, 179, 0.363);
 }
 
 .app {
@@ -29,34 +114,42 @@ body {
     display: flex;
     align-items: center;
     flex-direction: column;
-
     width: 220px;
-    background: transparent;
-    border-right: 1px solid rgba(0, 0, 0, 0.08);
+    flex-shrink: 0;
     background-color: rgb(54, 53, 53);
-    border-left: 2px solid wheat;
     border-right: 2px solid wheat;
     border-bottom: 2px solid wheat;
+    padding-top: 8px;
+}
+
+.sidebar-close-btn {
+    display: none;
+}
+
+.sidebar-overlay {
+    display: none;
 }
 
 .home-btn,
 .popular-btn {
     background-color: rgb(54, 53, 53);
-    padding: 10px;
+    padding: 10px 14px;
     color: wheat;
     text-decoration: none;
-    font-size: 40px;
+    font-size: 36px;
     border-bottom: wheat solid 2px;
+    width: 100%;
+    text-align: center;
 
     font-family: "Bebas Neue", sans-serif;
     font-weight: 400;
     font-style: normal;
+    transition: color 0.2s ease;
 }
 
 .home-btn:hover,
 .popular-btn:hover {
     color: rgb(167, 159, 145);
-    transition-duration: 1s;
     cursor: pointer;
 }
 
@@ -65,91 +158,20 @@ body {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding: 24px;
-}
-
-.topbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: rgb(54, 53, 53);
-    border-bottom: 2px solid wheat;
-}
-
-.search-bar {
-    color: wheat;
-    margin-top: 5px;
-    background-color: rgb(54, 53, 53);
-    border: wheat solid 3px;
-    font-size: 25px;
-    border-radius: 10px;
-    padding: 10px;
-    width: 400px;
-    margin-left: 10px;
-
-    font-family: "Bebas Neue", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-}
-
-.create-btn {
-    background-color: rgb(54, 53, 53);
-    padding: 10px;
-    border-radius: 10px;
-    color: wheat;
-    font-style: normal;
-    text-decoration: none;
-    font-size: 30px;
-    border: wheat solid 2px;
-
-    display: flex;
-    align-items: center;
-    justify-content: right;
-
-    font-family: "Bebas Neue", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-}
-
-.decon-btn {
-    background-color: rgb(54, 53, 53);
-    padding: 10px;
-    border-radius: 10px;
-    color: wheat;
-    font-style: normal;
-    text-decoration: none;
-    font-size: 30px;
-    border: wheat solid 2px;
-    margin-right: 20px;
-
-    font-family: "Bebas Neue", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-}
-
-.create-btn:hover, .decon-btn:hover {
-    background-color: rgba(245, 222, 179, 0.363);
-    transition-duration: 1s;
-}
-
-.btn-group {
-    display: flex;
-    align-items: center;
-    justify-content: right;
-    gap: 20px;
+    padding: 32px 24px;
+    min-width: 0;
 }
 
 .create-forum-box {
     width: 100%;
-    max-width: 560px;
-    padding: 30px 100px 30px 100px;
+    max-width: 620px;
+    padding: 36px 60px;
     border-radius: 28px;
     border: 2px solid wheat;
     background: rgb(54, 53, 53);
     display: flex;
     flex-direction: column;
-    gap: 24px;
-    margin-top: 40px;
+    gap: 20px;
 
     font-family: "Bebas Neue", sans-serif;
     font-weight: 400;
@@ -162,10 +184,25 @@ body {
     font-size: 40px;
 }
 
+.tag-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.tag-btn {
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 20px;
+    cursor: pointer;
+    border-bottom: none !important;
+    width: auto !important;
+}
+
 .form {
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 16px;
 }
 
 .forum-input,
@@ -173,13 +210,12 @@ body {
 .forum-description {
     width: 100%;
     border: 2px solid wheat;
-    border-radius: 18px;
-    padding: 16px 18px;
-    font-size: 15px;
+    border-radius: 14px;
+    padding: 14px 16px;
+    font-size: 20px;
     background: rgb(54, 53, 53);
     outline: none;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    font-size: 20px;
     color: wheat;
 
     font-family: "Bebas Neue", sans-serif;
@@ -187,20 +223,26 @@ body {
     font-style: normal;
 }
 
+.forum-input::placeholder,
+.tag-input::placeholder,
+.forum-description::placeholder {
+    color: rgba(245, 222, 179, 0.5);
+}
+
 .forum-input:focus,
 .tag-input:focus,
 .forum-description:focus {
     border-color: white;
-    box-shadow: 0 0 0 4px rgba(17, 24, 39, 0.06);
+    box-shadow: 0 0 0 3px rgba(245, 222, 179, 0.15);
 }
 
 .tag-input {
-    max-width: 260px;
+    max-width: 280px;
 }
 
 .forum-description {
     min-height: 160px;
-    resize: none;
+    resize: vertical;
 }
 
 .submit-btn {
@@ -210,21 +252,198 @@ body {
     background: wheat;
     color: rgb(54, 53, 53);
     cursor: pointer;
-    font-size: 25px;
+    font-size: 24px;
     font-weight: 700;
-    box-shadow: 0 16px 28px rgba(17, 24, 39, 0.15);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     transition: transform 0.2s ease, opacity 0.2s ease;
+
+    font-family: "Bebas Neue", sans-serif;
 }
 
 .submit-btn:hover {
-    transform: translateY(-1px);
-    opacity: 0.95;
+    transform: translateY(-2px);
+    opacity: 0.92;
 }
 
-.create-forum-box>button.popular-btn {
-    width: auto;
-    padding: 12px 18px;
-    border-radius: 999px;
-    max-width: 140px;
-    margin-bottom: 0;
+@media (max-width: 1024px) {
+    .topbar {
+        gap: 8px;
+        padding: 0 12px;
+    }
+
+    #title {
+        font-size: 36px;
+        padding-top: 14px;
+        padding-bottom: 14px;
+    }
+
+    .create-btn, .decon-btn {
+        font-size: 18px;
+        padding: 6px 12px;
+    }
+
+    .sidebar {
+        width: 170px;
+    }
+
+    .home-btn, .popular-btn {
+        font-size: 28px;
+    }
+
+    .create-forum-box {
+        padding: 30px 40px;
+        max-width: 560px;
+    }
+
+    .create-title {
+        font-size: 32px;
+    }
+
+    .forum-input,
+    .tag-input,
+    .forum-description {
+        font-size: 18px;
+        padding: 12px 14px;
+    }
+
+    .submit-btn {
+        font-size: 20px;
+        padding: 14px 20px;
+    }
+}
+
+@media (max-width: 767px) {
+    .topbar {
+        flex-wrap: wrap;
+        padding: 8px 12px;
+        gap: 8px;
+    }
+
+    .topbar-left {
+        flex: 1;
+    }
+
+    .hamburger-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #title {
+        font-size: 26px;
+        padding: 8px 0;
+    }
+
+    .btn-group {
+        gap: 6px;
+    }
+
+    .create-btn, .decon-btn {
+        font-size: 13px;
+        padding: 6px 8px;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -280px;
+        width: 260px;
+        height: 100%;
+        z-index: 500;
+        border-right: 2px solid wheat;
+        border-bottom: none;
+        padding-top: 60px;
+        transition: left 0.3s ease;
+    }
+
+    .sidebar.open {
+        left: 0;
+    }
+
+    .sidebar-close-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: none;
+        border: 2px solid wheat;
+        color: wheat;
+        font-size: 18px;
+        border-radius: 8px;
+        padding: 4px 10px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+    .sidebar-close-btn:hover {
+        background-color: rgba(245, 222, 179, 0.2);
+    }
+
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        z-index: 400;
+    }
+
+    .sidebar-overlay.active {
+        display: block;
+    }
+
+    .home-btn, .popular-btn {
+        font-size: 28px;
+        padding: 14px;
+    }
+
+    .app {
+        flex-direction: column;
+    }
+
+    .content {
+        padding: 16px 10px;
+    }
+
+    .create-forum-box {
+        padding: 20px 16px;
+        border-radius: 16px;
+        gap: 14px;
+    }
+
+    .create-title {
+        font-size: 28px;
+    }
+
+    .tag-actions {
+        gap: 8px;
+    }
+
+    .tag-btn {
+        font-size: 16px;
+        padding: 6px 12px;
+    }
+
+    .forum-input,
+    .tag-input,
+    .forum-description {
+        font-size: 16px;
+        padding: 12px 12px;
+        border-radius: 10px;
+    }
+
+    .tag-input {
+        max-width: 100%;
+    }
+
+    .forum-description {
+        min-height: 120px;
+    }
+
+    .submit-btn {
+        font-size: 18px;
+        padding: 14px;
+        width: 100%;
+    }
 }

@@ -3,6 +3,7 @@
 
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Créer un forum</title>
 
         <link rel="stylesheet" href="static/css/create.css">
@@ -10,28 +11,45 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
+        <script src="https://kit.fontawesome.com/aeedc88d0a.js" crossorigin="anonymous"></script>    </head>
     </head>
 
     <body>
         <div class="topbar">
-            <a id="title" href="/HomePage">4Red - FORUM</a>
+            <div class="topbar-left">
+                <button class="hamburger-btn" id="hamburgerBtn" aria-label="Menu" aria-expanded="false">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <a id="title" href="/HomePage">4Red - FORUM</a>
+            </div>
             <div class="btn-group">
                 <button class="create-btn" onclick="window.location.href='/createForum'">Créer</button>
                 <button class="decon-btn" onclick="window.location.href='/LogoutBtn'">Déconnexion</button>
             </div>
         </div>
 
+        
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
         <div class="app">
-            <div class="sidebar">
-                <a class="home-btn" onclick="window.location.href='index.html'">Accueil</a>
+            
+            <div class="sidebar" id="sidebar">
+                <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Fermer le menu">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <a class="home-btn" href="/HomePage">Accueil</a>
                 <a class="popular-btn">Populaire</a>
             </div>
 
+            
             <div class="content">
                 <div class="create-forum-box">
-                    <h2 class="create-title">Créer un forum</h2>
-                    <a type="button" class="popular-btn" onclick="addElement()">+Tag</a>
-                    <a type="button" class="popular-btn" onclick="suppElement()">-Tag</a>
+                    <h2 class="create-title">Créer un post</h2>
+                    <div class="tag-actions">
+                        <a type="button" class="popular-btn tag-btn" onclick="addElement()">+ Tag</a>
+                        <a type="button" class="popular-btn tag-btn" onclick="suppElement()">- Tag</a>
+                    </div>
                     
                     <form class="form" method="POST" action="/createForum">
                         <input type="text" class="forum-input" name="subject" placeholder="Titre du post">
@@ -42,34 +60,58 @@
                 </div>
             </div>
         </div>
+
+        <script>
+            function addElement() {
+                const newInput = document.createElement("input");
+                newInput.setAttribute("type", "text");
+                newInput.setAttribute("class", "tag-input");
+                newInput.setAttribute("placeholder", "Tag");
+                newInput.setAttribute("name", "tag");
+
+                const form = document.querySelector("form.form");
+                const referenceNode = form.querySelector("textarea");
+
+                if (referenceNode) {
+                    form.insertBefore(newInput, referenceNode);
+                } else {
+                    form.appendChild(newInput);
+                }
+            };
+
+            function suppElement() {
+                const tagInputs = document.querySelectorAll("input.tag-input");
+                if (tagInputs.length === 0) {
+                    return;
+                }
+
+                const lastTag = tagInputs[tagInputs.length - 1];
+                lastTag.remove();
+            }
+
+            
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const closeBtn = document.getElementById('sidebarCloseBtn');
+
+            function openSidebar() {
+                sidebar.classList.add('open');
+                overlay.classList.add('active');
+                hamburgerBtn.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeSidebar() {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+                hamburgerBtn.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            }
+
+            hamburgerBtn.addEventListener('click', openSidebar);
+            closeBtn.addEventListener('click', closeSidebar);
+            overlay.addEventListener('click', closeSidebar);
+        </script>
     </body>
-
-    <script>
-        function addElement() {
-            const newInput = document.createElement("input");
-            newInput.setAttribute("type", "text");
-            newInput.setAttribute("class", "tag-input");
-            newInput.setAttribute("placeholder", "Tag");
-            newInput.setAttribute("name", "tag");
-
-            const form = document.querySelector("form.form");
-            const referenceNode = form.querySelector("textarea");
-
-            if (referenceNode) {
-                form.insertBefore(newInput, referenceNode);
-            } else {
-                form.appendChild(newInput);
-            }
-        };
-
-        function suppElement() {
-            const tagInputs = document.querySelectorAll("input.tag-input");
-            if (tagInputs.length === 0) {
-                return;
-            }
-
-            const lastTag = tagInputs[tagInputs.length - 1];
-            lastTag.remove();
-        }
-    </script>
 </html>
