@@ -83,8 +83,19 @@ func matchLetter(s1 string, s2 string) int {
 	for _, r := range runes2 {
 		if counts[r] > 0 {
 			indice++
-			counts[r]-- 
+			counts[r]--
 		}
 	}
 	return indice
+}
+
+func pop(liste []Mess) []Mess {
+	for i := 0; i < len(liste); i++ {
+		for j := 0; j < len(liste); j++ {
+			if liste[i].Likes > liste[j].Likes {
+				liste[i], liste[j] = liste[j], liste[i]
+			}
+		}
+	}
+	return liste
 }

@@ -160,6 +160,42 @@ func createForum(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/HomePage", http.StatusSeeOther)
 }
 
+func Populaire(w http.ResponseWriter, r *http.Request) {
+	var new_data any
+	db, err := dbConnection()
+	if err != nil {
+		handleError(w, "Erreur DB", http.StatusInternalServerError, err)
+		return
+	}
+
+	if err := Authorize(r); err != nil {
+		handleError(w, "Utilisateur non authentifié", http.StatusUnauthorized, err)
+		return
+	}
+
+	data, err := getMess(db)
+	if err != nil {
+		handleError(w, "Erreur dans le chargement des messages", http.StatusInternalServerError, err)
+		return
+	}
+	username, err := getUsernameFromSessionCookie(r)
+	if err != nil {
+		handleError(w, "Utilisateur non authentifié", http.StatusUnauthorized, err)
+		return
+	}
+
+	path := "protected/home.html"
+
+	search := extractQueryParams(r)
+	new_data = DataHome{
+		Mess:          pop(data),
+		Params:        search,
+		CurrentUserID: getIdUserByUsername(db, username),
+	}
+	defer db.Close()
+	renderTemplateWithData(w, path, new_data)
+}
+
 func Like(w http.ResponseWriter, r *http.Request) {
 	if err := r.ParseForm(); err != nil {
 		handleError(w, "Formulaire invalide", http.StatusBadRequest, err)
@@ -206,9 +242,11 @@ func RoutePages() {
 	http.HandleFunc("/login", Login)
 	http.HandleFunc("/register", Register)
 	http.HandleFunc("/home", Home)
+	http.HandleFunc("/Home", Home)
 	http.HandleFunc("/createForum", createForum)
 	http.HandleFunc("/LogoutBtn", LogoutBtn)
 	http.HandleFunc("/HomePage", HomePage)
+	http.HandleFunc("/Populaire", Populaire)
 	http.HandleFunc("/Like", Like)
 }
 
