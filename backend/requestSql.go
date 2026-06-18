@@ -173,7 +173,7 @@ func getIdUserByUsername(db *sql.DB, userName string) string {
 	return id
 }
 
-func addLike(db *sql.DB, userName string) {
+func addLike(db *sql.DB, userId string, messId string) {
 	query := `UPDATE message SET likes += 1 WHERE username=()`
 	var id string
 	err := db.QueryRow(query, userName).Scan(&id)

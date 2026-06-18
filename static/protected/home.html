@@ -38,11 +38,14 @@
             <div class="content">
                 {{range .Mess}}
                     <div class="post">
-                        <div class="subject">{{.Subject}}</div>
-                        <div class="separateur"></div>
-                        <div class="bod">{{.Body}}</div>
-                        <div class="user">{{.Username}}</div>
-                        <a class="like-btn" href="/Like"><i class="fa-solid fa-heart"></i></a>
+                        <form action="/Like">
+                            <div class="subject" name="MessId" value="{{.Id}}">{{.Subject}}</div>
+                            <div class="separateur"></div>
+                            <div class="bod">{{.Body}}</div>
+                            <div class="user" name="UserId" value="{{.UserId}}">{{.Username}}</div>
+                            <button class="like-btn" type="submit"><i class="fa-solid fa-heart"></i></button>
+                        </form>
+                        
                     </div>
                 {{else}}
                 <span style="color:#fff; grid-column: 1 / -1; text-align: center; padding: 20px;">Aucun post trouvé.</span>
