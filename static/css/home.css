@@ -221,7 +221,12 @@ body {
 }
 
 .like-btn {
+    background-color: rgb(54, 53, 53);
     color: wheat;
+    font-style: normal;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
     font-size: 20px;
 }
 
