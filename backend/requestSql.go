@@ -173,11 +173,36 @@ func getIdUserByUsername(db *sql.DB, userName string) string {
 	return id
 }
 
-func addLike(db *sql.DB, userId string, messId string) {
-	query := `UPDATE message SET likes += 1 WHERE username=()`
-	var id string
-	err := db.QueryRow(query, userId, messId).Scan(&id)
+func addLike(db *sql.DB, userId string, messId string) error {
+	tx, err := db.Begin()
 	if err != nil {
-		fmt.Println(err)
+		return err
 	}
+
+	insertLikeQuery := `INSERT OR IGNORE INTO likes (id_message, id_utilisateur) VALUES (?, ?)`
+	result, err := tx.Exec(insertLikeQuery, messId, userId)
+	if err != nil {
+		_ = tx.Rollback()
+		return err
+	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		_ = tx.Rollback()
+		return err
+	}
+
+	if rowsAffected > 0 {
+		updateLikesQuery := `UPDATE messages SET likes = likes + 1 WHERE id = ?`
+		if _, err := tx.Exec(updateLikesQuery, messId); err != nil {
+			_ = tx.Rollback()
+			return err
+		}
+	}
+
+	if err := tx.Commit(); err != nil {
+		return err
+	}
+
+	return nil
 }

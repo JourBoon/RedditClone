@@ -38,7 +38,9 @@
             <div class="content">
                 {{range .Mess}}
                     <div class="post">
-                        <form action="/Like">
+                        <form method="POST" action="/Like">
+                            <input type="hidden" name="id_message" value="{{.Id}}" />
+                            <input type="hidden" name="id_utilisateur" value="{{$.CurrentUserID}}" />
                             <div class="subject" name="MessId" value="{{.Id}}">{{.Subject}}</div>
                             <div class="separateur"></div>
                             <div class="bod">{{.Body}}</div>
