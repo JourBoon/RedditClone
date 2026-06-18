@@ -76,10 +76,16 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			handleError(w, "Erreur dans le chargement des messages", http.StatusInternalServerError, err)
 			return
 		}
+		username, err := getUsernameFromSessionCookie(r)
+		if err != nil {
+			handleError(w, "Utilisateur non authentifié", http.StatusUnauthorized, err)
+			return
+		}
 		search := extractQueryParams(r)
 		data := DataHome{
-			Mess:   Search(messages, search.SearchQuery, search.SearchType),
-			Params: search,
+			Mess:          Search(messages, search.SearchQuery, search.SearchType),
+			Params:        search,
+			CurrentUserID: getIdUserByUsername(db, username),
 		}
 		renderTemplateWithData(w, path, data)
 		return
@@ -107,13 +113,19 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 		handleError(w, "Erreur dans le chargement des messages", http.StatusInternalServerError, err)
 		return
 	}
+	username, err := getUsernameFromSessionCookie(r)
+	if err != nil {
+		handleError(w, "Utilisateur non authentifié", http.StatusUnauthorized, err)
+		return
+	}
 
 	path := "protected/home.html"
 
 	search := extractQueryParams(r)
 	new_data = DataHome{
-		Mess:   Search(data, search.SearchQuery, search.SearchType),
-		Params: search,
+		Mess:          Search(data, search.SearchQuery, search.SearchType),
+		Params:        search,
+		CurrentUserID: getIdUserByUsername(db, username),
 	}
 	defer db.Close()
 	renderTemplateWithData(w, path, new_data)
@@ -149,15 +161,45 @@ func createForum(w http.ResponseWriter, r *http.Request) {
 }
 
 func Like(w http.ResponseWriter, r *http.Request) {
+<<<<<<< HEAD
 	userId := r.FormValue("UserId")
 	messId := r.FormValue("MessId")
+=======
+	if err := r.ParseForm(); err != nil {
+		handleError(w, "Formulaire invalide", http.StatusBadRequest, err)
+		return
+	}
+
+	messId := r.FormValue("id_message")
+	if messId == "" {
+		messId = r.FormValue("MessId")
+	}
+>>>>>>> master
 
 	db, err := dbConnection()
 	if err != nil {
 		handleError(w, "Erreur DB", http.StatusInternalServerError, err)
 		return
 	}
+<<<<<<< HEAD
 	addLike(db, userId, messId)
+=======
+	defer db.Close()
+
+	username, err := getUsernameFromSessionCookie(r)
+	if err != nil {
+		handleError(w, "Utilisateur non authentifié", http.StatusUnauthorized, err)
+		return
+	}
+	userId := getIdUserByUsername(db, username)
+
+	if err := addLike(db, userId, messId); err != nil {
+		handleError(w, "Erreur lors de l'ajout du like", http.StatusInternalServerError, err)
+		return
+	}
+
+	http.Redirect(w, r, "/HomePage", http.StatusSeeOther)
+>>>>>>> master
 }
 
 func RoutePages() {

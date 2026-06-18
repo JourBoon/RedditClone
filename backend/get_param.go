@@ -8,8 +8,9 @@ import (
 )
 
 type DataHome struct {
-	Mess   []Mess
-	Params queryParams
+	Mess          []Mess
+	Params        queryParams
+	CurrentUserID string
 }
 
 type login struct {
