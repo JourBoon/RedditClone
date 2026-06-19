@@ -384,7 +384,7 @@ body {
         width: 100%;
         flex-wrap: wrap;
         gap: 6px;
-        display: none; /* hidden on small screens */
+        display: none;
     }
 
     .search-bar {
