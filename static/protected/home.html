@@ -24,7 +24,7 @@
             <a id="title" href="/HomePage">4Red - FORUM</a>
         </div>
 
-        <form method="POST" action="/" class="search-form">
+        <form method="POST" action="/HomePage" class="search-form">
             <input type="text" name="SearchQuery" class="search-bar" placeholder="Rechercher..." />
             <select name="SearchType" class="search-select">
                 <option value="tags" {{if eq .Params.SearchType "tags" }} selected{{end}}>Tags</option>

@@ -108,7 +108,7 @@ func extractReg(r *http.Request) register {
 
 func extractQueryParams(r *http.Request) queryParams {
 	params := queryParams{
-		SearchQuery: r.FormValue("search"),
+		SearchQuery: r.FormValue("SearchQuery"),
 		SearchType:  r.FormValue("SearchType"),
 		Home:        r.FormValue("home"),
 		SortOrder:   r.FormValue("sort"),
