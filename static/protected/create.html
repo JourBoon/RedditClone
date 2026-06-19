@@ -61,62 +61,6 @@
             </div>
         </div>
 
-<<<<<<< HEAD
-    <script>
-        function addElement() {
-            const newInput = document.createElement("input");
-            newInput.setAttribute("type", "text");
-            newInput.setAttribute("class", "tag-input");
-            newInput.setAttribute("placeholder", "Tag");
-            newInput.setAttribute("name", "tag");
-
-            const form = document.querySelector("form.form");
-            const referenceNode = form.querySelector("textarea");
-
-            if (referenceNode) {
-                form.insertBefore(newInput, referenceNode);
-            } else {
-                form.appendChild(newInput);
-            }
-        };
-
-        function suppElement() {
-            const tagInputs = document.querySelectorAll("input.tag-input");
-            if (tagInputs.length === 0) {
-                return;
-            }
-
-            const lastTag = tagInputs[tagInputs.length - 1];
-            lastTag.remove();
-        }
-
-        
-        const hamburgerBtn = document.getElementById('hamburgerBtn');
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('sidebarOverlay');
-        const closeBtn = document.getElementById('sidebarCloseBtn');
-
-        function openSidebar() {
-            sidebar.classList.add('open');
-            overlay.classList.add('active');
-            hamburgerBtn.setAttribute('aria-expanded', 'true');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeSidebar() {
-            sidebar.classList.remove('open');
-            overlay.classList.remove('active');
-            hamburgerBtn.setAttribute('aria-expanded', 'false');
-            document.body.style.overflow = '';
-        }
-
-        hamburgerBtn.addEventListener('click', openSidebar);
-        closeBtn.addEventListener('click', closeSidebar);
-        overlay.addEventListener('click', closeSidebar);
-    </script>
-    </body>
-
-=======
         <script>
             function addElement() {
                 const newInput = document.createElement("input");
@@ -170,5 +114,4 @@
             overlay.addEventListener('click', closeSidebar);
         </script>
     </body>
->>>>>>> master
 </html>
