@@ -122,13 +122,11 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 	path := "protected/home.html"
 
 	search := extractQueryParams(r)
-	fmt.Println(search)
 	new_data = DataHome{
 		Mess:          Search(data, search.SearchQuery, search.SearchType),
 		Params:        search,
 		CurrentUserID: getIdUserByUsername(db, username),
 	}
-	fmt.Println(new_data)
 	defer db.Close()
 	renderTemplateWithData(w, path, new_data)
 }
